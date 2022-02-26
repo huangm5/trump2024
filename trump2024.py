@@ -3,7 +3,7 @@
 #to allow multiple scenario
 gtx1060="gtx1060";
 inossem="inossem";
-scenario=gtx1060;
+scenario=inossem;
 #2D facets to 3D finding stories
 #valuntine
 #freq visit route
@@ -21,10 +21,123 @@ DescX=0; #destination to gate
 DescY=0;
 
 ClientRegions={
-        gtx1060:Region(161,40,1598,998)
+        gtx1060:Region(161,40,1598,998),
+        inossem:Region(1,100,1200,625)
         };
 ClientRegion=ClientRegions[scenario];
 LocCenter=ClientRegion.getCenter();#Location(933, 503);//screen select region //can capture!
+def my_friend_gonext():
+    mouseMove(Location(489, 580)); 
+    mouseDown(Button.LEFT);
+    sleep(0.3);
+    mouseUp(Button.LEFT);
+    sleep(8.25);
+    return 0;
+
+def my_friend_exit():
+    lastLoc=Location(1169, 133);
+    mouseMove(lastLoc);
+    mouseDown(Button.LEFT);
+    sleep(0.3);
+    mouseUp(Button.LEFT);
+    sleep(12.25);
+    lastLoc=Location(1087, 191);
+    mouseMove(lastLoc);
+    mouseDown(Button.LEFT);
+    sleep(0.3);
+    mouseUp(Button.LEFT);
+    sleep(1.25);
+    return 77;
+def my_friend_menu():
+   try:
+        lastLoc=Region(1117,100,76,54).find("1645890659925.png").getTarget(); 
+        mouseMove(lastLoc);
+        mouseDown(Button.LEFT);
+        sleep(0.3);
+        mouseUp(Button.LEFT);
+        sleep(0.25);
+   except:
+       pass;
+   try:
+    lastLoc=Region(1117,376,78,173).find("1645890909817.png").getTarget(); 
+    mouseMove(lastLoc);
+    mouseDown(Button.LEFT);
+    sleep(0.3);
+    mouseUp(Button.LEFT);
+    sleep(0.25);
+   except:
+       return 999;
+   try:
+        lastLoc=Region(397,492,241,114).find("1645891012840.png").getTarget(); 
+        mouseMove(lastLoc);
+        mouseDown(Button.LEFT);
+        sleep(0.3);
+        mouseUp(Button.LEFT);
+        sleep(8.25);
+   except:
+       pass;
+       return 999;
+
+def my_friend():
+   try:
+        lastLoc=ClientRegion.find("1645890484137.png").getTarget(); 
+        mouseMove(lastLoc);
+        mouseDown(Button.LEFT);
+        sleep(0.1);
+        mouseUp(Button.LEFT);
+        sleep(13.25);
+   except:
+       return 999;
+   for j in range(16):
+       if(my_friend1()==77):
+           break;
+   return 0;
+def my_friend1(): 
+#   try:
+#        lastLoc=Region(374,628,98,84).find("1645891158890.png").getTarget(); 
+#        return my_friend_exit();
+#   except:
+#       pass;
+   try:
+        lastLoc=Region(374,628,98,84).find("1645891351088.png").getTarget(); 
+        for i in range(5):
+            mouseMove(lastLoc);
+            sleep(0.2);
+            mouseDown(Button.LEFT);
+            sleep(0.2);
+            mouseUp(Button.LEFT);
+            sleep(0.8);
+            loc=Location(1110, 580);
+            mouseMove(loc);
+            sleep(0.4);
+            drag(loc);
+            sleep(0.5);
+            dropAt(LocCenter);
+            sleep(0.2);
+        return my_friend_gonext();
+   except:
+       pass;
+   try:
+        lastLoc=Region(374,628,98,84).find("1645893212213.png").getTarget(); 
+        for k in range(5):
+            mouseMove(lastLoc);
+            mouseDown(Button.LEFT);
+            sleep(0.3);
+            mouseUp(Button.LEFT);
+            sleep(1.25);
+            mouseMove(LocCenter);
+            for i in range(3):
+                mouseDown(Button.LEFT);
+                sleep(0.3);
+                mouseUp(Button.LEFT);
+                sleep(0.25);
+        return my_friend_gonext();
+   except:
+       pass;
+   return my_friend_exit();
+#my_friend_gonext();
+#print(my_friend1());
+#my_friend();
 
 def SetRampDest(x,y) :
     global DescX;
@@ -34,7 +147,8 @@ def SetRampDest(x,y) :
     Log('Desc [{X},{Y}]'.format(X=x,Y=y));
 
 locss={
-        gtx1060:[Location(487, 337),Location(1510, 305),Location(1569, 876),Location(480, 780)]
+        gtx1060:[Location(487, 337),Location(1510, 305),Location(1569, 876),Location(480, 780)],
+        inossem:[Location(236, 243),Location(1018, 262),Location(993, 581),Location(223, 566)]
         };
 locs=locss[scenario];
 
@@ -110,14 +224,21 @@ def  SetCenterEstimate(x,y):
 #print( Region(174,49,1571,978).find());    
 Main="Main";
 Fir="Fir";
-landmarkss={
+landmarkss={gtx1060:{
         Main:["1640721586941.png","1640719028561.png","1640720333764.png","1644708172971.png","1640720057152.png","1640721817026.png","1640721745982.png","1640741694803.png","1640744943976.png","1641391579681.png","1641394421693.png","1640536842754.png"]
         ,
         Fir:["1641135019722.png","1641135048732.png","1641135072434.png","1640640250064.png"]
-        };
+        },
+        inossem:{
+        Main:["1640721586941.png","1640719028561.png","1640720333764.png","1644708172971.png","1645764608542.png"
+                 ,"1640721817026.png","1640721745982.png","1640741694803.png","1640744943976.png","1641391579681.png","1641394421693.png","1640536842754.png"]
+        ,
+        Fir:["1641135019722.png","1641135048732.png","1641135072434.png","1640640250064.png"]
+        }}[scenario];
 #Region(302,139,1431,864).find(landmarkss[Main][3]);
-Orig_XsMain  =[0       ,-7     ,2      ,3        ,590   ,523    ,1988   ,800    ,-500  ,20000                       ,18000     ,102,0,0,0];
-Orig_YsMain  =[0       , 0     ,2      ,3       ,17   ,215    , 827   ,-110   ,30    ,-1500                       ,-2000     ,-200,0,0,0];
+zoo=Main;
+Orig_XsMain  =[0       ,-7     ,2      ,3        ,-90   ,523    ,1988   ,800    ,-500  ,20000                       ,18000     ,102,0,0,0];
+Orig_YsMain  =[0       , 0     ,2      ,3       ,-17   ,215    , 827   ,-110   ,30    ,-1500                       ,-2000     ,-200,0,0,0];
 Orig_XsFir  =[0       ,27     ,36         ,638,0,0,0,0,0];
 Orig_YsFir  =[0       , -20     ,-100     ,418,0,0,0,0,0];
 Orig={ Main:{
@@ -129,15 +250,22 @@ Orig={ Main:{
             "y":[0       , -20     ,-100     ,418,0,0,0,0,0] 
             }
      };
+Orig_Xs=Orig[zoo]["x"];
+Orig_Ys=Orig[zoo]["y"];
 landmarks=landmarkss[Main];
-freqmarks=[0]*len(landmarksMain);
+freqmarks=[0]*len(landmarks);
+ScanLandmarksRegions={
+        gtx1060:Region(302,139,1431,864),
+        inossem:Region(120,185,993,521)
+        }[scenario];
+
 def ScanLandmarks():
     global landmarks,Orig_Xs,Orig_Ys;
     i = 0;
     loc0=Location(0,0);
     while i < len(landmarks):
         try: 
-            loc= Region(302,139,1431,864).find(landmarks[i]);
+            loc= ScanLandmarksRegions.find(landmarks[i]);
         except:
             i+=1;
             continue;
@@ -161,11 +289,16 @@ def ScanLandmarks():
         
 ScanLandmarks();
 
+clickRegions={
+        gtx1060: Region(304,146,1435,871),
+        inossem: Region(120,168,989,517)
+        };
+clickRange=clickRegions[scenario];
 
 def my_click(img):   
     global lastLoc;
     try:  
-        loc= Region(304,146,1435,871).find(img);
+        loc=clickRange.find(img);
         lastLoc=loc.getTarget();        
         mouseMove(lastLoc);
         mouseDown(Button.LEFT);
@@ -175,10 +308,16 @@ def my_click(img):
         return 0;
     except:
         return 999;
+
+growupRegions={
+        gtx1060:Region(537,734,852,301),
+        inossem:Region(333,351,519,279) 
+        };
+
 def my_GrownUp():
     global lastLoc;
     try:  
-        loc= Region(537,734,852,301).find("1640642196950.png");
+        loc=growupRegions[scenario].find("growup.png");
         lastLoc=loc.getTarget();        
         mouseMove(lastLoc);
         mouseDown(Button.LEFT);
@@ -189,6 +328,7 @@ def my_GrownUp():
     except:
         return 999;
     return r;
+
 def my_Fir():   
     r=my_click("1640640040396.png")    ;
     if(r==0):
@@ -203,11 +343,15 @@ def my_Terrarium():
 
 import random;
 def my_cash():   
-    r=my_click("1640407206306.png")    ;
+    r=my_click({gtx1060:"1640407206306.png",
+                inossem:"1645890337103.png"
+                }[scenario])    ;
     sleep(1.6);
     return r;
 def my_cash_bronze():   
-    r=my_click("1640540150379.png")    ;
+    r=my_click({gtx1060:"1640540150379.png",
+                inossem:"1645904477007.png"
+                }[scenario])    ;
     sleep(1.6);
     return r;
 
@@ -224,11 +368,12 @@ def my_cash1():
         return 0;
     except:
         return 999;
-     
+       
+       #Region(337,143,1273,847)
 def my_trash():   
     global lastLoc;
     try:   
-        lastLoc= Region(337,143,1273,847).find("1640533677248.png").getTarget();
+        lastLoc=clickRange.find(scenario+'/'+"trash.png").getTarget();
         mouseMove(lastLoc);
         mouseDown(Button.LEFT);
         sleep(0.2);
@@ -241,7 +386,12 @@ def my_trash():
 def my_coin():   
     global lastLoc;
     try:   
-        loc= Region(383,188,1227,723).find("1640236026729.png").getTarget();
+        loc= {
+gtx1060:        Region(383,188,1227,723),
+                inossem:clickRange}[scenario].find(
+                {gtx1060:"1640236026729.png",
+                    inossem:"1645717326846.png"
+                    }[scenario]).getTarget();
         lastLoc=loc.offset(0,-9);
         mouseMove(lastLoc);
         mouseDown(Button.LEFT);
@@ -252,11 +402,12 @@ def my_coin():
     except:
         return 999;
     
+#Region(322,144,1328,796);
 
 def my_star():   
     global lastLoc;
     try:   
-        lastLoc= Region(322,144,1328,796).find("1640230937076.png").getTarget();
+        lastLoc=clickRange.find(scenario+'/'+ "star.png").getTarget();
         mouseMove(lastLoc);
         mouseDown(Button.LEFT);
         sleep(0.6);
@@ -265,27 +416,35 @@ def my_star():
         return 0;
     except:
         return 999;
+my_star();
 
+#  Region(352,167,1185,721);
 def my_feed():
     global lastLoc;
     global CenterX;
     global CenterY;    
     try:
-            loc1= Region(352,167,1185,721).find("1640139660539.png").getTarget();
+            loc1= clickRange .find(scenario+'/'+"feed.png").getTarget();
             mouseMove(loc1);
             mouseDown(Button.LEFT);
             sleep(0.3);
             mouseUp(Button.LEFT);
-            loc=Location(1390, 464);
+            loc={
+                    gtx1060:Location(1390, 464),
+                    inossem:Location(964, 374)
+                    }[scenario];
             mouseMove(loc);
             sleep(0.4);
             mouseDown(Button.LEFT);
-            sleep(0.5);#
+            sleep(0.5);
             mouseUp(Button.LEFT);
             sleep(1.5);
             drag(loc);
             sleep(1);
-            lastLoc=Location(960, 527);#
+            lastLoc={
+                    gtx1060:Location(960, 527),
+                    inossem:LocCenter
+                    }[scenario];
             dropAt(lastLoc);
             if(CenterX!=0 or CenterY!=0):
                 CenterX-=lastLoc.x-loc1.x;
@@ -295,11 +454,16 @@ def my_feed():
             return 0;
     except:
             return 999;
+#my_feed();
 
 def my_water():
     global lastLoc;
     try:    
-        loc= Region(352,167,1185,721).find("1640125687306.png").getTarget();
+        loc={ 
+        gtx1060: Region(352,167,1185,721)
+                ,
+                inossem:clickRange.grow(-50)
+                }[scenario].find(inossem+'/'+"water.png").getTarget();
         drag(loc);
         sleep(0.1);
         mouseMove(loc.offset(100,80));
@@ -315,6 +479,7 @@ def my_water():
         return 0;
     except:
         return 999;
+my_water();
 
 def my_poo():
     global lastLoc;
@@ -362,7 +527,7 @@ def merge_regions(regions):
             max(map(lambda x:x.y+x.h,regions))-y
             );
 #print merge_regions([Region(1501,39,163,253),Region(1640,42,112,124)]);
-def my_close():        
+def my_close_gtx1060():        
     global lastLoc;
     while 1==1:
         try:   
@@ -416,7 +581,63 @@ def my_close():
     sleep(1);        
     lastLoc=loc.getTarget();    
     return 0;
-#my_close();
+
+def my_close_inossem():        
+    global lastLoc;
+    while 1==1:
+        try:   
+           loc= Region(918,106,174,124).find("1645849535010.png"); #dialog
+           Log('Close 1 dialog');
+           break;
+        except:
+           pass;        
+        try:   
+           loc= Region(758,195,198,196).find("1645882887382.png");
+           Log('Close 2 small dialog');
+           break;
+        except:
+           pass;        
+        try:   
+            loc= Region(1116,102,84,87).find("1645883981648.png");
+            Log('Close 3 dirty ');
+            break;
+        except:
+            pass;
+        try:   
+            loc= Region(1285,253,211,233).find("1640398758304.png");
+            Log('Close 4');
+            break;
+        except:
+            pass;
+        try:   
+            loc= Region(1475,457,193,144).find("1640537041268.png");
+            Log('Close 5');
+            break;        
+        except:
+            pass;
+        try:   
+            loc= Region(1504,466,167,159).find("1640538477820.png");
+            Log('Close 6');
+            break;        
+        except:
+            pass;
+        try:   
+           loc= Region(1640,42,112,124).find("1640539750376.png");
+           Log('Close 7');
+           break;
+        except:
+           pass;        
+        return 999;
+    mouseMove(loc);
+    mouseDown(Button.LEFT);
+    sleep(0.3);
+    mouseUp(Button.LEFT);
+    sleep(1);        
+    lastLoc=loc.getTarget();    
+    return 0;
+my_close_inossem();
+
+my_close={gtx1060:my_close_gtx1060,inossem:my_close_inossem}[scenario];
 
 def my_ball():    
     global lastLoc;
@@ -462,9 +683,14 @@ def my_first_try():
 
 import datetime
 now = datetime.datetime.now()
-
 try:
-    loc= Region(167,45,137,132).find("1644387272438.png");
+    loc= {                
+                gtx1060:Region(167,45,137,132), 
+                inossem:Region(7,106,77,73) 
+                }[scenario].find({ 
+                gtx1060:"1644387272438.png", 
+                    inossem:"dochead.png" 
+                    }[scenario]);
     running=999;
 except:
     running=-1;
@@ -472,7 +698,7 @@ mPoppyLast=0;
 lastStatus='init';
 while 1==1 :
     zoo='Main';        
-    landmarks=landmarksMain;
+    landmarks=landmarkss[Main];
     Orig_Xs=Orig_XsMain;
     Orig_Ys=Orig_YsMain;
     
@@ -517,7 +743,10 @@ while 1==1 :
                i=NLOOP;
                break;
         i+=1;
-        if(my_click("1642273227689.png")==0): 
+        if(my_click( {
+                    gtx1060:"1642273227689.png",
+                    inossem:"1645883000530.png"
+               }[scenario]     )==0): 
             lastLoc=Location(947, 562);
             mouseMove(lastLoc);
             mouseDown(Button.LEFT);
@@ -529,7 +758,7 @@ while 1==1 :
         if(my_close()==0) : #>star
            lastStatus='close';
            continue;
-        my_first_try();
+        #my_first_try();
         if(my_star()==0) :
            lastStatus='star';
            continue;
@@ -576,6 +805,9 @@ while 1==1 :
             mPoppyLast=mPoppy;
             SetRampDest(PoppyCenterX,PoppyCenterY);
             Log('Where is poppy?');
+        if(my_friend()==0):
+           lastStatus='friend';
+           continue;
         if(my_ball()==0):
            lastStatus='ball';
            continue;
