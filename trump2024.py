@@ -642,7 +642,12 @@ my_close={gtx1060:my_close_gtx1060,inossem:my_close_inossem}[scenario];
 def my_ball():    
     global lastLoc;
     try:   
-        loc= Region(383,188,1227,723).find("1640310968315.png");
+        loc= {gtx1060:Region(383,188,1227,723),
+                inossem:clickRange
+                }[scenario].find({
+                    gtx1060:"1640310968315.png",
+                    inossem:"1645925652733.png"
+                    }[scenario]);
         mouseMove(loc);
         mouseDown(Button.LEFT);
         sleep(0.4);
@@ -659,7 +664,7 @@ def my_ball():
         mouseDown(Button.LEFT);
         sleep(0.4);
         mouseUp(Button.LEFT);
-        sleep(0.2);
+        sleep(2.2);
         lastLoc=loc.getTarget();
         return 0;
     except:
