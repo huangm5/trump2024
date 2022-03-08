@@ -751,6 +751,12 @@ def my_close_gtx1060():
            break;
         except:
            pass;        
+        try:   
+           loc= Region(869,121,105,89).find("1646141916266.png");
+           Log('Close superDeal inossem');
+           break;
+        except:
+           pass;        
         return 999;
     
     mouseMove(loc);
@@ -961,7 +967,10 @@ while 1==1 :
            lastStatus='Growup';
            continue;
         if(my_click("1640869435405.png")==0): #over by cash，trash
-            lastStatus='Great';
+            lastStatus='Great gtx1060';
+            continue;
+        if(my_click("1646006271068.png")==0): #over by cash，trash
+            lastStatus='Great inossem';
             continue;
         if(my_trash()==0) :
            lastStatus='trash';
