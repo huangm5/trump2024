@@ -1,9 +1,14 @@
+#ramp with direction, do not depend on map
 #manage holidays
 #to allow merge tool
 #to allow multiple scenario
 #keep configable from sikuli /ok /revisit 1 month 3/28
 #2D facets to 3D finding stories
 #freq visit route
+
+from ast import Subscript
+from math import atan2
+
 
 gtx1060="gtx1060";
 inossem="inossem";
@@ -179,11 +184,24 @@ locss={
         inossem:[Location(236, 243),Location(1018, 262),Location(993, 581),Location(223, 566)]
         };
 locs=locss[scenario];
-
+ROI=[];
 def my_ramp():   
     global lastLoc;
     global CenterX;
     global CenterY;
+    global ROI;
+    if(ROI.__len__>0)：
+        cntA=[0]*8;
+        for loc in ROI:
+            ang=atan2(loc.x-LocCenter.x,loc.y-LocCenter.y);
+            int id=ang/pi/4+4;
+            print(id);
+            cntA[id]=cntA[id]+1；
+        max_val = max(cntA);
+        max_idx = cntA.index(max_val);
+        print(max_idx);
+ 
+    ROI=[];
     lastLoc=Location(0,0);
     if(CenterX==0 and CenterY==0):
         k=random.getrandbits(1)*3;
@@ -283,6 +301,10 @@ Orig={
        Fir :{
             "x":[0       ,27     ,36         ,638,0,0,0,0,0],
             "y":[0       , -20     ,-100     ,418,0,0,0,0,0] 
+            },
+Terrarium :{
+            "x":[0       ,27     ,36         ,638,0,0,0,0,0],
+            "y":[0       , -20     ,-100     ,418,0,0,0,0,0] 
             }
      },
         inossem:{ Main:{
@@ -290,6 +312,10 @@ Orig={
             "y":[0       , 0     ,2      ,3       ,17   ,215    , 827   ,-110   ,30    ,-1500                       ,-2000     ,-200,0,0,0]       
             },
        Fir :{
+            "x":[0       ,27     ,36         ,638,0,0,0,0,0],
+            "y":[0       , -20     ,-100     ,418,0,0,0,0,0] 
+            },
+       Terrarium :{
             "x":[0       ,27     ,36         ,638,0,0,0,0,0],
             "y":[0       , -20     ,-100     ,418,0,0,0,0,0] 
             }
@@ -428,6 +454,52 @@ def ScanLandmarks():
 
 ScanLandmarks();
 
+    
+class Geeks:
+     def __init__(self):
+          self._age = 0
+          self._lastLoc = Location(0,0)
+          self._lastLoc_subscribers=[];
+    
+     # function to get value of _age
+     def get_age(self):
+         print("getter method called")
+         return self._age       
+     # function to set value of _age
+     def set_age(self, a):
+         print("setter method called")
+         self._age = a 
+     # function to delete _age attribute
+     def del_age(self):
+         del self._age
+     age = property(get_age, set_age, del_age) 
+
+     def get_lastLoc(self):
+         print("getter method called")
+         return self._lastLoc
+     def set_lastLoc(self, a):
+         _lastLoc.timestamp=now()；
+         if(self._lastLoc == a) return;
+         self._lastLoc = a;
+         ROI.append(a);#constant subsriber
+         for ob in _lastLoc_subscribers:
+             if ob.timestamp<_lastLoc.timestamp:
+                 ob.calculate();
+
+     def del_lastLoc(self):
+         del self._lastLoc
+     lastLoc = property(get_lastLoc, set_lastLoc, del_lastLoc) 
+     def sub_lastLoc(self,ob): #ob must have version, and a caculator
+         self._lastLoc_subscribers.append(ob);
+     def unsub_lastLoc(self,ob): 
+         self._lastLoc_subscribers.remove(ob);
+
+mark = Geeks();
+mark.age = 10;
+print(mark.age);
+
+glbl= Geeks();
+
 clickRegions={
         gtx1060: Region(304,146,1435,871),
         inossem: Region(120,168,989,517)
@@ -444,6 +516,7 @@ def my_click(img):
         sleep(0.3);
         mouseUp(Button.LEFT);
         sleep(0.25);
+        # ROI.append(loc);
         return 0;
     except:
         return 999;
