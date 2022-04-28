@@ -74,6 +74,12 @@ def which_zoo_inossem():
     except:
         pass;
     try:
+        zoc=Region(2,99,97,87).find("1650649103774.png");
+        zoo="Fir";
+        return zoo;
+    except:
+        pass;
+    try:
         zoc=Region(48,126,29,43).find("1648929649914.png");
         zoo="Kujali";
         return zoo;
@@ -94,8 +100,8 @@ def which_zoo_inossem():
     return zoo;
 #zoo=which_zoo_inossem();
 which_zoo={gtx1060:which_zoo_gtx1060,inossem:which_zoo_inossem}[scenario];
-#zoo=which_zoo(); #4/2
-#print(zoo);
+zoo=which_zoo(); #4/2
+print(zoo);
 
 SetDestFir=0;
 SetDestTerrarium=0;
@@ -111,22 +117,47 @@ def my_click(loc,sleepy):
     return 0;
 
 def my_friend_gonext():
-    Hypnagogia(1);
+    global lastLoc;
+    Hypnagogia(2);
+    lastLoc=Location(564, 487);    
     try: 
-       print Region(403,538,251,105).find("1649620530268.png");
+       lastLoc=auto(Region(396,401,279,150),inossem).find(managed("1651154628086.png","1010"));
+       print lastLoc; #score 0.79 faile
+       if lastLoc.score>0.84:
+    #       click(Location(702, 483));
+           lastLoc=lastLoc.offset(140,0);
+           click(lastLoc);
+           Hypnagogia(2);    
+           click(LocCenter);
+           Hypnagogia(3);
+    #       print LocCenter;#L[601,412]@S(0)
+           click(Location(304, 514));
+           click(Location(511, 459));
+           click(Location(698, 454));
+           click(Location(881, 475));
+           Hypnagogia(2);    
+           lastLoc=Location(746, 592); #Redeem
+           click(lastLoc);
+           Hypnagogia(1);    
+    except:
+        Hypnagogia(1);
+    lastLoc=Location(513, 585);
+    try: 
+       lastLoc=auto(Region(403,538,251,105),inossem).find(managed("1649620530268.png","Yes"));
     except:
         Log("my_friend_gonext missign Yes ");
-    my_click(Location(513, 585) 
 #            Location(489, 580) # Yes to next friend
-            ,8.25);
+    click(lastLoc);
+    Hypnagogia(8.25);
+my_friend_gonext();
 
 import shutil;
 def managed(img, nametag):
     scenzoo=scenario+"/"+zoo;
-    storepath=getBundlePath()+"/"+scenzoo;
-    folder_to_file=storepath+"/"+nametag;
-    path_to_file=folder_to_file+"/"+img;
-    file_exists = exists(path_to_file);
+    storepath=getBundlePath()+"\\"+scenzoo;
+    folder_to_file=storepath+"\\"+nametag;
+    path_to_file=folder_to_file+"\\"+img;
+    file_exists = os.path.exists(path_to_file); 
     if not file_exists :
         try:
             os.makedirs(folder_to_file);
@@ -135,16 +166,15 @@ def managed(img, nametag):
         Log("shutil.copy {P}".format(P=path_to_file));
         shutil.copy(getBundlePath()+"/"+img, path_to_file);
     return img;
-#print managed("1649763391597.png", "sad");
 
 def my_friend_exit():    
     try:
-        lastLoc=auto(Region(1026,116,155,166),inossem).find(
-                managed("1649762735950.png",'my_friend_exit'));
+        lastLoc=auto(Region(1026,116,155,166),inossem).find(managed("1649762735950.png","my_friend_exit"));
         #    lastLoc=Location(1169, 133);
         mouseMove(lastLoc);
         mouseDown(Button.LEFT);
         Hypnagogia(0.3);
+       
         mouseUp(Button.LEFT);
         Hypnagogia(8.25);
     except:
@@ -177,8 +207,22 @@ def my_friend():
 def my_friend1(): 
    #lastLoc=Location(0,0);
    try:
-        lastLoc=Region(374,628,98,84).find("1645891158890.png").getTarget(); 
-        return my_friend_exit();
+        lastLoc=auto(Region(374,628,98,84),inossem).find(managed("1645891158890.png","meshnet")).getTarget(); 
+        for i in range(10):
+            mouseMove(lastLoc);
+            mouseDown(Button.LEFT);
+            mouseUp(Button.LEFT);
+            loc=Location(1110, 580);
+            drag(loc);
+            drag(LocCenter.offset(-20,-20));
+            drag(LocCenter.offset(20,-20));
+            dropAt(LocCenter.offset(-20,20));
+        Hypnagogia(1.2);
+        try:
+            lastLoc=auto(Region(374,628,98,84),inossem).find(managed("1645891158890.png","meshnet")).getTarget(); 
+            return my_friend_exit();#failed rabit?
+        except:
+           return my_friend_gonext(); 
    except:
        pass;
    try:
@@ -221,7 +265,7 @@ def my_friend1():
        pass;
    return 77;
 #my_friend_gonext();
-#print(my_friend1());
+print(my_friend1());
 
 menudrop=auto(Region(1125,94,102,77),inossem);
 
@@ -241,32 +285,23 @@ def my_friend_menu_drop():
    except:
        pass;
 #my_friend_menu_drop();
-
-
-def my_friend_menu():
-#   my_friend_menu_drop(); cannot use safely
-    for i in (1,2):
-        try:
-            lastLoc=Region(1117,376,78,173).find("1645890909817.png").getTarget(); 
-            break;
-        except:
-            pass;
-        lastLoc=Location(1176, 128);
-        mouseMove(lastLoc);
-        mouseDown(Button.LEFT);
-        Hypnagogia(0.3);
-        mouseUp(Button.LEFT);
-        Hypnagogia(1.25);
-        if i==2:
-            Log('Failed friend menu');
-            return 999;
-    mouseMove(lastLoc);
-    mouseDown(Button.LEFT);
-    Hypnagogia(0.3);
-    mouseUp(Button.LEFT);
-    Hypnagogia(1.25);
-    my_friend_in();
-    return 0;
+import datetime;
+t0=datetime.datetime(1,1,1);
+class missing:
+    successtime=t0;
+    failtime=t0;
+    failcount=0;
+    
+    def Failed(self):
+        self.failcount+=1;
+        if self.failtime<=self.successtime:
+            self.failtime=now;
+    
+    def Success(self):
+        if self.failtime>=self.successtime:
+            self.successtime=now;
+    
+MissingTries={"my_friend_menu":missing()};
 
 my_friend_active=False;
 my_friend_menu_lastVisit=0;
@@ -278,7 +313,7 @@ def my_friend_tbd():
     #            lastLoc=Region(718,238,325,392).find("1648085114160.png").getTarget().offset(-20,0);  
     #mess with red/gray heart when no gray
     #            lastLoc=Region(718,238,325,392).find("1649620992351.png"); 
-        lastLoc=Region(718,238,325,392).find("1649621670263.png"); 
+        lastLoc=auto(Region(718,238,325,392),inossem).find("1649621670263.png"); 
         print lastLoc.getScore();
         if lastLoc.getScore()>0.97248: #0.97 for mess , 1 for match ,0.978, 0.972483694553 corner           
             lastLoc=lastLoc.getTarget().offset(-30,0);
@@ -306,6 +341,39 @@ def my_friend_help():
         my_friend_active=False;
         return 999;
 
+def my_friend_menu():
+#   my_friend_menu_drop(); cannot use safely
+    for i in (1,2):
+        try:
+            region=auto(Region(1117,376,78,173),inossem);
+            #print region;#R[1117,376 78x173]@S(0)
+            lastLoc=region.find("1645890909817.png").getTarget(); 
+            MissingTries["my_friend_menu"].Success();
+            break;
+        except:
+            MissingTries["my_friend_menu"].Failed();
+            
+        lastLoc=Location(1176, 128);
+        click(lastLoc);
+#        mouseMove(lastLoc);
+#        mouseDown(Button.LEFT);
+#        Hypnagogia(0.3);
+#        mouseUp(Button.LEFT);
+        Hypnagogia(2.25);
+        if i==2:
+            Log('Failed friend menu');
+            return 999;
+    mouseMove(lastLoc);
+    mouseDown(Button.LEFT);
+    Hypnagogia(0.3);
+    mouseUp(Button.LEFT);
+    Hypnagogia(3.25);
+    my_friend_in();
+#    my_friend_tbd();
+    return 0;
+#my_friend_menu();
+
+
 def my_friend_in():
     #lastLoc=Location(0,0);
     kl=my_friend1();
@@ -313,7 +381,7 @@ def my_friend_in():
          kl=my_friend1();
     if kl==0:
          kl=my_friend1();
-    my_friend_exit();
+#    my_friend_exit();
     for tt in range(1,10):
        notin=(my_friend_tbd()!=Location(0,0));
        if notin :
@@ -718,7 +786,6 @@ clickRegions={
         };
 clickRange=clickRegions[scenario];
 
-import datetime;
 def Hypnagogia(sc):
     if(sc<5):
         sleep(sc);
@@ -810,10 +877,27 @@ def my_Terrarium_gtx1060():
     return r;
 my_Terrarium={gtx1060:my_Terrarium_gtx1060,inossem:my_Terrarium_inossem}[scenario];
 
-def my_cash():   
-    r=my_click({gtx1060:"1640407206306.png",
+my_cash_pic={gtx1060:"1640407206306.png",
                 inossem:"1645890337103.png"
-                }[scenario])    ;
+                }[scenario];
+
+def my_many_cash():   
+    global lastLoc;
+    locs=list(clickRange.findAll(managed(my_cash_pic,"my_cash")));
+    if len(locs)>0:
+        for loc in locs:
+            lastLoc=loc.getTarget();
+            mouseMove(lastLoc);
+            mouseDown(Button.LEFT);
+            Hypnagogia(0.1);
+            mouseUp(Button.LEFT);
+            Hypnagogia(0.1);
+        return 0;
+    return 999;
+my_many_cash();
+
+def my_cash():   
+    r=my_click(managed(my_cash_pic,"my_cash"))    ;
     Hypnagogia(1.6);
     return r;
 def my_cash_bronze():   
@@ -1467,6 +1551,10 @@ while 1==1 :
            lastStatus='trash';
            ROI.append(lastLoc);
            continue;
+        if(my_many_cash()==0) :
+            lastStatus='many cash';
+            ROI.append(lastLoc);
+            continue;
         if(my_cash_bronze()==0) :
             lastStatus='cash bronze';
             ROI.append(lastLoc);
