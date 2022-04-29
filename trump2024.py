@@ -106,6 +106,35 @@ print(zoo);
 SetDestFir=0;
 SetDestTerrarium=0;
 
+def Hypnagogia(sc):
+    if(sc<5):
+        sleep(sc);
+    else:
+        now=datetime.datetime.now();
+        togo = now+datetime.timedelta(seconds=sc-5);
+        while now<togo:
+            locMouse=Mouse.at();
+            if locMouse.x<10 and locMouse.y<10:
+                return;
+            now1=now;
+            ScanLandmarks();
+            now=datetime.datetime.now();
+            sk=(now-now1).total_seconds();
+            sc-=sk;
+            print(sk,"second killed",sc,"remain");            
+        Log("Sleep short of {S}".format(S=sc));
+        if(sc<0):
+            pass;
+#            Log("Sleep short of {S}".format(S=sc));
+        else:
+            sleep(sc);
+            now=datetime.datetime.now();
+            print(now);
+            
+#Hypnagogia(0.1);
+#Hypnagogia(4);
+#Hypnagogia(40);      
+
 def my_click(loc,sleepy):
     global lastLoc;
     lastLoc=loc;
@@ -149,7 +178,7 @@ def my_friend_gonext():
 #            Location(489, 580) # Yes to next friend
     click(lastLoc);
     Hypnagogia(8.25);
-my_friend_gonext();
+#my_friend_gonext();
 
 import shutil;
 def managed(img, nametag):
@@ -528,6 +557,7 @@ Fir="Fir";
 Terrarium="Terrarium";
 Kujali="Kujali";
 
+now=datetime.datetime.now();
 lastVisit={Main:t0,Fir:now,Terrarium:now,Kujali:now};
 Blocked={Main:False,Fir:False,Terrarium:False,Kujali:False};
 lastCheck={Main:t0,Fir:now,Terrarium:now,Kujali:now};
@@ -809,34 +839,6 @@ clickRegions={
         };
 clickRange=clickRegions[scenario];
 
-def Hypnagogia(sc):
-    if(sc<5):
-        sleep(sc);
-    else:
-        now=datetime.datetime.now();
-        togo = now+datetime.timedelta(seconds=sc-5);
-        while now<togo:
-            locMouse=Mouse.at();
-            if locMouse.x<10 and locMouse.y<10:
-                return;
-            now1=now;
-            ScanLandmarks();
-            now=datetime.datetime.now();
-            sk=(now-now1).total_seconds();
-            sc-=sk;
-            print(sk,"second killed",sc,"remain");            
-        Log("Sleep short of {S}".format(S=sc));
-        if(sc<0):
-            pass;
-#            Log("Sleep short of {S}".format(S=sc));
-        else:
-            sleep(sc);
-            now=datetime.datetime.now();
-            print(now);
-            
-#Hypnagogia(0.1);
-#Hypnagogia(4);
-Hypnagogia(40);      
 
 
 def my_click(img):   
