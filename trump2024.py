@@ -912,14 +912,15 @@ def my_many_cash():
     if len(locs)>0:
         for loc in locs:
             lastLoc=loc.getTarget();
-            mouseMove(lastLoc);
-            mouseDown(Button.LEFT);
-            Hypnagogia(0.1);
-            mouseUp(Button.LEFT);
+            click(lastLoc);
+#            mouseMove(lastLoc);
+#            mouseDown(Button.LEFT);
+#            Hypnagogia(0.1);
+#            mouseUp(Button.LEFT);
             Hypnagogia(0.1);
         return 0;
     return 999;
-my_many_cash();
+#my_many_cash();
 
 def my_cash():   
     r=my_click(managed(my_cash_pic,"my_cash"))    ;
@@ -969,14 +970,15 @@ def my_many_trash():
     if len(locs)>0:
         for loc in locs:
             lastLoc=loc.getTarget();
-            mouseMove(lastLoc);
-            mouseDown(Button.LEFT);
-            Hypnagogia(0.1);
-            mouseUp(Button.LEFT);
-            Hypnagogia(0.1);
+            click(lastLoc);
+#            mouseMove(lastLoc);
+#            mouseDown(Button.LEFT);
+#            Hypnagogia(0.1);
+#            mouseUp(Button.LEFT);
+#            Hypnagogia(0.1);
         return 0;
     return 999;
-#my_many_trash();
+my_many_trash();
 
 def my_coin():   
     global lastLoc;
