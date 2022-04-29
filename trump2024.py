@@ -1083,6 +1083,20 @@ def my_water():
         return 999;
 #my_water();
 
+mROUTHANLY=0;
+lastROUTHANLY=now;
+tbdROUTHANLY=now;
+def     ROUTHANLY():
+    global mROUTHANLY,lastROUTHANLY,tbdROUTHANLY;
+    if(lastROUTHANLY<=tbdROUTHANLY):
+        lastROUTHANLY=now;
+        mROUTHANLY=(clickRange.w+clickRange.h)/20;
+    return mROUTHANLY; 
+def abs(x):
+    if x>0 :
+        return x;
+    return -x;
+
 import math;
 def my_many_water():
     global lastLoc;
@@ -1101,27 +1115,37 @@ def my_many_water():
     if len(locs)==0:
         return 999;
 #    locs=sorted(locs,key=lambda m:math.atan2(m.x-LocCenter.x,m.y-LocCenter.y));
-    locs=sorted(locs,key=lambda m:math.pi*-2.0*int(math.sqrt((m.x-LocCenter.x)**2+(m.y-LocCenter.y)**2)/20.0)
+    locs=sorted(locs,key=lambda m:math.pi*-2.0*int(math.sqrt((m.x-LocCenter.x)**2+(m.y-LocCenter.y)**2)
+                /ROUTHANLY())
             +math.atan2(m.x-LocCenter.x,m.y-LocCenter.y));
     tt=True;
+    loc1=Location(0,0);
     for loc in locs:
         if tt :
             mouseMove(loc);
             tt=False;
-        print(loc);
+            loc1=loc;
+            continue;
+#        print(loc);
+        if(abs(loc1.x-loc.x)*3<ROUTHANLY() and abs(loc1.y-loc.y)*3<ROUTHANLY() ):
+            continue;
+        loc1=loc;
+        drag(loc);        
+    inRange=clickRange.grow(-100);
+    
+    if(loc.x>inRange.x and loc.y>inRange.y and 
+            loc.x<inRange.getBottomRight().x and loc.y<inRange.getBottomRight().y) :
         drag(loc);
-    loc.getTarget();
-    drag(loc);
-    Hypnagogia(0.1);
-    drag(loc.offset(100,80));
-    Hypnagogia(0.1);
-    drag(loc.offset(-100,80));
-    Hypnagogia(0.1);
-    drag(loc.offset(-100,-80));
-    Hypnagogia(0.1);
-    drag(loc.offset(100,-80));
-    Hypnagogia(0.1);
-    dropAt(loc);
+    #    Hypnagogia(0.1);
+        drag(loc.offset(100,80));
+    #    Hypnagogia(0.1);
+        drag(loc.offset(-100,80));
+    #    Hypnagogia(0.1);
+        drag(loc.offset(-100,-80));
+    #    Hypnagogia(0.1);
+        drag(loc.offset(100,-80));
+    #    Hypnagogia(0.1);
+        dropAt(loc);
     lastLoc=Location(0,0);    
     return 0;
 #my_many_water(); #tested 4/3
