@@ -528,15 +528,28 @@ Fir="Fir";
 Terrarium="Terrarium";
 Kujali="Kujali";
 
+lastVisit={Main:t0,Fir:now,Terrarium:now,Kujali:now};
+Blocked={Main:False,Fir:False,Terrarium:False,Kujali:False};
+lastCheck={Main:t0,Fir:now,Terrarium:now,Kujali:now};
+
 def my_goto(zoo):
+    if(Blocked[zoo]):
+        if lastCheck[zoo]+ datetime.timedelta(minutes=720)>now:
+            lastVisit[zoo]=now;
+            Log("Access Denied: "+zoo);
+            return;
+        lastCheck[zoo]=now;
     my_close(); # my friend interrupt
     for i in (1,2):
         try:
-            lastLoc=auto(Region(1136,340,84,347),inossem).find("1649547381869.png").getTarget(); 
-            mouseMove(lastLoc);
-            mouseDown(Button.LEFT);
-            Hypnagogia(0.3);
-            mouseUp(Button.LEFT);
+            lastLoc=auto(Region(1050,467,170,260),inossem).find(managed("1649547381869.png","gotomap"));
+#            print lastLoc; #M[1122,597 31x36]@S(0) S:0.95 C:1137,615 [24 msec]
+            lastLoc=lastLoc.getTarget();
+            click(lastLoc);
+#            mouseMove(lastLoc);
+#            mouseDown(Button.LEFT);
+#            Hypnagogia(0.3);
+#            mouseUp(Button.LEFT);
             Hypnagogia(1.25);
             break;
         except:
@@ -555,6 +568,16 @@ def my_goto(zoo):
             Terrarium:Location(373, 540),
             Kujali:Location(765, 627)
             }[zoo];
+    checkgate=Region(lastLoc.x-50,lastLoc.y-50,100,100);
+    try:
+        checkgate.find("1651162705271.png");
+        Log( "Blocked:"+zoo);
+        Blocked[zoo]=True;
+        return;
+    except:
+        if Blocked[zoo]:
+            Log( "Reopen:"+zoo);
+            Blocked[zoo]=False;
     mouseMove(lastLoc);
     mouseDown(Button.LEFT);
     Hypnagogia(0.3);
@@ -565,7 +588,7 @@ def my_goto(zoo):
     mouseDown(Button.LEFT);
     Hypnagogia(0.3);
     mouseUp(Button.LEFT);
-    Hypnagogia(8.25);
+    Hypnagogia(12);
     if zoo==Terrarium:
         Hypnagogia(3);
         wheel(LocCenter,Button.WHEEL_DOWN,10);
@@ -1428,7 +1451,6 @@ mPoppyLast=0;
 last_fail_poo=now;
 lastStatus='init';
 t0=datetime.datetime(1,1,1);
-lastVisit={Main:t0,Fir:now,Terrarium:now};
 my_friend_active=False;
 my_friend_menu_lastVisit=now;
 while 1==1 :    
