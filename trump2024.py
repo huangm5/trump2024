@@ -253,11 +253,14 @@ def my_friend():
 
 meshnet=managed("1645891158890.png","meshnet")
 
+def my_friend_meshnet():
+       return auto(Region(374,628,98,84),inossem).find(meshnet); 
+
 def my_friend1():
    #lastLoc=Location(0,0);
    try:
 #print       auto(Region(374,628,98,84),inossem); R[427,622 111x93]@S(0 !this works!
-        lastLoc=auto(Region(374,628,98,84),inossem).find(meshnet).getTarget(); 
+        lastLoc=my_friend_meshnet();
         reachX=200;
         reachY=126;
         offsetY=40;
@@ -271,6 +274,20 @@ def my_friend1():
 #            mouseUp(Button.LEFT);
             click(lastLoc);
             Hypnagogia(0.1);
+            if i>10:
+            #meshnet continue exists in shadow, only a pop up can hel
+                try:
+                    lastLoc=my_friend_meshnet();
+                    print(lastLoc);#0.92
+                    if lastLoc.score<0.85:
+                        break;
+                    try:
+                        Region(515,333,397,343).find("1651676723257.png");
+                        return my_friend_gonext(); 
+                    except:
+                        pass;
+                except:
+                    break;
             loc=Location(1110, 580+offsetY);
 #            loc=Location(1265, 610);#chalotte@inossem
             drag(loc);
@@ -282,12 +299,7 @@ def my_friend1():
 #            drag(LocCenter.offset(270,-295+offsetY));
             dropAt(LocCenter);
         Hypnagogia(1.2);
-        try:
-            lastLoc=auto(Region(374,628,98,84),inossem).find(meshnet).getTarget(); 
-            return my_friend_exit();#failed rabit?
-        except:
-           Hypnagogia(2);
-           return my_friend_gonext(); 
+        return my_friend_exit();#failed rabit?
    except:
        pass;
    try:
