@@ -8,10 +8,12 @@ import math;
 
 gtx1060="gtx1060";
 inossem="inossem";
+
 ds=[Region(0,0,313,318).find("1652230690072.png").getTarget(),
 Region(993,494,373,270).find("1652229805622.png").getTarget(),
 Region(766,0,494,360).find("1652229378603.png").getTarget()
        ]
+    
 #print Region(21,50,1311,661)
 cs=[
         [Location(43,151),Location(1149,683),Location(982,132),Region(0,100,1184,624)],
@@ -1668,6 +1670,16 @@ def my_first_try():
 menu={inossem:Region(9,221,86,466),
     gtx1060:Region(178,177,126,806)}[scenario];
 
+def my_born():
+  try:
+    ClientRegion.click(managed("1652303915096.png","born"));
+    sleep(1);
+    auto(Region(420,428,337,223),inossem).click(managed("1652304012516.png","Okay"));
+    return 0;
+  except:
+    return 999;
+print my_born();
+
 def my_animal_level():
     if(my_click( {
                 gtx1060:"1642273227689.png",
@@ -1793,7 +1805,8 @@ while 1==1 :
             if(my_click("1649437078845.png")==0):
                 lastStatus='Splash';                
                 continue;
-        mine=[my_animal_level,my_close,my_star,my_GrownUp,my_many_cash,my_many_trash];
+        mine=[my_animal_level,my_close,my_star,my_GrownUp,my_many_cash,my_many_trash,
+                my_born];
         did=False;
         for my in mine:
             if my==lastRun:
