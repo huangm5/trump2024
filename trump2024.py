@@ -1,4 +1,3 @@
-#manage holidays
 #to allow merge tool
 #to allow multiple scenario
 #keep configable from sikuli /ok /revisit 1 month 3/28
