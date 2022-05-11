@@ -8,8 +8,7 @@ import math;
 
 gtx1060="gtx1060";
 inossem="inossem";
-ds=[
-Region(0,0,313,318).find("1652230690072.png").getTarget(),
+ds=[Region(0,0,313,318).find("1652230690072.png").getTarget(),
 Region(993,494,373,270).find("1652229805622.png").getTarget(),
 Region(766,0,494,360).find("1652229378603.png").getTarget()
        ]
@@ -55,7 +54,7 @@ print cr
 print Region(8,37,1323,663)
 
 
-scenario=gtx1060;
+scenario=inossem;
 
 global zoo,landmarks,Orig_Xs,Orig_Ys;
 global lastLoc;
@@ -717,7 +716,7 @@ def my_goto(zoo):
     my_close(); # my friend interrupt
     for i in (1,2):
         try:
-            lastLoc=auto(Region(1050,467,170,260),inossem).find(managed("1649547381869.png","gotomap"));
+            lastLoc=auto(Region(1050,467,170,260),inossem).find(managed("1652270187685.png","gotomap"));
 #            print lastLoc; #M[1122,597 31x36]@S(0) S:0.95 C:1137,615 [24 msec]
             lastLoc=lastLoc.getTarget();
             click(lastLoc);
@@ -1688,6 +1687,7 @@ while 1==1 :
     need_my_focus_inossem=False;
     need_my_splash=True;
     need_my_friend1=False;
+    lastRun=my_friend;
     while i<NLOOP:
         oldzoo=zoo;
         enabledonzoo=True;
