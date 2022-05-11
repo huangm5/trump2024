@@ -321,7 +321,7 @@ def my_friend_exit_all():
 def my_friend():
    try:
         lastLoc=ClientRegion.find(managed("1652298276529.png","my_friend")).getTarget(); 
-        #was 1645890484137.png for inossem
+        #was.png for inossem
         return 0;
    except:
        return 999;
@@ -392,7 +392,7 @@ def my_friend1():
        pass;
    try:
        #        "1645891351088.png"#inossem
-        lastLoc=butarea.find(managed("1651759310864.png","ballon")).getTarget(); 
+        lastLoc=butarea.find(managed("1652302078356.png","ballon")).getTarget(); 
         for i in range(5):
             mouseMove(lastLoc);
             Hypnagogia(0.2);
@@ -415,7 +415,7 @@ def my_friend1():
    try:
 #        rg=auto(Region(374,628,98,84),inossem);
          #       "1651444630312.png" #charlotte@inossem
-        lastLoc=butarea.find(managed("1651761038679.png","ravin")).getTarget(); 
+        lastLoc=butarea.find(managed("1652302181137.png","ravin")).getTarget(); 
         for k in range(5):
             mouseMove(lastLoc);
             mouseDown(Button.LEFT);
@@ -434,26 +434,22 @@ def my_friend1():
        pass;
    return 77;
 #my_friend_gonext();
-#print(my_friend1());
+print(my_friend1());
 
 menudrop=auto(Region(1125,94,102,77),inossem);
 
 def my_friend_menu_drop():
    try:
        #would not found first time and die lock next try, contrast with mouseup without sleep?
-#        lastLoc=menudrop.find("1645890659925.png").getTarget(); 
-        lastLoc= Region(1159,120,29,31).find("1649554885808.png");        
+        lastLoc=menudrop.find(managed("1652299608937.png","my_friend_menu_drop")); 
+        #green triangle point down
+#        lastLoc= Region(1159,120,29,31).find("1649554885808.png");        
         lastLoc=lastLoc.getTarget(); 
-        mouseMove(lastLoc);
-        sleep(0.02);
-        mouseDown(Button.LEFT);
-        sleep(0.02);
-        mouseUp(Button.LEFT);
+        click(lastLoc); 
         sleep(1.25);
-        #Hypnagogia(1.25);
    except:
        pass;
-my_friend_menu_drop();
+#my_friend_menu_drop();
 
 class missing:
     successtime=t0;
@@ -481,15 +477,17 @@ def my_friend_tbd():
     #            lastLoc=Region(718,238,325,392).find("1648085114160.png").getTarget().offset(-20,0);  
     #mess with red/gray heart when no gray
     #            lastLoc=Region(718,238,325,392).find("1649620992351.png"); 
-        lastLoc=auto(Region(718,238,325,392),inossem).find(managed("1651765375516.png","my_friend_tbd")); #"1649621670263.png"
+        lastLoc=auto(Region(718,238,325,392),inossem).find(managed("1652300097817.png",
+                    "my_friend_tbd")); #"1649621670263.png"
 
         print lastLoc.getScore();
         if lastLoc.getScore()>0.97248: #0.97 for mess , 1 for match ,0.978, 0.972483694553 corner           
             lastLoc=lastLoc.getTarget().offset(-30,0);
-            mouseMove(lastLoc);
-            mouseDown(Button.LEFT);
-            Hypnagogia(0.3);
-            mouseUp(Button.LEFT);
+            click(lastLoc);
+#            mouseMove(lastLoc);
+#            mouseDown(Button.LEFT);
+#            Hypnagogia(0.3);
+#            mouseUp(Button.LEFT);
             Hypnagogia(0.5);
             my_friend_active=True;
             return lastLoc;
@@ -497,11 +495,13 @@ def my_friend_tbd():
         pass; 
     return Location(0,0);
 #print my_friend_tbd()
+
 def my_friend_help():
     global my_friend_active;
     try:
         lastLoc={inossem:Region(397,492,241,114),
-                gtx1060:Region(383,556,567,452)}[scenario].find(managed("1651765509839.png","help")).getTarget(); 
+                gtx1060:Region(383,556,567,452)}[scenario].find(
+                managed("1652301900036.png","help")).getTarget(); 
         #"1645891012840.png"inossm
         friend_active=True;        
         mouseMove(lastLoc);
@@ -520,7 +520,7 @@ def my_friend_menu():
         try:
             region={inossem:Region(1117,376,78,173),
             gtx1060:Region(1553,344,240,544)}[scenario];
-            lastLoc=region.find(managed("1651811868645.png","my_friend_menu")).getTarget(); 
+            lastLoc=region.find(managed("1652299824877.png","my_friend_menu")).getTarget(); 
             MissingTries["my_friend_menu"].Success();
             break;
         except:
@@ -566,7 +566,7 @@ def my_friend_in():
             try:        
                 {gtx1060:Region(1256,805,407,272),
                         inossem:Region(930,629,168,76)}[scenario].find(
-                        managed("1651762160009.png","help_all")
+                        managed("1652302667522.png","help_all")
                         ); 
                 drag(Location(1007, 329));
                 lastLoc=Location(620, 346);
@@ -703,6 +703,14 @@ Fir="Fir";
 Terrarium="Terrarium";
 Kujali="Kujali";
 
+callback_unknown_recovering=[];
+def unknown_recovering():
+    need_my_focus_inossem=True; #must run after my_close;
+    need_my_splash=True;
+    need_my_friend1=True;
+    for x in callback_unknown_recovering:
+         x();
+
 now=datetime.datetime.now();
 lastVisit={Main:t0,Fir:now,Terrarium:now,Kujali:now};
 Blocked={Main:False,Fir:False,Terrarium:False,Kujali:False};
@@ -725,10 +733,8 @@ def which_zoo():
              enteringTime[zoo]=now;
        oldzoo1=zoo;
    if(zoo=="unknown"):
-            need_my_focus_inossem=True; #must run after my_close;
-            need_my_splash=True;
-            need_my_friend1=True;
-            Log("back to "+zoo);
+            unknown_recovering();
+            Log("back to "+oldzoo);
             type(Key.ESC);             
             return oldzoo;
    lastVisit[zoo]=now;
