@@ -8,6 +8,53 @@ import math;
 
 gtx1060="gtx1060";
 inossem="inossem";
+ds=[
+Region(0,0,313,318).find("1652230690072.png").getTarget(),
+Region(993,494,373,270).find("1652229805622.png").getTarget(),
+Region(766,0,494,360).find("1652229378603.png").getTarget()
+       ]
+#print Region(21,50,1311,661)
+cs=[
+        [Location(43,151),Location(1149,683),Location(982,132),Region(0,100,1184,624)],
+        [Location(49,79),Location(1324,677),Location(1140,58),Region(0,24,1366,705)],
+        [Location(68,102),Location(1289,663),Location(1118,81),Region(21,50,1311,661)]
+];
+#print cs
+#from scipy import linalg
+#import numpy as np
+#np.array
+a=([[cs[0][1].x-cs[0][0].x,cs[0][1].y-cs[0][0].y,1],
+    [cs[1][1].x-cs[1][0].x,cs[1][1].y-cs[1][0].y,1],
+    [cs[2][1].x-cs[2][0].x,cs[2][1].y-cs[2][0].y,1]])
+bx=([cs[0][3].x-cs[0][0].x,cs[1][3].x-cs[1][0].x,cs[2][3].x-cs[2][0].x])
+by=([cs[0][3].y-cs[0][0].y,cs[1][3].y-cs[1][0].y,cs[2][3].y-cs[2][0].y])
+bw=([cs[0][3].w,cs[1][3].w,cs[2][3].w])
+print a
+print bw
+px=[-0.0334696913350688,  -0.005206396429899591,  -3.2127184827073263];
+py=[ 0.01859427296392711,  -0.10821866865005578,  -13.992934176273709];
+pw=[  1.154332465600595,  -0.198214949795463,  12.758646336928226];
+ph=[  0.034585347712904425,  1.1387132763108962,  -20.046857567869097];
+ac=a[1];
+pd=ph;
+#print ac[0]*pd[0]+ac[1]*pd[1]+pd[2];#+cs[1][0].y;
+#x=linalg.solve(a,b) #https://www.99cankao.com/algebra/unknwn3.php
+#print(x)
+#ds=[Location(53,91),Location(1293,652),Location(1122,70)];
+ac=[ds[1].x-ds[0].x,ds[1].y-ds[0].y]
+pd=ph
+h=ac[0]*pd[0]+ac[1]*pd[1]+pd[2];
+pd=pw
+w=ac[0]*pd[0]+ac[1]*pd[1]+pd[2];
+pd=px
+x=ac[0]*pd[0]+ac[1]*pd[1]+pd[2]+ds[0].x;
+pd=py
+y=ac[0]*pd[0]+ac[1]*pd[1]+pd[2]+ds[0].y;
+cr=Region(int(x),int(y),int(w),int(h))
+print cr
+print Region(8,37,1323,663)
+
+
 scenario=gtx1060;
 
 global zoo,landmarks,Orig_Xs,Orig_Ys;
@@ -26,7 +73,10 @@ ClientRegions={
         gtx1060:Region(161,40,1598,998),
         inossem:Region(1,100,1200,625)
         };
-ClientRegion=ClientRegions[scenario];
+print ClientRegions[scenario];
+print cr;
+ClientRegion=cr #ClientRegions[scenario];
+
 LocCenter=ClientRegion.getCenter();
 #Location(933, 503);//screen select region //can capture! 
 def auto(rg,origin): #ClientRegions not ClientRegion
@@ -1565,6 +1615,21 @@ def my_first_try():
 menu={inossem:Region(9,221,86,466),
     gtx1060:Region(178,177,126,806)}[scenario];
 
+def my_animal_level():
+    if(my_click( {
+                gtx1060:"1642273227689.png",
+                inossem:"1645883000530.png"
+           }[scenario]     )==0): 
+        lastLoc=Location(947, 562);
+        mouseMove(lastLoc);
+        mouseDown(Button.LEFT);
+        Hypnagogia(0.3);
+        mouseUp(Button.LEFT);
+        Hypnagogia(0.3);
+        lastStatus='Animal Level';
+        return 0;
+    return 999;
+
 def ispoppydays(now):
     return (now.month==2 and now.day>=14 and now.day<=14+14 #valentine
         or now.month==4 and now.day>=6 and now.day<=6+14  #easter early?
@@ -1687,45 +1752,28 @@ while 1==1 :
             if(my_click("1649437078845.png")==0):
                 lastStatus='Splash';                
                 continue;
-        if(my_click( {
-                    gtx1060:"1642273227689.png",
-                    inossem:"1645883000530.png"
-               }[scenario]     )==0): 
-            lastLoc=Location(947, 562);
-            mouseMove(lastLoc);
-            mouseDown(Button.LEFT);
-            Hypnagogia(0.3);
-            mouseUp(Button.LEFT);
-            Hypnagogia(0.3);
-            lastStatus='Animal Level';
+        mine=[my_animal_level,my_close,my_star,my_GrownUp,my_many_cash,my_many_trash];
+        did=False;
+        for my in mine:
+            if my==lastRun:
+                #do not repeat? helping out corner stuck
+                continue;
+            print my;
+            if(my()==0):
+                did=True;
+                lastRun=my;
+                lastStatus="{F}".format(F=my)
+                break;
+        if did:
             continue;
-        if(my_close()==0) : #>star
-           lastStatus='close';
-           continue;
         if need_my_focus_inossem: 
            need_my_focus_inossem=False;
            my_focus_inossem();
-#my_first_try();
-        if(my_star()==0) :
-           lastStatus='star';
-           ROI.append(lastLoc);
-           continue;
-        if(my_GrownUp()==0) : #>coin
-           lastStatus='Growup';
-           continue;
         if(my_click("1640869435405.png")==0): #over by cash，trash
             lastStatus='Great gtx1060';
             continue;
         if(my_click("1646006271068.png")==0): #over by cash，trash
             lastStatus='Great inossem';
-            continue;
-        if(my_many_trash()==0) :
-           lastStatus='trash';
-           ROI.append(lastLoc);
-           continue;
-        if(my_many_cash()==0) :
-            lastStatus='many cash';
-            ROI.append(lastLoc);
             continue;
         if(my_cash_bronze()==0) :
             lastStatus='cash bronze';
