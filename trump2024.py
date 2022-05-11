@@ -150,9 +150,15 @@ def which_zoo_inossem():
         pass;   
     return zoo;
 #print which_zoo_inossem();
-which_zoo={gtx1060:which_zoo_gtx1060,inossem:which_zoo_inossem}[scenario];
-zoo=which_zoo(); #4/2
-print(zoo);
+import os
+def Log(str):
+    os.system('echo '+str);
+
+
+import datetime;
+which_zoo1={gtx1060:which_zoo_gtx1060,inossem:which_zoo_inossem}[scenario];
+oldzoo="unknown";
+t0=datetime.datetime(1,1,1);
 
 SetDestFir=0;
 SetDestTerrarium=0;
@@ -243,9 +249,6 @@ def my_friend_gonext():
     sleep(12); #nothing to look at yet
 #my_friend_gonext();
 
-import os
-def Log(str):
-    os.system('echo '+str);
 
 import glob
 import shutil;
@@ -317,19 +320,20 @@ def my_friend_exit_all():
 
 def my_friend():
    try:
-        lastLoc=ClientRegion.find(managed("1651687008346.png","my_friend")).getTarget(); #was 1645890484137.png for inossem
+        lastLoc=ClientRegion.find(managed("1652298276529.png","my_friend")).getTarget(); 
+        #was 1645890484137.png for inossem
         return 0;
    except:
        return 999;
-
+#my_friend();
 
 #ClientRegion=Region(5,36,1360,694);#for charlotte @ inossem
 #scenario='new';
 #meshnet="1651443957097.png";
 #LocCenter=ClientRegion.getCenter();
-
+zoo="Main"
 meshnet=managed("1651687266431.png","meshnet");#was 1645891158890.png for inossem
-print meshnet;
+#print meshnet;
 butarea={inossem:Region(374,628,98,84),
         gtx1060:Region(548,859,228,203)}[scenario];
 
@@ -451,8 +455,6 @@ def my_friend_menu_drop():
        pass;
 my_friend_menu_drop();
 
-import datetime;
-t0=datetime.datetime(1,1,1);
 class missing:
     successtime=t0;
     failtime=t0;
@@ -589,7 +591,7 @@ def my_friend_in():
     my_friend_active=False;
     my_friend_exit_all();
     return 999;
-my_friend_in();
+#my_friend_in();
 #my_friend_menu();#close popup still in need
 
 def SetRampDest(x,y) :
@@ -705,6 +707,35 @@ now=datetime.datetime.now();
 lastVisit={Main:t0,Fir:now,Terrarium:now,Kujali:now};
 Blocked={Main:False,Fir:False,Terrarium:False,Kujali:False};
 lastCheck={Main:t0,Fir:now,Terrarium:now,Kujali:now};
+enteringTime={};#Main:t0,Fir:now,Terrarium:now,Kujali:now};
+oldzoo1="unknown";
+def which_zoo():
+   global oldzoo,oldzoo1;
+   now=datetime.datetime.now();
+   enabledonzoo=True;
+   zoo=which_zoo1(); 
+   if(oldzoo1!=zoo) :
+       if(zoo!="unknown"):
+           if(oldzoo!=zoo):
+             Log(zoo);
+             oldzoo=zoo;
+             if(oldzoo!="unknown"):
+                 #exiting(oldoldzoo);
+                 pass;
+             enteringTime[zoo]=now;
+       oldzoo1=zoo;
+   if(zoo=="unknown"):
+            need_my_focus_inossem=True; #must run after my_close;
+            need_my_splash=True;
+            need_my_friend1=True;
+            Log("back to "+zoo);
+            type(Key.ESC);             
+            return oldzoo;
+   lastVisit[zoo]=now;
+   return zoo;
+
+zoo=which_zoo(); #4/2
+print(zoo);
 
 def my_goto(zoo):
     if(Blocked[zoo]):
@@ -1334,9 +1365,14 @@ def my_poo_star():
     for i in range(2):
         try:
            # print auto(Region(356,620,220,101),inossem);           #R[633,870 292x161]@S(0)
-            rg=Region(485,845,318,204);
+#            rg=Region(485,845,318,204);#?gtx
+            rg=auto(Region(294,593,231,165),inossem);#inossem
+#            print rg;
+            if rg.y+rg.h>ClientRegion.y+ClientRegion.h:
+                rg.h=ClientRegion.y+ClientRegion.h-rg.y;
+#            print rg;            
             #print rg; #R[485,845 318x204]@S(0)
-            loc=rg.find(managed("1651724533719.png","my_poo_star"));           
+            loc=rg.find(managed("1652277301831.png","my_poo_star"));           
             return True;
         except:
             if i==1:            
@@ -1350,14 +1386,22 @@ poorange={gtx1060: Region(219,96,1482,923),
             inossem:ClientRegion
             }[scenario];
 
-def my_poo():
-    global lastLoc;
-    try:    
-        loc={gtx1060: Region(340,186,1294,772),
+def my_poo_find_inossem():
+        return clickRange.find("1646838657680.png");
+
+def my_poo_find_gtx1060():
+        return {gtx1060: Region(340,186,1294,772),
                 inossem:clickRange
                 }[scenario].find({gtx1060:"1640315967731.png",
                     inossem:"1646838657680.png"
-                    }[scenario]).getTarget();
+                    }[scenario])    
+my_poo_find={gtx1060:my_poo_find_gtx1060,inossem:my_poo_find_inossem}[scenario];
+
+def my_poo():
+    global lastLoc;
+    try:    
+        loc=my_poo_find();
+        loc=loc.getTarget();
         loc0=loc;
     except:
         return 888;
@@ -1380,7 +1424,7 @@ def my_poo():
     poogrid=auto(Region
             (0,0,70,60),gtx1060); 
     #            (0,0,80,50)
-#    print(poogrid);
+    print "poogrid=",poogrid;
     for t in trail:
         lastLoc=Location(t[0]*poogrid.w+LocCenter.x,t[1]*poogrid.h+LocCenter.y);
 #        mouseMove(lastLoc);    
@@ -1399,7 +1443,8 @@ def my_poo():
         for j in range(1,3):
             if not my_poo_star():
                 Log("Done poo brush");
-                mouseUp(Button.LEFT);
+#                mouseUp(Button.LEFT);
+                dropAt(lastLoc);
                 Hypnagogia(1);
                 return 0;
             try:
@@ -1410,16 +1455,19 @@ def my_poo():
                 pass;
         if j>=4 :
             Log("Done poo brush");
-            mouseUp(Button.LEFT);
+#            mouseUp(Button.LEFT);
+            dropAt(lastLoc);
             Hypnagogia(1);
             return 0;
         cl=ClientRegion.grow(-50);
         lastLoc=Location(random.randrange(cl.x,cl.x+cl.w),
                             random.randrange(cl.y,cl.y+cl.h));
-        mouseMove(lastLoc);                
+#        mouseMove(lastLoc);                
+        dropAt(lastLoc);
         Hypnagogia(0.1);
     Log("Failed poo brush {L}".format(L=loc0));
-    mouseUp(Button.LEFT);
+    #mouseUp(Button.LEFT);
+    dropAt(lastLoc);
     return 999;
 #my_poo();
 
@@ -1689,21 +1737,8 @@ while 1==1 :
     need_my_friend1=False;
     lastRun=my_friend;
     while i<NLOOP:
-        oldzoo=zoo;
-        enabledonzoo=True;
-        zoo=which_zoo();
-        if(zoo=="unknown"):
-            need_my_focus_inossem=True; #must run after my_close;
-            need_my_splash=True;
-            need_my_friend1=True;
         now = datetime.datetime.now();
-        if(zoo=='unknown') :
-           zoo=oldzoo;
-           Log("back to "+zoo);
-            #enabledonzoo=False;
-        elif(zoo!=oldzoo):
-            lastVisit[oldzoo]=now;
-            Log(zoo);
+        zoo=which_zoo();
         landmarks=landmarkss[zoo];
         Orig_Xs=Orig[zoo]['x'];
         Orig_Ys=Orig[zoo]['y'];
@@ -1805,7 +1840,7 @@ while 1==1 :
 
 #"1649303197390.png"#easter egg
 
-            if(my_click(managed("1651683908139.png",gtx1060))==0):
+            if(my_click(managed("1652286241635.png","poppy"))==0):
                 #mothers day
                poppy+=1;
                lastPoppyVisited=now;
