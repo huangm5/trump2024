@@ -1060,6 +1060,7 @@ def my_GrownUp():
     except:
         return 999;
     return r;
+#my_GrownUp();
 
 def my_Fir_gtx1060():   
     r=my_click("1640640040396.png")    ;
@@ -1490,6 +1491,7 @@ def merge_regions(regions):
 #print merge_regions([Region(1501,39,163,253),Region(1640,42,112,124)]);
 def my_close_gtx1060():        
     global lastLoc;
+    type(Key.ESC);             
     while 1==1:
         try:   
            loc= Region(1286,276,220,174).find("1641265807541.png");
@@ -1566,8 +1568,8 @@ def my_focus_inossem():
 
 def my_close_inossem():        
     global lastLoc;
-    
     my_friend_exit();
+    type(Key.ESC);             
     while 1==1:
         try:   
            loc= Region(850,95,166,130).find("1649449467461.png"); #super deal tbd
@@ -1606,6 +1608,12 @@ def my_close_inossem():
             break;
         except:
             pass;
+        try:   
+           loc= Region(869,121,105,89).find("1646141916266.png");
+           Log('Close superDeal inossem');
+           break;
+        except:
+           pass;        
         return 999;
     mouseMove(loc);
     mouseDown(Button.LEFT);
@@ -1756,7 +1764,13 @@ while 1==1 :
     lastRun=my_friend;
     while i<NLOOP:
         now = datetime.datetime.now();
+        oldz=zoo;
         zoo=which_zoo();
+        print(zoo); 
+        if zoo=="unknown" :
+            zoo=oldz;
+            if zoo=="unknown" :
+                zoo=Main;
         landmarks=landmarkss[zoo];
         Orig_Xs=Orig[zoo]['x'];
         Orig_Ys=Orig[zoo]['y'];
