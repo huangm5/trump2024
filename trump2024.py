@@ -1,6 +1,3 @@
-#manage holidays
-#to allow merge tool
-#to allow multiple scenario
 #keep configable from sikuli /ok /revisit 1 month 3/28
 #2D facets to 3D finding stories
 #freq visit route
@@ -8,54 +5,54 @@ import math;
 
 gtx1060="gtx1060";
 inossem="inossem";
-
-ds=[Region(0,0,313,318).find("1652230690072.png").getTarget(),
-Region(993,494,373,270).find("1652229805622.png").getTarget(),
-Region(766,0,494,360).find("1652229378603.png").getTarget()
-       ]
-    
-#print Region(21,50,1311,661)
-cs=[
-        [Location(43,151),Location(1149,683),Location(982,132),Region(0,100,1184,624)],
-        [Location(49,79),Location(1324,677),Location(1140,58),Region(0,24,1366,705)],
-        [Location(68,102),Location(1289,663),Location(1118,81),Region(21,50,1311,661)]
-];
-#print cs
-#from scipy import linalg
-#import numpy as np
-#np.array
-a=([[cs[0][1].x-cs[0][0].x,cs[0][1].y-cs[0][0].y,1],
-    [cs[1][1].x-cs[1][0].x,cs[1][1].y-cs[1][0].y,1],
-    [cs[2][1].x-cs[2][0].x,cs[2][1].y-cs[2][0].y,1]])
-bx=([cs[0][3].x-cs[0][0].x,cs[1][3].x-cs[1][0].x,cs[2][3].x-cs[2][0].x])
-by=([cs[0][3].y-cs[0][0].y,cs[1][3].y-cs[1][0].y,cs[2][3].y-cs[2][0].y])
-bw=([cs[0][3].w,cs[1][3].w,cs[2][3].w])
-print a
-print bw
-px=[-0.0334696913350688,  -0.005206396429899591,  -3.2127184827073263];
-py=[ 0.01859427296392711,  -0.10821866865005578,  -13.992934176273709];
-pw=[  1.154332465600595,  -0.198214949795463,  12.758646336928226];
-ph=[  0.034585347712904425,  1.1387132763108962,  -20.046857567869097];
-ac=a[1];
-pd=ph;
-#print ac[0]*pd[0]+ac[1]*pd[1]+pd[2];#+cs[1][0].y;
-#x=linalg.solve(a,b) #https://www.99cankao.com/algebra/unknwn3.php
-#print(x)
-#ds=[Location(53,91),Location(1293,652),Location(1122,70)];
-ac=[ds[1].x-ds[0].x,ds[1].y-ds[0].y]
-pd=ph
-h=ac[0]*pd[0]+ac[1]*pd[1]+pd[2];
-pd=pw
-w=ac[0]*pd[0]+ac[1]*pd[1]+pd[2];
-pd=px
-x=ac[0]*pd[0]+ac[1]*pd[1]+pd[2]+ds[0].x;
-pd=py
-y=ac[0]*pd[0]+ac[1]*pd[1]+pd[2]+ds[0].y;
-cr=Region(int(x),int(y),int(w),int(h))
-print cr
-print Region(8,37,1323,663)
-
-
+try:
+    ds=[Region(0,0,313,318).find("1652230690072.png").getTarget(),
+    Region(993,494,373,270).find("1652229805622.png").getTarget(),
+    Region(766,0,494,360).find("1652229378603.png").getTarget()
+           ]
+        
+    #print Region(21,50,1311,661)
+    cs=[
+            [Location(43,151),Location(1149,683),Location(982,132),Region(0,100,1184,624)],
+            [Location(49,79),Location(1324,677),Location(1140,58),Region(0,24,1366,705)],
+            [Location(68,102),Location(1289,663),Location(1118,81),Region(21,50,1311,661)]
+    ];
+    #print cs
+    #from scipy import linalg
+    #import numpy as np
+    #np.array
+    a=([[cs[0][1].x-cs[0][0].x,cs[0][1].y-cs[0][0].y,1],
+        [cs[1][1].x-cs[1][0].x,cs[1][1].y-cs[1][0].y,1],
+        [cs[2][1].x-cs[2][0].x,cs[2][1].y-cs[2][0].y,1]])
+    bx=([cs[0][3].x-cs[0][0].x,cs[1][3].x-cs[1][0].x,cs[2][3].x-cs[2][0].x])
+    by=([cs[0][3].y-cs[0][0].y,cs[1][3].y-cs[1][0].y,cs[2][3].y-cs[2][0].y])
+    bw=([cs[0][3].w,cs[1][3].w,cs[2][3].w])
+    print a
+    print bw
+    px=[-0.0334696913350688,  -0.005206396429899591,  -3.2127184827073263];
+    py=[ 0.01859427296392711,  -0.10821866865005578,  -13.992934176273709];
+    pw=[  1.154332465600595,  -0.198214949795463,  12.758646336928226];
+    ph=[  0.034585347712904425,  1.1387132763108962,  -20.046857567869097];
+    ac=a[1];
+    pd=ph;
+    #print ac[0]*pd[0]+ac[1]*pd[1]+pd[2];#+cs[1][0].y;
+    #x=linalg.solve(a,b) #https://www.99cankao.com/algebra/unknwn3.php
+    #print(x)
+    #ds=[Location(53,91),Location(1293,652),Location(1122,70)];
+    ac=[ds[1].x-ds[0].x,ds[1].y-ds[0].y]
+    pd=ph
+    h=ac[0]*pd[0]+ac[1]*pd[1]+pd[2];
+    pd=pw
+    w=ac[0]*pd[0]+ac[1]*pd[1]+pd[2];
+    pd=px
+    x=ac[0]*pd[0]+ac[1]*pd[1]+pd[2]+ds[0].x;
+    pd=py
+    y=ac[0]*pd[0]+ac[1]*pd[1]+pd[2]+ds[0].y;
+    cr=Region(int(x),int(y),int(w),int(h))
+    print cr
+    print Region(8,37,1323,663)
+except:
+    pass;
 scenario=inossem;
 
 global zoo,landmarks,Orig_Xs,Orig_Ys;
@@ -75,8 +72,8 @@ ClientRegions={
         inossem:Region(1,100,1200,625)
         };
 print ClientRegions[scenario];
-print cr;
-ClientRegion=cr #ClientRegions[scenario];
+#print cr;
+ClientRegion=ClientRegions[scenario];
 
 LocCenter=ClientRegion.getCenter();
 #Location(933, 503);//screen select region //can capture! 
@@ -125,7 +122,7 @@ def which_zoo_inossem():
     except:
         pass;
     try:
-        zoc=Region(2,99,97,87).find("1650649103774.png");
+        zoc=Region(2,99,97,87).find(managed("1652374285038.png","fir"));
         if zoc.score>0.8:
             zoo="Fir";
             return zoo;
@@ -145,7 +142,7 @@ def which_zoo_inossem():
     except:
         pass;   
     try:
-        zoc=Region(8,104,108,73).find("1649521451422.png");
+        zoc=Region(8,104,108,73).find(managed("1652374190639.png","somebody"));
         Log("in somebody houese, hope you can close");
         return zoo;
     except:
@@ -299,9 +296,10 @@ def my_friend_exit():
         mouseUp(Button.LEFT);
         Hypnagogia(15);
         entering(zoo);
+        return 0;
     except:
         #Log("my_friend_exit not found");
-        pass;
+        return 999;
 #my_friend_exit();
 
 def my_friend_exit_all():
@@ -371,11 +369,10 @@ def my_friend1():
                     try:
                         ({inossem:Region(515,333,397,343),
                         gtx1060:Region(954,641,390,329)}[scenario]).find(
-                               {inossem:"1651676723257.png",
-                                    gtx1060:"1651761850369.png"}[scenario] #go home
-                                );
+                               managed( "1652368662649.png","gohome"));
                         return my_friend_gonext(); 
                     except:
+                        type(Key.ESC);
                         pass;
                 except:
                     break;
@@ -436,7 +433,7 @@ def my_friend1():
        pass;
    return 77;
 #my_friend_gonext();
-print(my_friend1());
+#print(my_friend1());
 
 menudrop=auto(Region(1125,94,102,77),inossem);
 
@@ -611,6 +608,9 @@ locs=locss[scenario];
 
 
 def my_ramp():   
+    zoo=which_zoo();
+    if(zoo=="unknown"):
+        return 999;
     global lastLoc,DescX,DescY,CenterX,CenterY;
     lastLoc=Location(0,0);
     if len(ROI)>0 :
@@ -715,6 +715,7 @@ def unknown_recovering():
 
 now=datetime.datetime.now();
 lastVisit={Main:t0,Fir:now,Terrarium:now,Kujali:now};
+firstVisit={Main:t0,Fir:t0,Terrarium:t0,Kujali:t0};
 Blocked={Main:False,Fir:False,Terrarium:False,Kujali:False};
 lastCheck={Main:t0,Fir:now,Terrarium:now,Kujali:now};
 enteringTime={};#Main:t0,Fir:now,Terrarium:now,Kujali:now};
@@ -737,7 +738,7 @@ def which_zoo():
    if(zoo=="unknown"):
             unknown_recovering();
             Log("back to "+oldzoo);
-            type(Key.ESC);             
+            #type(Key.ESC);              #queue this , for readonly in this function
             return oldzoo;
    lastVisit[zoo]=now;
    return zoo;
@@ -1554,7 +1555,7 @@ def my_close_gtx1060():
 #if zoo is not found
 def my_focus_inossem():        
         try:   
-           loc= Region(14,0,405,35).find("1649353378650.png");
+           loc= Region(14,0,405,35).find(managed("1652374584338.png","pandaicon"));
            if which_zoo_inossem()=="unknown":
                 mouseMove(loc);
                 mouseDown(Button.LEFT);
@@ -1568,11 +1569,10 @@ def my_focus_inossem():
 
 def my_close_inossem():        
     global lastLoc;
-    my_friend_exit();
     type(Key.ESC);             
     while 1==1:
         try:   
-           loc= Region(850,95,166,130).find("1649449467461.png"); #super deal tbd
+           loc= Region(850,95,166,130).find(managed("1652377567329.png","superdeal")); #super deal tbd
            Log('Close 0 super deal');
            break;
         except:
@@ -1598,7 +1598,7 @@ def my_close_inossem():
             pass;
         try:   
             loc= Region(1285,253,211,233).find("1640398758304.png");
-            Log('Close 4');
+            Log('Close 4'); #cover same button for my_friend_exit?
             break;
         except:
             pass;
@@ -1820,7 +1820,7 @@ while 1==1 :
                 lastStatus='Splash';                
                 continue;
         mine=[my_animal_level,my_close,my_star,my_GrownUp,my_many_cash,my_many_trash,
-                my_born];
+                my_born,my_cash_bronze,my_many_water];
         did=False;
         for my in mine:
             if my==lastRun:
@@ -1842,10 +1842,6 @@ while 1==1 :
             continue;
         if(my_click("1646006271068.png")==0): #over by cash，trash
             lastStatus='Great inossem';
-            continue;
-        if(my_cash_bronze()==0) :
-            lastStatus='cash bronze';
-            ROI.append(lastLoc);
             continue;
         if(my_cash()==0) :
             lastStatus='cash';
@@ -1912,10 +1908,6 @@ while 1==1 :
            lastStatus='ball';
            ROI.append(lastLoc);
            continue;
-        if(my_many_water()==0):
-           lastStatus='water many';
-           ROI.append(lastLoc);
-           continue;
         if(my_water()==0):
            lastStatus='water';
            ROI.append(lastLoc);
@@ -1935,7 +1927,8 @@ while 1==1 :
                 continue;
 
 #set destination
-        if ispoppydays(now) and lastPoppyVisit+ datetime.timedelta(minutes=31)<now:
+
+        if ispoppydays(now) and lastPoppyVisit+datetime.timedelta(minutes=31)<now and firstVisit[zoo]+datetime.timedelta(minutes=24)<now:
                 if zoo!='Main':
                     if my_goto(Main)==0:
                         SetRampDest(-100,20); 
@@ -1947,13 +1940,21 @@ while 1==1 :
             for key in lastVisit:
                 if(lastVisit[key]<lastVisit[oldzoo]):
                     oldzoo=key;
-        if(lastVisit[oldzoo]+ datetime.timedelta(minutes=20)<now):
-            if(my_goto(oldzoo)==0):            
-                    lastVisit[oldzoo]=now;
-                    zoo=oldzoo;                
+        else:
+            firstVisit[zoo]=now; 
+        min=now;
+        for j in lastVisit.keys():
+            if lastVisit[j]<min:
+                min=lastVisit[j];
+                wishzoo=j;
+        if(lastVisit[wishzoo]+ datetime.timedelta(minutes=33)<now):
+            print zoo,"->",wishzoo;
+            if(my_goto(wishzoo)==0):            
+                    lastVisit[wishzoo]=now;
+                    zoo=wishzoo;                
                     landmarks=landmarkss[zoo];
-                    Orig_Xs=Orig_XsFir;
-                    Orig_Ys=Orig_YsFir;                
+                    Orig_Xs=Orig[zoo]["x"];
+                    Orig_Ys=Orig[zoo]["y"];
                     continue;
 #        if(enabledonzoo): 
         my_ramp();
