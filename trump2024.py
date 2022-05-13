@@ -608,7 +608,7 @@ locs=locss[scenario];
 
 
 def my_ramp():   
-    zoo=which_zoo();
+    zoo=which_zoo1();
     if(zoo=="unknown"):
         return 999;
     global lastLoc,DescX,DescY,CenterX,CenterY;
@@ -686,7 +686,7 @@ def my_ramp():
     if(CenterX!=0 or CenterY!=0):
         CenterX-=lastLoc.x-locs[k].x;
         CenterY-=lastLoc.y-locs[k].y;
-        Log('Ramp ({X},{Y})'.format(X=CenterX,Y=CenterY));
+        Log('Ramp {Z}({X},{Y})'.format(Z=zoo,X=CenterX,Y=CenterY));
     Hypnagogia(0.1);
     ScanLandmarks();
     
@@ -1816,7 +1816,7 @@ while 1==1 :
         i+=1;
         if(need_my_splash):
             need_my_splash=False;
-            if(my_click("1649437078845.png")==0):
+            if(my_click(managed("1652449514171.png","Splash"))==0):
                 lastStatus='Splash';                
                 continue;
         mine=[my_animal_level,my_close,my_star,my_GrownUp,my_many_cash,my_many_trash,
