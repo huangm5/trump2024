@@ -539,7 +539,7 @@ def my_friend_menu():
     mouseDown(Button.LEFT);
     Hypnagogia(0.3);
     mouseUp(Button.LEFT);
-    Hypnagogia(3.25);
+    Hypnagogia(5);
     my_friend_in();
 #    my_friend_tbd();
     return 0;
@@ -570,7 +570,7 @@ def my_friend_in():
                 drag(Location(1007, 329));
                 lastLoc=Location(620, 346);
                 dropAt(lastLoc);
-                Hypnagogia(2.3);
+                Hypnagogia(3);
             except:
                 my_friend_active=False;
                 return 999;
@@ -580,8 +580,8 @@ def my_friend_in():
                  notin=False;             
              else:
                   return 0;    
-       Hypnagogia(13);
        for h in range(1,8):
+           Hypnagogia(22);
            kl=my_friend1();              
            if kl>0:
                break;
@@ -706,12 +706,20 @@ Terrarium="Terrarium";
 Kujali="Kujali";
 
 callback_unknown_recovering=[];
+need_my_focus_inossem=False;
+need_my_splash=True;
+need_my_friend1=False;
 def unknown_recovering():
+    global need_my_focus_inossem;
+    global need_my_splash;
+    global need_my_friend1;
     need_my_focus_inossem=True; #must run after my_close;
     need_my_splash=True;
     need_my_friend1=True;
     for x in callback_unknown_recovering:
          x();
+#unknown_recovering();
+#print need_my_focus_inossem;
 
 now=datetime.datetime.now();
 lastVisit={Main:t0,Fir:now,Terrarium:now,Kujali:now};
@@ -1111,13 +1119,13 @@ def my_many_cash():
 
 def my_cash():   
     r=my_click(managed(my_cash_pic,"my_cash"))    ;
-    Hypnagogia(1.6);
+#    Hypnagogia(1.6);
     return r;
 def my_cash_bronze():   
     r=my_click({gtx1060:"1640540150379.png",
                 inossem:"1645904477007.png"
                 }[scenario])    ;
-    Hypnagogia(1.6);
+#    Hypnagogia(1.6);
     return r;
 
 def my_cash1():
@@ -1177,11 +1185,12 @@ gtx1060:        Region(383,188,1227,723),
                     inossem:"1645717326846.png"
                     }[scenario]).getTarget();
         lastLoc=loc.offset(0,-9);
-        mouseMove(lastLoc);
-        mouseDown(Button.LEFT);
-        Hypnagogia(0.3);
-        mouseUp(Button.LEFT);
-        Hypnagogia(1.8);
+        click(lastLoc);
+#        mouseMove(lastLoc);
+#        mouseDown(Button.LEFT);
+#        Hypnagogia(0.3);
+#        mouseUp(Button.LEFT);
+#        Hypnagogia(1.8);
         return 0;
     except:
         return 999;
@@ -1203,46 +1212,53 @@ def my_star():
 #my_star();
 
 #  Region(352,167,1185,721);
+feedLoc={
+            gtx1060:Location(960, 527),
+            inossem:LocCenter
+            }[scenario];
 def my_feed():
     global lastLoc;
     global CenterX;
     global CenterY;    
     try:
-            loc1= clickRange .find(scenario+'/'+"feed.png").getTarget();
-            click(loc1);
-            loc={
-                    gtx1060:Location(1390, 464),
-                    inossem:Location(964, 374)
-                    }[scenario];
-            mouseMove(loc);
-            mouseDown(Button.LEFT);
-            Hypnagogia(0.4);#hold and relase and hold >=0.34, depend on loading
-            #may enter state hard to recover
-            mouseUp(Button.LEFT);
-            Hypnagogia(0.1);#hold and relase and hold >=0.34, depend on loading/zoo?
-            mouseDown(Button.LEFT);
-            Hypnagogia(0.1);#hold and relase and hold >=0.34, depend on loading
-            drag(loc);
-            lastLoc={
-                    gtx1060:Location(960, 527),
-                    inossem:LocCenter
-                    }[scenario];
-            if(zoo=="Terrarium"):
-                drag(Location(lastLoc.x,lastLoc.y/2)); #do no devide itself, it actually LocCenter by object reference
-            dropAt(lastLoc);
-            if(CenterX!=0 or CenterY!=0):
-                CenterX-=lastLoc.x-loc1.x;
-                CenterY-=lastLoc.y-loc1.y;
-                Log('Feed ({X},{Y})'.format(X=CenterX,Y=CenterY));
-            Hypnagogia(0.1);
-            #this program may stuck, need an absolut exit
+        loc1= clickRange .find(scenario+'/'+"feed.png").getTarget();
+        click(loc1);
+        r=my_feed1(feedLoc);
+        if(CenterX!=0 or CenterY!=0):
+            CenterX-=lastLoc.x-loc1.x;
+            CenterY-=lastLoc.y-loc1.y;
+            Log('Feed ({X},{Y})'.format(X=CenterX,Y=CenterY));
+        return 0;
+    except:
+        return 999;
+print my_feed()   
+def my_feed1(feedLoc):
+    global lastLoc;
+    global CenterX;
+    global CenterY;    
+    loc={
+            gtx1060:Location(1390, 464),
+            inossem:Location(964, 374)
+            }[scenario];
+    mouseMove(loc);
+    mouseDown(Button.LEFT);
+    Hypnagogia(0.4);#hold and relase and hold >=0.34, depend on loading
+    #may enter state hard to recover
+    mouseUp(Button.LEFT);
+    Hypnagogia(0.1);#hold and relase and hold >=0.34, depend on loading/zoo?
+    mouseDown(Button.LEFT);
+    Hypnagogia(0.1);#hold and relase and hold >=0.34, depend on loading
+    drag(loc);
+    lastLoc=feedLoc;
+    if(zoo=="Terrarium"):
+        drag(Location(lastLoc.x,lastLoc.y/2)); #do no devide itself, it actually LocCenter by object reference
+    dropAt(lastLoc);
+    #this program may stuck, need an absolut exit
 #            lastLoc=Location(1073, 404);click(lastLoc); #inossem the close button 
 #            auto(Region(1007,329,148,179),inossem).click(managed("1651411946642.png","close feed")); 
-            #inossem the close button 
-            return 0;
-    except:
-            return 999;
-#my_feed();
+    #inossem the close button 
+    return 0;
+#print my_feed1(???)   
 
 def my_water():
     global lastLoc;
@@ -1325,15 +1341,10 @@ def my_many_water():
     if(loc.x>inRange.x and loc.y>inRange.y and 
             loc.x<inRange.getBottomRight().x and loc.y<inRange.getBottomRight().y) :
         drag(loc);
-    #    Hypnagogia(0.1);
         drag(loc.offset(100,80));
-    #    Hypnagogia(0.1);
         drag(loc.offset(-100,80));
-    #    Hypnagogia(0.1);
-        drag(loc.offset(-100,-80));
-    #    Hypnagogia(0.1);
+#        drag(loc.offset(-100,-80));
         drag(loc.offset(100,-80));
-    #    Hypnagogia(0.1);
         dropAt(loc);
     lastLoc=Location(0,0);    
     return 0;
@@ -1386,7 +1397,7 @@ def my_poo_star():
             return True;
         except:
             if i==1:            
-                Hypnagogia(2);
+                Hypnagogia(1.5);
     return False;
 #print (my_poo_star());
 poobrush={gtx1060:"1640317826765.png",
@@ -1453,9 +1464,8 @@ def my_poo():
         for j in range(1,3):
             if not my_poo_star():
                 Log("Done poo brush");
-#                mouseUp(Button.LEFT);
                 dropAt(lastLoc);
-                Hypnagogia(1);
+#                Hypnagogia(1);
                 return 0;
             try:
                 loc= ClientRegion.find(poobrush).getTarget();
@@ -1465,14 +1475,12 @@ def my_poo():
                 pass;
         if j>=4 :
             Log("Done poo brush");
-#            mouseUp(Button.LEFT);
             dropAt(lastLoc);
-            Hypnagogia(1);
+#            Hypnagogia(1);
             return 0;
         cl=ClientRegion.grow(-50);
         lastLoc=Location(random.randrange(cl.x,cl.x+cl.w),
                             random.randrange(cl.y,cl.y+cl.h));
-#        mouseMove(lastLoc);                
         dropAt(lastLoc);
         Hypnagogia(0.1);
     Log("Failed poo brush {L}".format(L=loc0));
@@ -1553,7 +1561,7 @@ def my_close_gtx1060():
     return 0;
 
 #if zoo is not found
-def my_focus_inossem():        
+def my_focus_inossem():#also other recovers        
         try:   
            loc= Region(14,0,405,35).find(managed("1652374584338.png","pandaicon"));
            if which_zoo_inossem()=="unknown":
@@ -1565,11 +1573,29 @@ def my_focus_inossem():
                 Log('Recover tab');
         except:
            pass;        
+        try:   
+           loc= auto(Region(398,376,445,313),inossem).find(managed("1652488232002.png","reload"));
+           sleep(72*60);
+           click(loc);
+           Log('Reload');
+           sleep(20);
+        except:
+           pass;        
 #my_focus_inossem();
+
+def my_close_feed():
+    try:
+        loc=ClientRegion.find("1652456900136.png");
+        my_feed1(loc.offset(0,ClientRegion.h/4));        
+    except:
+        pass;
+#my_close_feed();
 
 def my_close_inossem():        
     global lastLoc;
     type(Key.ESC);             
+    #hard to close, stuck in feed
+    my_close_feed();    
     while 1==1:
         try:   
            loc= Region(850,95,166,130).find(managed("1652377567329.png","superdeal")); #super deal tbd
@@ -1615,11 +1641,12 @@ def my_close_inossem():
         except:
            pass;        
         return 999;
-    mouseMove(loc);
-    mouseDown(Button.LEFT);
-    Hypnagogia(0.3);
-    mouseUp(Button.LEFT);
-    Hypnagogia(1);        
+    click(loc);
+#    mouseMove(loc);
+#    mouseDown(Button.LEFT);
+#    Hypnagogia(0.3);
+#    mouseUp(Button.LEFT);
+    Hypnagogia(0.5);        
     lastLoc=loc.getTarget();    
     return 0;
 #my_close_inossem();
@@ -1758,9 +1785,6 @@ while 1==1 :
         #Sunday, April 17 easter
         poppy=0;SetRampDest(100,100);                
     displaceCount=0;    
-    need_my_focus_inossem=False;
-    need_my_splash=True;
-    need_my_friend1=False;
     lastRun=my_friend;
     while i<NLOOP:
         now = datetime.datetime.now();
@@ -1819,8 +1843,8 @@ while 1==1 :
             if(my_click(managed("1652449514171.png","Splash"))==0):
                 lastStatus='Splash';                
                 continue;
-        mine=[my_animal_level,my_close,my_star,my_GrownUp,my_many_cash,my_many_trash,
-                my_born,my_cash_bronze,my_many_water];
+        mine=[my_animal_level,my_close,my_star,my_GrownUp,my_many_cash,my_many_trash,my_coin,
+                my_cash,my_born,my_cash_bronze,my_many_water];
         did=False;
         for my in mine:
             if my==lastRun:
@@ -1845,10 +1869,6 @@ while 1==1 :
             continue;
         if(my_cash()==0) :
             lastStatus='cash';
-            ROI.append(lastLoc);
-            continue;
-        if(my_coin()==0) :
-            lastStatus='coin';
             ROI.append(lastLoc);
             continue;
         if(my_click("1640623363794.png")==0):
