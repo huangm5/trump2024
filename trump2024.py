@@ -1,3 +1,6 @@
+#rename working folder to start
+#sihost or explorer may hold the folder to rename
+#a dead situation happend, no cpu, sleeping?
 #keep configable from sikuli /ok /revisit 1 month 3/28
 #2D facets to 3D finding stories
 #freq visit route
@@ -5,55 +8,101 @@ import math;
 
 gtx1060="gtx1060";
 inossem="inossem";
-try:
-    ds=[Region(0,0,313,318).find("1652230690072.png").getTarget(),
-    Region(993,494,373,270).find("1652229805622.png").getTarget(),
-    Region(766,0,494,360).find("1652229378603.png").getTarget()
-           ]
-        
-    #print Region(21,50,1311,661)
-    cs=[
-            [Location(43,151),Location(1149,683),Location(982,132),Region(0,100,1184,624)],
-            [Location(49,79),Location(1324,677),Location(1140,58),Region(0,24,1366,705)],
-            [Location(68,102),Location(1289,663),Location(1118,81),Region(21,50,1311,661)]
-    ];
-    #print cs
-    #from scipy import linalg
-    #import numpy as np
-    #np.array
-    a=([[cs[0][1].x-cs[0][0].x,cs[0][1].y-cs[0][0].y,1],
-        [cs[1][1].x-cs[1][0].x,cs[1][1].y-cs[1][0].y,1],
-        [cs[2][1].x-cs[2][0].x,cs[2][1].y-cs[2][0].y,1]])
-    bx=([cs[0][3].x-cs[0][0].x,cs[1][3].x-cs[1][0].x,cs[2][3].x-cs[2][0].x])
-    by=([cs[0][3].y-cs[0][0].y,cs[1][3].y-cs[1][0].y,cs[2][3].y-cs[2][0].y])
-    bw=([cs[0][3].w,cs[1][3].w,cs[2][3].w])
-    print a
-    print bw
-    px=[-0.0334696913350688,  -0.005206396429899591,  -3.2127184827073263];
-    py=[ 0.01859427296392711,  -0.10821866865005578,  -13.992934176273709];
-    pw=[  1.154332465600595,  -0.198214949795463,  12.758646336928226];
-    ph=[  0.034585347712904425,  1.1387132763108962,  -20.046857567869097];
-    ac=a[1];
-    pd=ph;
-    #print ac[0]*pd[0]+ac[1]*pd[1]+pd[2];#+cs[1][0].y;
-    #x=linalg.solve(a,b) #https://www.99cankao.com/algebra/unknwn3.php
-    #print(x)
-    #ds=[Location(53,91),Location(1293,652),Location(1122,70)];
-    ac=[ds[1].x-ds[0].x,ds[1].y-ds[0].y]
-    pd=ph
-    h=ac[0]*pd[0]+ac[1]*pd[1]+pd[2];
-    pd=pw
-    w=ac[0]*pd[0]+ac[1]*pd[1]+pd[2];
-    pd=px
-    x=ac[0]*pd[0]+ac[1]*pd[1]+pd[2]+ds[0].x;
-    pd=py
-    y=ac[0]*pd[0]+ac[1]*pd[1]+pd[2]+ds[0].y;
-    cr=Region(int(x),int(y),int(w),int(h))
-    print cr
-    print Region(8,37,1323,663)
-except:
-    pass;
+
 scenario=inossem;
+ClientRegions={
+        gtx1060:Region(161,40,1598,998),
+        inossem:Region(1,100,1200,625)
+        };
+print ClientRegions[scenario];
+#print cr;
+ClientRegion=ClientRegions[scenario];
+
+def my_direct_ramp():
+    wilds=["1653477061197.png"
+            ,"1653477491528.png"
+            ,"1653477522075.png"];
+    for i in range(len(wilds)):
+        try:
+            ClientRegion.find(managed(wilds[i],"wildtohome"));
+            Log("wildtohome #{I}".format(I=i));
+            drag(autoscale(Location(222, 574),inossem));
+            dropAt(autoscale(Location(986, 275),inossem));
+            return 0;
+        except:
+            pass;
+    return 999;   
+#my_direct_ramp();
+def my_direct_water():
+    try:
+       auto_must(Region(1,212,129,497),inossem).click(managed("1653477759587.png","watermission")); 
+       return 0;
+    except:
+        return 999;
+#print my_direct_water();
+
+import datetime;
+t0=datetime.datetime(1,1,1);
+lastClientRegion=t0;
+
+def updateClientRegion():
+    global ClientRegion,firstClientRegion,lastClientRegion;
+    try:
+        ds=[Region(0,0,313,318).find("1652230690072.png").getTarget(),
+        Region(993,494,373,270).find("1652229805622.png").getTarget(),
+        Region(766,0,494,360).find("1652229378603.png").getTarget()
+               ]
+            
+        #print Region(21,50,1311,661)
+        cs=[
+                [Location(43,151),Location(1149,683),Location(982,132),Region(0,100,1184,624)],
+                [Location(49,79),Location(1324,677),Location(1140,58),Region(0,24,1366,705)],
+                [Location(68,102),Location(1289,663),Location(1118,81),Region(21,50,1311,661)]
+        ];
+        #print cs
+        #from scipy import linalg
+        #import numpy as np
+        #np.array
+        a=([[cs[0][1].x-cs[0][0].x,cs[0][1].y-cs[0][0].y,1],
+            [cs[1][1].x-cs[1][0].x,cs[1][1].y-cs[1][0].y,1],
+            [cs[2][1].x-cs[2][0].x,cs[2][1].y-cs[2][0].y,1]])
+        bx=([cs[0][3].x-cs[0][0].x,cs[1][3].x-cs[1][0].x,cs[2][3].x-cs[2][0].x])
+        by=([cs[0][3].y-cs[0][0].y,cs[1][3].y-cs[1][0].y,cs[2][3].y-cs[2][0].y])
+        bw=([cs[0][3].w,cs[1][3].w,cs[2][3].w])
+        print a
+        print bw
+        px=[-0.0334696913350688,  -0.005206396429899591,  -3.2127184827073263];
+        py=[ 0.01859427296392711,  -0.10821866865005578,  -13.992934176273709];
+        pw=[  1.154332465600595,  -0.198214949795463,  12.758646336928226];
+        ph=[  0.034585347712904425,  1.1387132763108962,  -20.046857567869097];
+        ac=a[1];
+        pd=ph;
+        #print ac[0]*pd[0]+ac[1]*pd[1]+pd[2];#+cs[1][0].y;
+        #x=linalg.solve(a,b) #https://www.99cankao.com/algebra/unknwn3.php
+        #print(x)
+        #ds=[Location(53,91),Location(1293,652),Location(1122,70)];
+        ac=[ds[1].x-ds[0].x,ds[1].y-ds[0].y]
+        pd=ph
+        h=ac[0]*pd[0]+ac[1]*pd[1]+pd[2];
+        pd=pw
+        w=ac[0]*pd[0]+ac[1]*pd[1]+pd[2];
+        pd=px
+        x=ac[0]*pd[0]+ac[1]*pd[1]+pd[2]+ds[0].x;
+        pd=py
+        y=ac[0]*pd[0]+ac[1]*pd[1]+pd[2]+ds[0].y;
+        cr=Region(int(x),int(y),int(w),int(h))
+#        print cr
+#        print Region(8,37,1323,663)
+        if ClientRegion!=cr :
+            ClientRegion=cr;
+            firstClientRegion=now;
+        lastClientRegion=now;
+        return cr;
+    except:
+        print "Failed: updateClientRegion  ";
+    return ClientRegion;
+updateClientRegion();
+print ClientRegion;
 
 global zoo,landmarks,Orig_Xs,Orig_Ys;
 global lastLoc;
@@ -67,19 +116,15 @@ CenterY=0;
 DescX=0; #destination to gate
 DescY=0;
 
-ClientRegions={
-        gtx1060:Region(161,40,1598,998),
-        inossem:Region(1,100,1200,625)
-        };
-print ClientRegions[scenario];
-#print cr;
-ClientRegion=ClientRegions[scenario];
 
 LocCenter=ClientRegion.getCenter();
 #Location(933, 503);//screen select region //can capture! 
 def auto(rg,origin): #ClientRegions not ClientRegion
     if(scenario==origin):
         return rg;
+    return auto_must(rg,origin);
+    
+def auto_must(rg,origin): #ClientRegions not ClientRegion
     cro=ClientRegions[origin];
     crs=ClientRegion;    #ClientRegions[scenario];    
     return Region(
@@ -115,28 +160,29 @@ def which_zoo_gtx1060():
         
 def which_zoo_inossem():
     zoo='unknown';
+    AdvisorRegion=Region(0,0,306,300);
     try:
-        zoc=Region(48,126,29,43).find("1646769583487.png");
+        zoc=AdvisorRegion.find("1646769583487.png");
         zoo="Main";
         return zoo;
     except:
         pass;
     try:
-        zoc=Region(2,99,97,87).find(managed("1652374285038.png","fir"));
+        zoc=AdvisorRegion.find(managed("1652374285038.png","fir"));
         if zoc.score>0.8:
             zoo="Fir";
             return zoo;
     except:
         pass;
     try:
-        zoc=Region(48,126,29,43).find("1648929649914.png");
+        zoc=AdvisorRegion.find("1648929649914.png");
         if zoc.score>0.8:
             zoo="Kujali";
             return zoo;
     except:
         pass;
     try:
-        zoc=Region(44,94,54,71).find("1646769787903.png");
+        zoc=AdvisorRegion.find("1646769787903.png");
         zoo="Terrarium";
         return zoo;
     except:
@@ -154,10 +200,9 @@ def Log(str):
     os.system('echo '+str);
 
 
-import datetime;
+
 which_zoo1={gtx1060:which_zoo_gtx1060,inossem:which_zoo_inossem}[scenario];
 oldzoo="unknown";
-t0=datetime.datetime(1,1,1);
 
 SetDestFir=0;
 SetDestTerrarium=0;
@@ -203,7 +248,8 @@ def my_click(loc,sleepy):
 
 def autoscale(loc,origin): #ClientRegions not ClientRegion
     if(scenario==origin):
-        return loc;
+        if(ClientRegion==ClientRegions[origin]):        
+            return loc;
     cro=ClientRegions[origin];
     crs=ClientRegion;
     return Location(
@@ -278,6 +324,41 @@ def managed(img, nametag):
 #zoo="Main";
 #print managed("1651763228410.png", "1010");
 #print managed("1651154628086.png", "1010");
+def list_managed(img, nametag):
+    paths=[];
+    scenzoo=scenario+"/"+zoo;
+    storepath=getBundlePath()+"\\"+scenzoo;
+    folder_to_file=storepath+"\\"+nametag;
+    path_to_file=folder_to_file+"\\"+img;
+#    print folder_to_file;
+    paths.append(folder_to_file);
+    scenzoo=scenario+"/unknown";
+    storepath=getBundlePath()+"\\"+scenzoo;
+    folder_to_file=storepath+"\\"+nametag;
+    path_to_file=folder_to_file+"\\"+img;
+#    print folder_to_file;
+    paths.append(folder_to_file);
+    scenzoo=scenario;
+    storepath=getBundlePath()+"\\"+scenzoo;
+    folder_to_file=storepath+"\\"+nametag;
+    path_to_file=folder_to_file+"\\"+img;
+#    print folder_to_file;
+    paths.append(folder_to_file);
+    storepath=getBundlePath();
+    folder_to_file=storepath+"\\"+nametag;
+    path_to_file=folder_to_file+"\\"+img;
+#    print folder_to_file;
+    paths.append(folder_to_file);
+    list_of_files=[];
+    for path in paths:
+        list_of_files.extend(glob.glob(path+'/*'))
+    if len(list_of_files)==0:
+        print("Sorry no file found for "+img);
+        return list_of_files;
+#    latest_file = max(list_of_files, key=os.path.getctime)
+    list_of_files.sort(key=lambda x: -os.path.getctime(x));    
+    return list_of_files;
+#print list_managed("1649762735950.png","my_friend_exit");
 
 def entering(zoo):
     if zoo==Terrarium:
@@ -287,16 +368,17 @@ def entering(zoo):
     
 def my_friend_exit():    
     try:
-        lastLoc=auto(Region(1026,116,155,166),inossem).find(managed("1649762735950.png","my_friend_exit"));
+        rg=auto(Region(1026,116,155,166),inossem);
+        lastLoc=findBeast(rg,"1653518245883.png","my_friend_exit");
+        if lastLoc!=Location(0,0):
         #    lastLoc=Location(1169, 133);
-        mouseMove(lastLoc);
-        mouseDown(Button.LEFT);
-        Hypnagogia(0.3);
-       
-        mouseUp(Button.LEFT);
-        Hypnagogia(15);
-        entering(zoo);
-        return 0;
+            mouseMove(lastLoc);
+            mouseDown(Button.LEFT);
+            Hypnagogia(0.3);           
+            mouseUp(Button.LEFT);
+            Hypnagogia(15);
+            entering(zoo);
+            return 0;
     except:
         #Log("my_friend_exit not found");
         return 999;
@@ -332,66 +414,72 @@ def my_friend():
 #meshnet="1651443957097.png";
 #LocCenter=ClientRegion.getCenter();
 zoo="Main"
-meshnet=managed("1651687266431.png","meshnet");#was 1645891158890.png for inossem
+#meshnet=managed("1651687266431.png","meshnet");#was 1645891158890.png for inossem
+meshnet=managed("1653449826127.png","meshnet");#was 1645891158890.png for inossem
 #print meshnet;
-butarea={inossem:Region(374,628,98,84),
+butarea={inossem:Region(291,444,477,310),
         gtx1060:Region(548,859,228,203)}[scenario];
 
 def my_friend_meshnet():
-       return butarea.find(meshnet); 
+       return findBeast(butarea,"1653449826127.png","meshnet"); 
 #my_friend_meshnet();
-corco={inossem:Location(1110, 580),gtx1060:Location(1603, 823)}[scenario];
+#corco={inossem:Location(1110, 580),gtx1060:Location(1603, 823)}[scenario];
+corco=autoscale(Location(1110, 580),inossem);
 def my_friend1():
    #lastLoc=Location(0,0);
    try:
         lastLoc=my_friend_meshnet();
-        reachX=200;
-        reachY=126;
-        offsetY=40;
-        #charlotte:
-        if(scenario=="gtx1060"):
-            reachX=270;
-            reachY=150;
+        if lastLoc!=Location(0,0):
+            reachX=200;
+            reachY=126;
             offsetY=40;
-        for i in range(21):
-#           mouseMove(lastLoc);
-#            mouseDown(Button.LEFT);
-#            mouseUp(Button.LEFT);
-            click(lastLoc);
-            Hypnagogia(0.1);
-            if i>10:
-            #meshnet continue exists in shadow, only a pop up can hel
-                try:
-                    lastLoc=my_friend_meshnet();
-                    print(lastLoc);#0.92
-                    if lastLoc.score<0.85:
-                        break;
+            #charlotte:
+            if(scenario=="gtx1060"):
+                reachX=270;
+                reachY=150;
+                offsetY=40;
+            for i in range(21):
+    #           mouseMove(lastLoc);
+    #            mouseDown(Button.LEFT);
+    #            mouseUp(Button.LEFT);
+                click(lastLoc);
+                Hypnagogia(0.1);
+                if i>10:
+                #meshnet continue exists in shadow, only a pop up can hel
                     try:
-                        ({inossem:Region(515,333,397,343),
-                        gtx1060:Region(954,641,390,329)}[scenario]).find(
-                               managed( "1652368662649.png","gohome"));
-                        return my_friend_gonext(); 
+                        lastLoc=my_friend_meshnet();
+                        print(lastLoc);#0.92
+                        if lastLoc.getTarget()==Location(0,0):
+                            break;
+                        if lastLoc.score<0.85:
+                            break;
+                        try:
+                            ({inossem:Region(515,333,397,343),
+                            gtx1060:Region(954,641,390,329)}[scenario]).find(
+                                   managed( "1652368662649.png","gohome"));
+                            return my_friend_gonext(); 
+                        except:
+                            type(Key.ESC);
+                            pass;
                     except:
-                        type(Key.ESC);
-                        pass;
-                except:
-                    break;
-            loc=corco;
-#            loc=Location(1265, 610);#chalotte@inossem
-            drag(loc);
-            offs={inossem:[[-reachX,-reachY+offsetY],[-110,155+offsetY],[220,-220+offsetY]],
-                    gtx1060:[[-reachX,-reachY+offsetY],[-140,195+offsetY],[270,-295+offsetY]]}[scenario];
-            for off in offs:            
-                drag(LocCenter.offset(off[0],off[1]));
-            dropAt(LocCenter);
-        Hypnagogia(1.2);
-        print "Rabbit gone";
-        return my_friend_exit();#failed rabit?
+                        break;
+                loc=corco;
+    #            loc=Location(1265, 610);#chalotte@inossem
+                drag(loc);
+                offs={inossem:[[-reachX,-reachY+offsetY],[-110,155+offsetY],[220,-220+offsetY]],
+                        gtx1060:[[-reachX,-reachY+offsetY],[-140,195+offsetY],[270,-295+offsetY]]}[scenario];
+                for off in offs:            
+                    drag(LocCenter.offset(off[0],off[1]));
+                dropAt(LocCenter);
+            Hypnagogia(1.2);
+            print "Rabbit gone";
+            return my_friend_exit();#failed rabit?
    except:
        pass;
    try:
        #        "1645891351088.png"#inossem
-        lastLoc=butarea.find(managed("1652302078356.png","ballon")).getTarget(); 
+       #"1652302078356.png"
+        lastLoc=butarea.find(managed("1653446315434.png","ballon")).getTarget(); 
         for i in range(5):
             mouseMove(lastLoc);
             Hypnagogia(0.2);
@@ -414,28 +502,32 @@ def my_friend1():
    try:
 #        rg=auto(Region(374,628,98,84),inossem);
          #       "1651444630312.png" #charlotte@inossem
-        lastLoc=butarea.find(managed("1652302181137.png","ravin")).getTarget(); 
-        for k in range(5):
-            mouseMove(lastLoc);
-            mouseDown(Button.LEFT);
-            Hypnagogia(0.3);
-            mouseUp(Button.LEFT);
-            Hypnagogia(1.25);
-            mouseMove(LocCenter);
-            for i in range(3):
+         # "1652302181137.png"
+        lastLoc=findBeast(butarea,"1653449413546.png","ravin");
+        lastLoc=lastLoc.getTarget(); 
+        if lastLoc!=Location(0,0):
+            for k in range(5):
+                mouseMove(lastLoc);
                 mouseDown(Button.LEFT);
                 Hypnagogia(0.3);
                 mouseUp(Button.LEFT);
-                Hypnagogia(0.25);
-        Hypnagogia(2);
-        return my_friend_gonext();
+                Hypnagogia(1.25);
+                mouseMove(LocCenter.offset(0,-ClientRegion.h/15));
+                for i in range(3):
+                    mouseDown(Button.LEFT);
+                    Hypnagogia(0.3);
+                    mouseUp(Button.LEFT);
+                    Hypnagogia(0.25);
+            Hypnagogia(2);
+            return my_friend_gonext();
    except:
        pass;
    return 77;
 #my_friend_gonext();
-#print(my_friend1());
+print my_friend1();
 
-menudrop=auto(Region(1125,94,102,77),inossem);
+menudrop=auto_must(Region(1125,94,102,77),inossem);
+print menudrop
 
 def my_friend_menu_drop():
    try:
@@ -465,47 +557,134 @@ class missing:
             self.successtime=now;
     
 MissingTries={"my_friend_menu":missing()};
+global pick_my_friend_tbd,lastRegion2X4,Region2X4;
+Region2X4=Region(0,0,0,0);
+lastRegion2X4=t0;
+pick_my_friend_tbd="";
+    
+def try_update_Region2X4():
+    global pick_my_friend_tbd,lastRegion2X4,Region2X4;
+    if lastRegion2X4>lastClientRegion:
+        if Region2X4!=Region(0,0,0,0):
+            return Region2X4; 
+    now=datetime.datetime.now();
+    lastRegion2X4=now;    
+    sample="1652931147389.png";
+    name="my_friend_tbd";
+    locs=ClientRegion.findAll(managed(sample,name)); 
+    #"1649621670263.png","1652300097817.png"
+    if locs.hasNext():
+        picklocs=list(locs);
+        scores=map(lambda x: x.getScore(),picklocs);#enumerate can be use enumerated only once
+        minavg=sum(scores)/len(scores);
+        picksample=sample;
+    else :
+        picklocs=[];
+        minavg=0.0;
+        picksample="";
+    for samply in list_managed(sample,name):
+        locsy=ClientRegion.findAll(samply); 
+        if not locsy.hasNext():
+            continue;
+        locsy=list(locsy);
+        scores=map(lambda x: x.getScore(),locsy);#enumerate can be use enumerated only once
+        avg=sum(scores)/len(scores);
+        if avg>minavg:
+            minavg=avg;
+            picklocs=locsy;
+            picksample=samply;
+    if len(picklocs)==0:
+        #nothing can update tbds
+        return Region2X4;
+    locs=picklocs;
+    samply=picksample;
+    pick_my_friend_tbd=picksample;
+    print minavg,samply,locs;
+    lastLoc=Location(0,0);
+    minsc=2.0;
+    xs=map(lambda x:x.x,locs);
+    x1=min(xs);
+    x2=max(xs);
+    print x1,x2;
+    ys=map(lambda x:x.y,locs);
+    y1=min(ys);
+    y2=max(ys);
+    print y1,y2;
+    Region2X4=Region(x1,y1,x2-x1,y2-y1);
+    return Region2X4;
 
+threashold=[[0.97248,0.937],
+        [0.930,0.952],
+        [0.942,0.961],
+            [0.934,0.948]];
+global my_friend_active;
 my_friend_active=False;
 my_friend_menu_lastVisit=0;
-
+#close friend button: L[1220,163]@S(0) R[20,65 1329x661]@S(0) 0.902934537246 0.1482602118
 def my_friend_tbd():
     global my_friend_active;
     global my_friend_menu_lastVisit;
-    try:
-    #            lastLoc=Region(718,238,325,392).find("1648085114160.png").getTarget().offset(-20,0);  
-    #mess with red/gray heart when no gray
-    #            lastLoc=Region(718,238,325,392).find("1649620992351.png"); 
-        lastLoc=auto(Region(718,238,325,392),inossem).find(managed("1652300097817.png",
-                    "my_friend_tbd")); #"1649621670263.png"
-
-        print lastLoc.getScore();
-        if lastLoc.getScore()>0.97248: #0.97 for mess , 1 for match ,0.978, 0.972483694553 corner           
-            lastLoc=lastLoc.getTarget().offset(-30,0);
-            click(lastLoc);
-#            mouseMove(lastLoc);
-#            mouseDown(Button.LEFT);
-#            Hypnagogia(0.3);
-#            mouseUp(Button.LEFT);
-            Hypnagogia(0.5);
-            my_friend_active=True;
-            return lastLoc;
-    except:
-        pass; 
-    return Location(0,0);
+    try_update_Region2X4(); 
+    locs=ClientRegion.findAll(pick_my_friend_tbd); 
+    minsc=5.5;
+    lastLoc=Location(0,0);
+    for loc in locs:
+            col=int(round(float(loc.x-Region2X4.x)/Region2X4.w));           
+            row=int(round(float(loc.y-Region2X4.y)*3/Region2X4.h));
+#            print loc,row,col,loc.getScore();
+#            loc=ClientRegion.find(pick_my_friend_tbd);
+            locexclScore=0.0;
+            try:
+                locexcl=Region(loc.x-60,loc.y-40,120,80).find(managed("1653280765013.png","my_friend_tbd.exclude"))
+                locexclScore=locexcl.getScore()
+            except:
+                pass;
+                
+#            print loc,locexcl
+            if loc.getScore()>locexclScore: #threashold[row][col]:
+                sc=(1.0-loc.getScore())/(1.0-threashold[row][col]);
+                print sc;
+                if sc<minsc:
+                    minsc=sc;
+                    lastLoc=loc.getTarget();
+#        print lastLoc;
+    if lastLoc==Location(0,0):
+        for loc in locs:
+                col=int(round(float(loc.x-Region2X4.x)/Region2X4.w));           
+                row=int(round(float(loc.y-Region2X4.y)*3/Region2X4.h));
+                print loc,row,col,loc.getScore();# log?
+        my_friend_active=False;
+        return Location(0,0);
+    lastLoc=lastLoc.offset(-30,0);
+    click(lastLoc);
+    my_friend_active=True;
+    Hypnagogia(0.5);
+    return lastLoc;
 #print my_friend_tbd()
+
+#def find_candy(pic,name):
+#    ClientRegion.find(managed(pic,name)); 
+#find_candy("1652301900036.png","help");
 
 def my_friend_help():
     global my_friend_active;
     try:
-        lastLoc={inossem:Region(397,492,241,114),
-                gtx1060:Region(383,556,567,452)}[scenario].find(
-                managed("1652301900036.png","help")).getTarget(); 
+#        rg={inossem:Region(397,492,241,114),
+#                gtx1060:Region(383,556,567,452)}[scenario];
+        rg=ClientRegion;
+        lastLoc=findBeast(rg,"1653444593875.png","help");
+        #print lastLoc;
+        if lastLoc==Location(0,0): 
+            my_friend_active=False;
+            return 999;
+        lastLoc=lastLoc.getTarget(); 
+        #the gray color not exluded?
         #"1645891012840.png"inossm
-        friend_active=True;        
+        friend_active=True;
+        click(lastLoc); #need 2 clicks?
         mouseMove(lastLoc);
         mouseDown(Button.LEFT);
-        Hypnagogia(0.3);
+        Hypnagogia(2);
         mouseUp(Button.LEFT);
         return 0;
     except:
@@ -513,12 +692,14 @@ def my_friend_help():
         return 999;
 #print my_friend_help()
 
+
 def my_friend_menu():
 #   my_friend_menu_drop(); cannot use safely
     for i in (1,2):
         try:
-            region={inossem:Region(1117,376,78,173),
-            gtx1060:Region(1553,344,240,544)}[scenario];
+#            region={inossem:Region(1117,376,78,173),
+#            gtx1060:Region(1553,344,240,544)}[scenario];
+            region=auto_must(Region(1117,376,78,173),inossem);
             lastLoc=region.find(managed("1652299824877.png","my_friend_menu")).getTarget(); 
             MissingTries["my_friend_menu"].Success();
             break;
@@ -526,11 +707,8 @@ def my_friend_menu():
             MissingTries["my_friend_menu"].Failed();
             
         lastLoc=autoscale(Location(1176, 128),inossem);
+#        print lastLoc
         click(lastLoc);
-#        mouseMove(lastLoc);
-#        mouseDown(Button.LEFT);
-#        Hypnagogia(0.3);
-#        mouseUp(Button.LEFT);
         Hypnagogia(2.25);
         if i==2:
             Log('Failed friend menu');
@@ -545,8 +723,43 @@ def my_friend_menu():
     return 0;
 #my_friend_menu();
 
+global button_help_all;
+def update_button_help_all():
+    try:         
+#        pic=managed("1652302667522.png","help_all");
+        pic=managed("1653443300630.png","help_all");
+        button_help_all=ClientRegion.find(pic);
+    except:
+        print "Failed: update_button_help_all";
+#update_button_help_all()
+preferedimg={};
+def findBeast(rg,img,name): #findBest name used
+    global preferedimg;
+    try:
+        loc=rg.find(managed(img,name)); 
+        return loc;
+    except:
+        pass;
+    if bool(preferedimg.get(name)):
+        try:
+            img=preferedimg.get(name);
+            loc=rg.find(img); 
+            return loc;
+        except:
+            pass;
+    listimg=list_managed(img, name);
+    for img in listimg:
+        try:
+            loc=rg.find(img); 
+            preferedimg[name]=img;
+            return loc;
+        except:
+            pass;
+    return Location(0,0);
+#t=findBeast(ClientRegion, "1653443901464.png","help_all");
 
 def my_friend_in():
+    global my_friend_active;
     #lastLoc=Location(0,0);
     kl=my_friend1();
     if kl==0:
@@ -562,16 +775,21 @@ def my_friend_in():
              else:
                   return 0;    
        else:
-            try:        
-                {gtx1060:Region(1256,805,407,272),
-                        inossem:Region(930,629,168,76)}[scenario].find(
-                        managed("1652302667522.png","help_all")
-                        ); 
-                drag(Location(1007, 329));
+            try:    
+                rg={gtx1060:Region(1256,805,407,272),
+                        inossem:Region(918,480,439,288)}[scenario];
+                loc=findBeast(rg, "1653443901464.png","help_all"); 
+                if(loc==Location(0,0)):
+                    print "no help_all";
+                    my_friend_active=False;
+                    return 999;
+                print loc
+                drag(autoscale(Location(1007, 329),inossem));
                 lastLoc=Location(620, 346);
                 dropAt(lastLoc);
                 Hypnagogia(3);
             except:
+                print "no help_all";
                 my_friend_active=False;
                 return 999;
             notin=(my_friend_tbd()!=Location(0,0));
@@ -1231,7 +1449,8 @@ def my_feed():
         return 0;
     except:
         return 999;
-print my_feed()   
+#print my_feed()   
+
 def my_feed1(feedLoc):
     global lastLoc;
     global CenterX;
@@ -1240,6 +1459,10 @@ def my_feed1(feedLoc):
             gtx1060:Location(1390, 464),
             inossem:Location(964, 374)
             }[scenario];
+    try:
+        loc=ClientRegion.find(managed("1653360099807.png","my_feed1"));
+    except:
+        pass;
     mouseMove(loc);
     mouseDown(Button.LEFT);
     Hypnagogia(0.4);#hold and relase and hold >=0.34, depend on loading
@@ -1319,6 +1542,9 @@ def my_many_water():
     locs=list(work[0].findAll(work[1]))+list(work[0].findAll("1649030194070.png")); 
     if len(locs)==0:
         return 999;
+    if len(locs)==1:
+        click(locs[0]);
+        return 0;
 #    locs=sorted(locs,key=lambda m:math.atan2(m.x-LocCenter.x,m.y-LocCenter.y));
     locs=sorted(locs,key=lambda m:math.pi*-2.0*
             int(math.sqrt((m.x-LocCenter.x)**2+(m.y-LocCenter.y)**2)/ROUTHANLY())
@@ -1338,14 +1564,14 @@ def my_many_water():
         drag(loc);        
     inRange=clickRange.grow(-100);
     
-    if(loc.x>inRange.x and loc.y>inRange.y and 
-            loc.x<inRange.getBottomRight().x and loc.y<inRange.getBottomRight().y) :
-        drag(loc);
-        drag(loc.offset(100,80));
-        drag(loc.offset(-100,80));
+#    if(loc.x>inRange.x and loc.y>inRange.y and 
+#            loc.x<inRange.getBottomRight().x and loc.y<inRange.getBottomRight().y) :
+#        drag(loc);
+#        drag(loc.offset(100,80));
+#        drag(loc.offset(-100,80));
 #        drag(loc.offset(-100,-80));
-        drag(loc.offset(100,-80));
-        dropAt(loc);
+#        drag(loc.offset(100,-80));
+    dropAt(loc);
     lastLoc=Location(0,0);    
     return 0;
 #my_many_water(); #tested 4/3
@@ -1560,40 +1786,76 @@ def my_close_gtx1060():
     lastLoc=loc.getTarget();    
     return 0;
 
+SteamMode=False;
 #if zoo is not found
 def my_focus_inossem():#also other recovers        
-        try:   
-           loc= Region(14,0,405,35).find(managed("1652374584338.png","pandaicon"));
-           if which_zoo_inossem()=="unknown":
-                mouseMove(loc);
-                mouseDown(Button.LEFT);
-                sleep(0.2);
-                mouseUp(Button.LEFT);
-                sleep(0.2);
-                Log('Recover tab');
-        except:
-           pass;        
-        try:   
-           loc= auto(Region(398,376,445,313),inossem).find(managed("1652488232002.png","reload"));
-           sleep(72*60);
-           click(loc);
-           Log('Reload');
-           sleep(20);
-        except:
-           pass;        
+    global SteamMode;
+    if QuitGame:
+        SteamMode=True;
+    if SteamMode:
+        print("don't know how to get focus?");
+        return;
+    global need_my_focus_inossem;
+    if need_my_focus_inossem: 
+       need_my_focus_inossem=False;
+    try:   
+       loc= Region(14,0,405,35).find(managed("1652374584338.png","pandaicon"));
+       if which_zoo_inossem()=="unknown":
+            mouseMove(loc);
+            mouseDown(Button.LEFT);
+            sleep(0.2);
+            mouseUp(Button.LEFT);                    
+            type(Key.ESC);             
+            sleep(0.2);
+            Log('Recover tab');
+    except:
+       pass;        
+    try:   
+       loc= auto(Region(398,376,445,313),inossem).find(managed("1652488232002.png","reload"));
+       sleep(72*60);
+       click(loc);
+       Log('Reload');
+       sleep(20);
+    except:
+       pass;        
 #my_focus_inossem();
 
 def my_close_feed():
     try:
-        loc=ClientRegion.find("1652456900136.png");
+        loc=ClientRegion.find(managed("1653359955691.png","my_close_feed"));
         my_feed1(loc.offset(0,ClientRegion.h/4));        
     except:
         pass;
 #my_close_feed();
+global button_close_friend;
+def update_button_close_friend():
+#only call this after menu click
+    try:         
+        button_close_friend=ClientRegion.find(managed("1653162976076.png","button_close_friend"));
+        button_close_friend=button_close_friend.getTarget();
+        print button_close_friend,ClientRegion,float(button_close_friend.x-ClientRegion.x)/ClientRegion.w,float(button_close_friend.y-ClientRegion.y)/ClientRegion.h;
+        #0.902934537246 0.1482602118
+        #how to avoid mess up other close button
+    except:
+        print "Failed: update_button_close_friend";
+#update_button_close_friend()
 
+global QuitGame;
+QuitGame=False;
 def my_close_inossem():        
     global lastLoc;
-    type(Key.ESC);             
+    global QuitGame;
+    try:
+        loc=ClientRegion.find("1653352410294.png")
+        type(Key.ESC);
+        QuitGame=True;
+        return 0;
+    except:
+        pass;
+    if not(QuitGame):
+        type(Key.ESC);             
+    elif random.random()<0.05:
+        type(Key.ESC);             
     #hard to close, stuck in feed
     my_close_feed();    
     while 1==1:
@@ -1729,6 +1991,8 @@ def my_animal_level():
         lastStatus='Animal Level';
         return 0;
     return 999;
+global poppy;
+poppy=-1;
 
 def ispoppydays(now):
     return (now.month==2 and now.day>=14 and now.day<=14+14 #valentine
@@ -1844,7 +2108,8 @@ while 1==1 :
                 lastStatus='Splash';                
                 continue;
         mine=[my_animal_level,my_close,my_star,my_GrownUp,my_many_cash,my_many_trash,my_coin,
-                my_cash,my_born,my_cash_bronze,my_many_water];
+                my_cash,my_born,my_cash_bronze,my_many_water,my_ball,my_water,my_direct_water
+                ,my_direct_ramp,my_feed,my_focus_inossem];
         did=False;
         for my in mine:
             if my==lastRun:
@@ -1858,38 +2123,20 @@ while 1==1 :
                 break;
         if did:
             continue;
-        if need_my_focus_inossem: 
-           need_my_focus_inossem=False;
-           my_focus_inossem();
+        lastRun="otherdeeds";
+#        if need_my_focus_inossem: 
+#           need_my_focus_inossem=False;
+#           my_focus_inossem();
         if(my_click("1640869435405.png")==0): #over by cash，trash
             lastStatus='Great gtx1060';
             continue;
         if(my_click("1646006271068.png")==0): #over by cash，trash
             lastStatus='Great inossem';
             continue;
-        if(my_cash()==0) :
-            lastStatus='cash';
-            ROI.append(lastLoc);
-            continue;
         if(my_click("1640623363794.png")==0):
             lastStatus='breed';
             continue;
-        if ispoppydays(now):
-            if(poppy<0) :
-                try:
-
-# "1644682415730.png" #poppy on menu, valentine
-                   menu.find(
-                           "1651663081444.png"
-                           ); #mothers day
-                   poppy=0;        
-                except:
-                   pass;
-#"1644338915756.png" #poppy image valentine?
-
-#"1649303197390.png"#easter egg
-
-            if(my_click(managed("1652286241635.png","poppy"))==0):
+        if(my_click(managed("1652286241635.png","poppy"))==0):
                 #mothers day
                poppy+=1;
                lastPoppyVisited=now;
@@ -1897,17 +2144,6 @@ while 1==1 :
                Log("{T}:Found poppy {L}".format(T=lastPoppyVisited,L=orgPoppy));
                lastStatus='poppy';
                continue;
-            PoppyCenterX=22;
-            PoppyCenterY=50;        
-            if(CenterX<PoppyCenterX+50 and CenterX>PoppyCenterX-50 and CenterY>PoppyCenterY-50 and CenterY<PoppyCenterY+50):
-                SetRampDest(0,0);
-                Log('All poppy gone');
-            mPoppy=int(now.minute/6);
-            #Log('Poppy Minuter={m}'.format(m=mPoppy));
-            if(mPoppy!=mPoppyLast):
-                mPoppyLast=mPoppy;
-                SetRampDest(PoppyCenterX,PoppyCenterY);
-                Log('Where is poppy?');
         if not my_friend_active: 
             if my_friend()==0:
                 my_friend_active=True;           
@@ -1924,17 +2160,6 @@ while 1==1 :
                 lastStatus='friend menu';                       
                 my_friend_active =False;
                 continue;
-        if(my_ball()==0):
-           lastStatus='ball';
-           ROI.append(lastLoc);
-           continue;
-        if(my_water()==0):
-           lastStatus='water';
-           ROI.append(lastLoc);
-           continue;
-        if(my_feed()==0) :
-           lastStatus='feed2';
-           continue;
         if(my_click("1640869544082.png")==0):
            lastStatus='check';
            continue;
@@ -1947,7 +2172,7 @@ while 1==1 :
                 continue;
 
 #set destination
-
+#def my_zoo():
         if ispoppydays(now) and lastPoppyVisit+datetime.timedelta(minutes=31)<now and firstVisit[zoo]+datetime.timedelta(minutes=24)<now:
                 if zoo!='Main':
                     if my_goto(Main)==0:
@@ -1962,10 +2187,10 @@ while 1==1 :
                     oldzoo=key;
         else:
             firstVisit[zoo]=now; 
-        min=now;
+        minn=now;
         for j in lastVisit.keys():
-            if lastVisit[j]<min:
-                min=lastVisit[j];
+            if lastVisit[j]<minn:
+                minn=lastVisit[j];
                 wishzoo=j;
         if(lastVisit[wishzoo]+ datetime.timedelta(minutes=33)<now):
             print zoo,"->",wishzoo;
@@ -2024,3 +2249,31 @@ def notyet():
     # to loop through
     for p in imgPath:
             print p
+
+poppy=-1;
+def poppymenu():   
+    if ispoppydays(now):
+            if(poppy<0) :
+                try:
+# "1644682415730.png" #poppy on menu, valentine
+                   menu.find(
+                           "1651663081444.png"
+                           ); #mothers day
+                   poppy=0;        
+                except:
+                   pass;
+#"1644338915756.png" #poppy image valentine?
+#"1649303197390.png"#easter egg
+            PoppyCenterX=22;
+            PoppyCenterY=50;        
+            if(CenterX<PoppyCenterX+50 and CenterX>PoppyCenterX-50 and CenterY>PoppyCenterY-50 and CenterY<PoppyCenterY+50):
+                SetRampDest(0,0);
+                Log('All poppy gone');
+            mPoppy=int(now.minute/6);
+            #Log('Poppy Minuter={m}'.format(m=mPoppy));
+            if(mPoppy!=mPoppyLast):
+                mPoppyLast=mPoppy;
+                SetRampDest(PoppyCenterX,PoppyCenterY);
+                Log('Where is poppy?');
+
+poppymenu();
