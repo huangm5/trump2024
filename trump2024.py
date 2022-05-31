@@ -1,3 +1,4 @@
+#trump2024.py:2351 sleep 37281.17s
 #rename working folder to start
 #sihost or explorer may hold the folder to rename
 #a dead situation happend, no cpu, sleeping?
@@ -21,7 +22,20 @@ ClientRegion=ClientRegions[scenario];
 def my_direct_ramp():
     wilds=["1653477061197.png"
             ,"1653477491528.png"
-            ,"1653477522075.png"];
+            ,"1653477522075.png"
+            ,"1653689150137.png"
+            ,"1653689444115.png"
+            ,"1653689497145.png"
+            ,"1653689553562.png"
+            ,"1653689671914.png"
+            ,"1653689768469.png"
+            ,"1653689808007.png"
+            ,"1653690885820.png"
+            ,"1653690895113.png"
+            ,"1653690950729.png"
+            ,"1653690996752.png"
+            ,"1653692223086.png"
+            ];
     for i in range(len(wilds)):
         try:
             ClientRegion.find(managed(wilds[i],"wildtohome"));
@@ -33,6 +47,51 @@ def my_direct_ramp():
             pass;
     return 999;   
 #my_direct_ramp();
+
+def my_direct_ramp_right():
+    wilds=[
+           "1653689311325.png"
+           ,"1653690020449.png"
+            ,"1653690112052.png"
+            ,"1653690145125.png"
+            ,"1653690172479.png"
+            ,"1653690198582.png"
+            ,"1653690228711.png"
+            ,"1653690269359.png"
+            ,"1653690319577.png"
+            ,"1653690353440.png"
+            ,"1653690411321.png"
+            ,"1653736497313.png"
+            ,"1653736529591.png"
+            ];
+    for i in range(len(wilds)):
+        try:
+            ClientRegion.find(managed(wilds[i],"wildtohome"));
+            Log("wildtohome #{I}".format(I=i));
+            drag(autoscale(Location(917, 593),inossem));
+            dropAt(autoscale(Location(208, 275),inossem));
+            return 0;
+        except:
+            pass;
+    return 999;   
+#my_direct_ramp_right();
+
+def my_direct_ramp_left():
+    wilds=["1653691143390.png"
+            ,"1653691234108.png"
+            ];
+    for i in range(len(wilds)):
+        try:
+            ClientRegion.find(managed(wilds[i],"wildtohome"));
+            Log("wildtohome #{I}".format(I=i));
+            drag(autoscale(Location(208, 275),inossem));
+            dropAt(autoscale(Location(917, 593),inossem));
+            return 0;
+        except:
+            pass;
+    return 999;   
+#my_direct_ramp_left();
+
 def my_direct_water():
     try:
        auto_must(Region(1,212,129,497),inossem).click(managed("1653477759587.png","watermission")); 
@@ -307,7 +366,7 @@ def managed(img, nametag):
         if not os.path.exists(getBundlePath()+"\\"+img):
             list_of_files = glob.glob(folder_to_file+'/*')
             if len(list_of_files)==0:
-                Log("Sorry no file found for "+img);
+                Log("Sorry no file found for "+nametag+"="+img);
                 return img;
             latest_file = max(list_of_files, key=os.path.getctime)
             print(latest_file)            
@@ -575,10 +634,12 @@ def try_update_Region2X4():
     #"1649621670263.png","1652300097817.png"
     if locs.hasNext():
         picklocs=list(locs);
+#        print picklocs
         scores=map(lambda x: x.getScore(),picklocs);#enumerate can be use enumerated only once
         minavg=sum(scores)/len(scores);
         picksample=sample;
     else :
+        print "locs sample empty"
         picklocs=[];
         minavg=0.0;
         picksample="";
@@ -612,6 +673,7 @@ def try_update_Region2X4():
     print y1,y2;
     Region2X4=Region(x1,y1,x2-x1,y2-y1);
     return Region2X4;
+try_update_Region2X4();
 
 threashold=[[0.97248,0.937],
         [0.930,0.952],
@@ -625,6 +687,9 @@ def my_friend_tbd():
     global my_friend_active;
     global my_friend_menu_lastVisit;
     try_update_Region2X4(); 
+    if not bool(pick_my_friend_tbd):
+        print "pick_my_friend_tbd is null";
+        return;
     locs=ClientRegion.findAll(pick_my_friend_tbd); 
     minsc=5.5;
     lastLoc=Location(0,0);
@@ -669,9 +734,9 @@ def my_friend_tbd():
 def my_friend_help():
     global my_friend_active;
     try:
-#        rg={inossem:Region(397,492,241,114),
-#                gtx1060:Region(383,556,567,452)}[scenario];
-        rg=ClientRegion;
+        rg={inossem:Region(397,492,241,114),
+                gtx1060:Region(383,556,567,452)}[scenario];
+        #rg=ClientRegion; #dont want mess up with help all
         lastLoc=findBeast(rg,"1653444593875.png","help");
         #print lastLoc;
         if lastLoc==Location(0,0): 
@@ -808,7 +873,7 @@ def my_friend_in():
     my_friend_active=False;
     my_friend_exit_all();
     return 999;
-#my_friend_in();
+my_friend_in();
 #my_friend_menu();#close popup still in need
 
 def SetRampDest(x,y) :
@@ -1810,9 +1875,11 @@ def my_focus_inossem():#also other recovers
             Log('Recover tab');
     except:
        pass;        
-    try:   
-       loc= auto(Region(398,376,445,313),inossem).find(managed("1652488232002.png","reload"));
-       sleep(72*60);
+    try:
+       for i in Range(24):
+           loc= auto(Region(398,376,445,313),inossem).find(managed("1652488232002.png","reload"));
+           Log('Reloading');
+           sleep(3*60);
        click(loc);
        Log('Reload');
        sleep(20);
@@ -1878,7 +1945,7 @@ def my_close_inossem():
         except:
            pass;        
         try:   
-            loc= Region(1093,53,203,163).find(managed("1649767973217.png","my_close.dirty"));
+            loc= Region(1093,53,203,163).find(managed("1653736131771.png","my_close.dirty"));
             print loc;
             Log('Close 3 dirty ');
             break;
@@ -1994,12 +2061,48 @@ def my_animal_level():
 global poppy;
 poppy=-1;
 
+def my_zoo():
+    global lastVisit,firstVisit,Blocked,lastCheck,enteringTime,lastPoppyVisit,zoo,oldzoo;
+    now=datetime.datetime.now();
+    if ispoppydays(now) and lastPoppyVisit+datetime.timedelta(minutes=31)<now and firstVisit[zoo]+datetime.timedelta(minutes=24)<now:
+            if zoo!='Main':
+                if my_goto(Main)==0:
+                    SetRampDest(-100,20); 
+                    #Dest subsbribe zoo, to be poppy
+                    return 0;
+                Log("failed my_goto(Main) ?");
+    if  zoo==oldzoo:
+        lastVisit[zoo]=now;
+        for key in lastVisit:
+            if(lastVisit[key]<lastVisit[oldzoo]):
+                oldzoo=key;
+    else:
+        firstVisit[zoo]=now;
+        oldzoo=zoo;
+    minn=now;
+    for j in lastVisit.keys():
+        if lastVisit[j]<minn:
+            minn=lastVisit[j];
+            wishzoo=j;
+    if firstVisit[zoo]+ datetime.timedelta(minutes=12)<now and (lastVisit[wishzoo]+ datetime.timedelta(minutes=33)<now):
+        print zoo,"->",wishzoo;
+        if(my_goto(wishzoo)==0):            
+                lastVisit[wishzoo]=now;
+                zoo=wishzoo;                
+                landmarks=landmarkss[zoo];
+                Orig_Xs=Orig[zoo]["x"];
+                Orig_Ys=Orig[zoo]["y"];
+                return 0;
+    return 999;
+
 def ispoppydays(now):
     return (now.month==2 and now.day>=14 and now.day<=14+14 #valentine
         or now.month==4 and now.day>=6 and now.day<=6+14  #easter early?
         or now.month==5 and now.day>=4 and now.day<=4+14 ); #monthers day
             
 now = datetime.datetime.now();
+#print ispoppydays(now);
+
 try:
     loc= {                
                 gtx1060:Region(167,45,137,132), 
@@ -2109,7 +2212,8 @@ while 1==1 :
                 continue;
         mine=[my_animal_level,my_close,my_star,my_GrownUp,my_many_cash,my_many_trash,my_coin,
                 my_cash,my_born,my_cash_bronze,my_many_water,my_ball,my_water,my_direct_water
-                ,my_direct_ramp,my_feed,my_focus_inossem];
+                ,my_direct_ramp,my_feed,my_direct_ramp_right,my_direct_ramp_left
+                ,my_focus_inossem,my_zoo];
         did=False;
         for my in mine:
             if my==lastRun:
@@ -2172,36 +2276,7 @@ while 1==1 :
                 continue;
 
 #set destination
-#def my_zoo():
-        if ispoppydays(now) and lastPoppyVisit+datetime.timedelta(minutes=31)<now and firstVisit[zoo]+datetime.timedelta(minutes=24)<now:
-                if zoo!='Main':
-                    if my_goto(Main)==0:
-                        SetRampDest(-100,20); 
-                        #Dest subsbribe zoo, to be poppy
-                        continue;
-                    Log("failed my_goto(Main) ?");
-        if  zoo==oldzoo:
-            lastVisit[zoo]=now;
-            for key in lastVisit:
-                if(lastVisit[key]<lastVisit[oldzoo]):
-                    oldzoo=key;
-        else:
-            firstVisit[zoo]=now; 
-        minn=now;
-        for j in lastVisit.keys():
-            if lastVisit[j]<minn:
-                minn=lastVisit[j];
-                wishzoo=j;
-        if(lastVisit[wishzoo]+ datetime.timedelta(minutes=33)<now):
-            print zoo,"->",wishzoo;
-            if(my_goto(wishzoo)==0):            
-                    lastVisit[wishzoo]=now;
-                    zoo=wishzoo;                
-                    landmarks=landmarkss[zoo];
-                    Orig_Xs=Orig[zoo]["x"];
-                    Orig_Ys=Orig[zoo]["y"];
-                    continue;
-#        if(enabledonzoo): 
+##        if(enabledonzoo): 
         my_ramp();
         ROI=[];
     if(i<NLOOP) :
