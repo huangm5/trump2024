@@ -179,8 +179,8 @@ DescY=0;
 LocCenter=ClientRegion.getCenter();
 #Location(933, 503);//screen select region //can capture! 
 def auto(rg,origin): #ClientRegions not ClientRegion
-    if(scenario==origin):
-        return rg;
+#    if(scenario==origin):
+#        return rg;
     return auto_must(rg,origin);
     
 def auto_must(rg,origin): #ClientRegions not ClientRegion
@@ -219,6 +219,7 @@ def which_zoo_gtx1060():
         
 def which_zoo_inossem():
     zoo='unknown';
+    zoc=None;
     AdvisorRegion=Region(0,0,306,300);
     try:
         zoc=AdvisorRegion.find("1646769583487.png");
@@ -228,16 +229,22 @@ def which_zoo_inossem():
         pass;
     try:
         zoc=AdvisorRegion.find(managed("1652374285038.png","fir"));
-        if zoc.score>0.8:
+        print zoc;
+        if zoc.score>0.85:
             zoo="Fir";
-            return zoo;
+#            return zoo;
     except:
         pass;
     try:
-        zoc=AdvisorRegion.find("1648929649914.png");
-        if zoc.score>0.8:
+        zoc3=AdvisorRegion.find("1648929649914.png");
+        print zoc3;
+        if bool(zoc):
+            if zoc.score>zoc3.score:
+                return zoo;
+        if zoc3.score>0.85:
             zoo="Kujali";
             return zoo;
+        zoc=zoc3;
     except:
         pass;
     try:
@@ -323,24 +330,26 @@ def my_friend_gonext():
        lastLoc=auto(Region(396,401,279,150),inossem).find(managed("1651154628086.png","1010"));
        print lastLoc; #score 0.79 faile
        if lastLoc.score>0.84:
-    #       click(Location(702, 483));
-           lastLoc=lastLoc.offset(140,0);#ok for both
-           click(lastLoc);
-           Hypnagogia(2);    
-           click(LocCenter);
-           Hypnagogia(3);
-    #       print LocCenter;#L[601,412]@S(0)
-           click(autoscale(Location(304, 514),inossem));
-           Hypnagogia(0.2);    
-           click(autoscale(Location(511, 459),inossem));
-           Hypnagogia(0.2);    
-           click(autoscale(Location(698, 454),inossem));
-           Hypnagogia(0.2);    
-           click(autoscale(Location(881, 475),inossem));
-           Hypnagogia(2);    
-           lastLoc=autoscale(Location(746, 592),inossem); #Redeem
-           click(lastLoc);
-           Hypnagogia(1);    
+           exclude=findBeast(auto(Region(396,401,279,150),inossem),"1653995763648.png","810");
+           if exclude==Location(0,0):
+        #       click(Location(702, 483));
+               lastLoc=lastLoc.offset(140,0);#ok for both
+               click(lastLoc);
+               Hypnagogia(2);    
+               click(LocCenter);
+               Hypnagogia(3);
+        #       print LocCenter;#L[601,412]@S(0)
+               click(autoscale(Location(304, 514),inossem));
+               Hypnagogia(0.2);    
+               click(autoscale(Location(511, 459),inossem));
+               Hypnagogia(0.2);    
+               click(autoscale(Location(698, 454),inossem));
+               Hypnagogia(0.2);    
+               click(autoscale(Location(881, 475),inossem));
+               Hypnagogia(2);    
+               lastLoc=autoscale(Location(746, 592),inossem); #Redeem
+               click(lastLoc);
+               Hypnagogia(1);    
     except:
         Hypnagogia(1);
     lastLoc=autoscale(Location(513, 585),inossem);
@@ -424,6 +433,9 @@ def entering(zoo):
         Hypnagogia(1);
         wheel(LocCenter,Button.WHEEL_DOWN,10);
         Hypnagogia(2);
+    elif zoo==Main:
+        drag(autoscale(Location(403, 651),inossem));
+        dropAt(autoscale(Location(750, 136),inossem));
     
 def my_friend_exit():    
     try:
@@ -483,7 +495,7 @@ def my_friend_meshnet():
        return findBeast(butarea,"1653449826127.png","meshnet"); 
 #my_friend_meshnet();
 #corco={inossem:Location(1110, 580),gtx1060:Location(1603, 823)}[scenario];
-corco=autoscale(Location(1110, 580),inossem);
+corco=autoscale(Location(1110, 580+20),inossem);
 def my_friend1():
    #lastLoc=Location(0,0);
    try:
@@ -498,9 +510,6 @@ def my_friend1():
                 reachY=150;
                 offsetY=40;
             for i in range(21):
-    #           mouseMove(lastLoc);
-    #            mouseDown(Button.LEFT);
-    #            mouseUp(Button.LEFT);
                 click(lastLoc);
                 Hypnagogia(0.1);
                 if i>10:
@@ -566,16 +575,19 @@ def my_friend1():
         lastLoc=lastLoc.getTarget(); 
         if lastLoc!=Location(0,0):
             for k in range(5):
-                mouseMove(lastLoc);
-                mouseDown(Button.LEFT);
-                Hypnagogia(0.3);
-                mouseUp(Button.LEFT);
+                click(lastLoc);
+#                mouseMove(lastLoc);
+#                mouseDown(Button.LEFT);
+#                Hypnagogia(0.3);
+#                mouseUp(Button.LEFT);
                 Hypnagogia(1.25);
-                mouseMove(LocCenter.offset(0,-ClientRegion.h/15));
+                locc=LocCenter.offset(0,-ClientRegion.h/15);
+#                mouseMove();
                 for i in range(3):
-                    mouseDown(Button.LEFT);
-                    Hypnagogia(0.3);
-                    mouseUp(Button.LEFT);
+                    click(locc);
+#                    mouseDown(Button.LEFT);
+#                    Hypnagogia(0.3);
+#                    mouseUp(Button.LEFT);
                     Hypnagogia(0.25);
             Hypnagogia(2);
             return my_friend_gonext();
@@ -673,7 +685,8 @@ def try_update_Region2X4():
     print y1,y2;
     Region2X4=Region(x1,y1,x2-x1,y2-y1);
     return Region2X4;
-try_update_Region2X4();
+#try_update_Region2X4();
+#print pick_my_friend_tbd
 
 threashold=[[0.97248,0.937],
         [0.930,0.952],
@@ -778,15 +791,16 @@ def my_friend_menu():
         if i==2:
             Log('Failed friend menu');
             return 999;
-    mouseMove(lastLoc);
-    mouseDown(Button.LEFT);
-    Hypnagogia(0.3);
-    mouseUp(Button.LEFT);
+    click(lastLoc);
+#    mouseMove(lastLoc);
+#    mouseDown(Button.LEFT);
+#    Hypnagogia(0.3);
+#    mouseUp(Button.LEFT);
     Hypnagogia(5);
     my_friend_in();
 #    my_friend_tbd();
     return 0;
-#my_friend_menu();
+my_friend_menu();
 
 global button_help_all;
 def update_button_help_all():
@@ -1009,22 +1023,34 @@ lastVisit={Main:t0,Fir:now,Terrarium:now,Kujali:now};
 firstVisit={Main:t0,Fir:t0,Terrarium:t0,Kujali:t0};
 Blocked={Main:False,Fir:False,Terrarium:False,Kujali:False};
 lastCheck={Main:t0,Fir:now,Terrarium:now,Kujali:now};
-enteringTime={};#Main:t0,Fir:now,Terrarium:now,Kujali:now};
 oldzoo1="unknown";
+OldestZoo="Main";
+def UpdateOldestZoo():    
+    global OldestZoo;
+    old="Main";
+    for key in lastVisit:
+        if key==zoo:
+            continue;
+        if(lastVisit[key]<lastVisit[old]):
+            old=key;
+    OldestZoo=old;
+
 def which_zoo():
-   global oldzoo,oldzoo1;
+   global oldzoo,oldzoo1,OldestZoo;
    now=datetime.datetime.now();
    enabledonzoo=True;
    zoo=which_zoo1(); 
    if(oldzoo1!=zoo) :
        if(zoo!="unknown"):
            if(oldzoo!=zoo):
-             Log(zoo);
+             Log("{O}=>{Z}".format(O=oldzoo,Z=zoo));
              oldzoo=zoo;
              if(oldzoo!="unknown"):
                  #exiting(oldoldzoo);
                  pass;
-             enteringTime[zoo]=now;
+             firstVisit[zoo]=now;
+             if zoo==OldestZoo:
+                 UpdateOldestZoo();
        oldzoo1=zoo;
    if(zoo=="unknown"):
             unknown_recovering();
@@ -1484,10 +1510,11 @@ def my_star():
     global lastLoc;
     try:   
         lastLoc=clickRange.find(scenario+'/'+ "star.png").getTarget();
-        mouseMove(lastLoc);
-        mouseDown(Button.LEFT);
-        Hypnagogia(0.6);
-        mouseUp(Button.LEFT);
+        click(lastLoc);
+#        mouseMove(lastLoc);
+#        mouseDown(Button.LEFT);
+#        Hypnagogia(0.6);
+#        mouseUp(Button.LEFT);
         Hypnagogia(0.6);
         return 0;
     except:
@@ -1583,7 +1610,7 @@ def     ROUTHANLY():
     global mROUTHANLY,lastROUTHANLY,tbdROUTHANLY;
     if(lastROUTHANLY<=tbdROUTHANLY):
         lastROUTHANLY=now;
-        mROUTHANLY=(clickRange.w+clickRange.h)/20;
+        mROUTHANLY=(clickRange.w+clickRange.h)/10;
     return mROUTHANLY; 
 def abs(x):
     if x>0 :
@@ -1611,8 +1638,8 @@ def my_many_water():
         click(locs[0]);
         return 0;
 #    locs=sorted(locs,key=lambda m:math.atan2(m.x-LocCenter.x,m.y-LocCenter.y));
-    locs=sorted(locs,key=lambda m:math.pi*-2.0*
-            int(math.sqrt((m.x-LocCenter.x)**2+(m.y-LocCenter.y)**2)/ROUTHANLY())
+    locs=sorted(locs,key=lambda m:math.pi*(-2.0)*
+            int(math.sqrt((m.x-LocCenter.x)**2+(m.y-LocCenter.y)**2)/3/ROUTHANLY())
             +math.atan2(m.x-LocCenter.x,m.y-LocCenter.y));
     tt=True;
     loc1=Location(0,0);
@@ -2062,29 +2089,30 @@ global poppy;
 poppy=-1;
 
 def my_zoo():
-    global lastVisit,firstVisit,Blocked,lastCheck,enteringTime,lastPoppyVisit,zoo,oldzoo;
+    global lastVisit,firstVisit,Blocked,lastCheck,lastPoppyVisit,zoo,oldzoo,OldestZoo;
     now=datetime.datetime.now();
-    if ispoppydays(now) and lastPoppyVisit+datetime.timedelta(minutes=31)<now and firstVisit[zoo]+datetime.timedelta(minutes=24)<now:
+    Log("zoo:{T}".format(T=now));
+    if ispoppydays(now):
+        Log("poppy time");
+        if lastPoppyVisit+datetime.timedelta(minutes=31)<now and firstVisit[zoo]+datetime.timedelta(minutes=24)<now:
             if zoo!='Main':
                 if my_goto(Main)==0:
                     SetRampDest(-100,20); 
                     #Dest subsbribe zoo, to be poppy
                     return 0;
                 Log("failed my_goto(Main) ?");
-    if  zoo==oldzoo:
-        lastVisit[zoo]=now;
-        for key in lastVisit:
-            if(lastVisit[key]<lastVisit[oldzoo]):
-                oldzoo=key;
-    else:
-        firstVisit[zoo]=now;
-        oldzoo=zoo;
-    minn=now;
-    for j in lastVisit.keys():
-        if lastVisit[j]<minn:
-            minn=lastVisit[j];
-            wishzoo=j;
-    if firstVisit[zoo]+ datetime.timedelta(minutes=12)<now and (lastVisit[wishzoo]+ datetime.timedelta(minutes=33)<now):
+    wishzoo=OldestZoo;
+    stayTime={Main:35,Fir:15,Terrarium:8,Kujali:11};
+    t1=firstVisit[zoo]+ datetime.timedelta(minutes=stayTime[zoo]);
+    if wishzoo==zoo:
+        if t1>now:
+            Log("Will change after {T}".format(T=t1));
+            return 999;
+        else :
+            UpdateOldestZoo();
+            wishzoo=OldestZoo;
+    Log("wishzoo="+wishzoo);
+    if firstVisit[zoo]+ datetime.timedelta(minutes=stayTime[zoo])<now :
         print zoo,"->",wishzoo;
         if(my_goto(wishzoo)==0):            
                 lastVisit[wishzoo]=now;
@@ -2256,7 +2284,8 @@ while 1==1 :
                 continue;
 #        print(my_friend_active);
         if my_friend_active :
-            t=my_friend_menu_lastVisit+ datetime.timedelta(minutes=5);
+            Log("my_friend_menu_lastVisit={T}".format(T=my_friend_menu_lastVisit));
+            t=my_friend_menu_lastVisit+ datetime.timedelta(minutes=4);
             if(t<now):
                 my_friend_menu_lastVisit=now;
                 Log('my_friend_menu {T}'.format(T=my_friend_menu_lastVisit));
@@ -2352,3 +2381,6 @@ def poppymenu():
                 Log('Where is poppy?');
 
 poppymenu();
+
+
+research20220603mom=["1654253115297.png""1654253130553.png""1654253218427.png"];
