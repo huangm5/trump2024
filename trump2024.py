@@ -1,3 +1,4 @@
+#20220609
 #trump2024.py:2351 sleep 37281.17s
 #rename working folder to start
 #sihost or explorer may hold the folder to rename
@@ -331,7 +332,7 @@ def my_friend_gonext():
        print lastLoc; #score 0.79 faile
        if lastLoc.score>0.84:
            exclude=findBeast(auto(Region(396,401,279,150),inossem),"1653995763648.png","810");
-           if exclude==Location(0,0):
+           if exclude==Location(0,0) or exclude.score<lastLoc.score:
         #       click(Location(702, 483));
                lastLoc=lastLoc.offset(140,0);#ok for both
                click(lastLoc);
@@ -369,17 +370,18 @@ def managed(img, nametag):
 #    img="1651154628086.png";nametag="1010";
     scenzoo=scenario+"/"+zoo;
     storepath=getBundlePath()+"\\"+scenzoo;
-    folder_to_file=storepath+"\\"+nametag;
-    path_to_file=folder_to_file+"\\"+img;
     if not os.path.exists(img):
         if not os.path.exists(getBundlePath()+"\\"+img):
-            list_of_files = glob.glob(folder_to_file+'/*')
+#            list_of_files = glob.glob(folder_to_file+'/*')
+            list_of_files = list_managed(img, nametag);
             if len(list_of_files)==0:
                 Log("Sorry no file found for "+nametag+"="+img);
                 return img;
             latest_file = max(list_of_files, key=os.path.getctime)
             print(latest_file)            
             return latest_file;
+    folder_to_file=storepath+"\\"+nametag;
+    path_to_file=folder_to_file+"\\"+img;
     file_exists = os.path.exists(path_to_file); 
     if not file_exists :
         try:
@@ -392,6 +394,7 @@ def managed(img, nametag):
 #zoo="Main";
 #print managed("1651763228410.png", "1010");
 #print managed("1651154628086.png", "1010");
+
 def list_managed(img, nametag):
     paths=[];
     scenzoo=scenario+"/"+zoo;
@@ -595,7 +598,7 @@ def my_friend1():
        pass;
    return 77;
 #my_friend_gonext();
-print my_friend1();
+#print my_friend1();
 
 menudrop=auto_must(Region(1125,94,102,77),inossem);
 print menudrop
@@ -800,7 +803,7 @@ def my_friend_menu():
     my_friend_in();
 #    my_friend_tbd();
     return 0;
-my_friend_menu();
+#my_friend_menu();
 
 global button_help_all;
 def update_button_help_all():
@@ -811,6 +814,7 @@ def update_button_help_all():
     except:
         print "Failed: update_button_help_all";
 #update_button_help_all()
+
 preferedimg={};
 def findBeast(rg,img,name): #findBest name used
     global preferedimg;
@@ -858,6 +862,7 @@ def my_friend_in():
                 rg={gtx1060:Region(1256,805,407,272),
                         inossem:Region(918,480,439,288)}[scenario];
                 loc=findBeast(rg, "1653443901464.png","help_all"); 
+                print loc
                 if(loc==Location(0,0)):
                     print "no help_all";
                     my_friend_active=False;
