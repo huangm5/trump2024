@@ -324,7 +324,7 @@ def autoscale(loc,origin): #ClientRegions not ClientRegion
     (loc.y-cro.y) *crs.h/cro.h+crs.y);
 
 def my_friend_gonext():
-    global lastLoc;
+    global TimeLoadZoo,lastLoc;
     Hypnagogia(2);
 #    lastLoc=Location(564, 487);    #inossem, no use?
     try: 
@@ -360,7 +360,7 @@ def my_friend_gonext():
         Log("my_friend_gonext missign Yes ");
 #            Location(489, 580) # Yes to next friend
     click(lastLoc);
-    sleep(12); #nothing to look at yet
+    sleep(TimeLoadZoo*12/22); #nothing to look at yet
 #my_friend_gonext();
 
 
@@ -437,10 +437,11 @@ def entering(zoo):
         wheel(LocCenter,Button.WHEEL_DOWN,10);
         Hypnagogia(2);
     elif zoo==Main:
-        drag(autoscale(Location(403, 651),inossem));
-        dropAt(autoscale(Location(750, 136),inossem));
+        drag(autoscale(Location(703, 651),inossem));
+        dropAt(autoscale(Location(650, 136),inossem));
     
 def my_friend_exit():    
+    global TimeLoadZoo;
     try:
         rg=auto(Region(1026,116,155,166),inossem);
         lastLoc=findBeast(rg,"1653518245883.png","my_friend_exit");
@@ -450,7 +451,7 @@ def my_friend_exit():
             mouseDown(Button.LEFT);
             Hypnagogia(0.3);           
             mouseUp(Button.LEFT);
-            Hypnagogia(15);
+            sleep(TimeLoadZoo*15/22);
             entering(zoo);
             return 0;
     except:
@@ -840,9 +841,10 @@ def findBeast(rg,img,name): #findBest name used
             pass;
     return Location(0,0);
 #t=findBeast(ClientRegion, "1653443901464.png","help_all");
+TimeLoadZoo=55; #22, based on cpu,space.network?
 
 def my_friend_in():
-    global my_friend_active;
+    global TimeLoadZoo,my_friend_active;
     #lastLoc=Location(0,0);
     kl=my_friend1();
     if kl==0:
@@ -883,7 +885,8 @@ def my_friend_in():
              else:
                   return 0;    
        for h in range(1,8):
-           Hypnagogia(22);
+#           Hypnagogia(22);
+           sleep(TimeLoadZoo);
            kl=my_friend1();              
            if kl>0:
                break;
@@ -1572,6 +1575,7 @@ def my_feed1(feedLoc):
     lastLoc=feedLoc;
     if(zoo=="Terrarium"):
         drag(Location(lastLoc.x,lastLoc.y/2)); #do no devide itself, it actually LocCenter by object reference
+    drag(lastLoc.offset(0,ClientRegion.h/5));
     dropAt(lastLoc);
     #this program may stuck, need an absolut exit
 #            lastLoc=Location(1073, 404);click(lastLoc); #inossem the close button 
