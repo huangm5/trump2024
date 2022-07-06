@@ -11,203 +11,7 @@ import math;
 gtx1060="gtx1060";
 inossem="inossem";
 
-cookieItemFulls={};
-
-def cookie_item(item,title):
-    if bool(cookieItemFulls.get(title)):
-        return;
-    try:
-        loc=find(item);    
-        print title,loc;#M[1369,267 250x158]@
-        if loc.getScore()>0.85:
-            loc1=Location(loc.x+loc.w*0.9,loc.y+loc.h*0.75)
-            rg=Region(loc1.x-80,loc1.y-50,80*2,50*2)
-            try:
-                loc2=rg.find("1655843239458.png")
-                print 'x0:',loc2 
-                if loc2.getScore()<0.93:
-                    raise Exception('bad score'); 
-            except:        
-                click(loc1);
-                sleep(1);
-                try:
-                    loc2=find("1656888495630.png");
-                    click(loc2.getTopRight());
-                    cookieItemFulls[title]=True;
-                except:
-                    pass;
-    except:
-        pass;
-
-import datetime;
-cookieItems=[["1656276637754.png",'Jellybean Jam']
-#            ,["1656996995975.png",'Butter']
-            ,["1656997272926.png",'Wood']
-            ,["1657059240407.png",'Shovel']
-            ,["1656277184823.png",'Planter']
-            ,["1656277384825.png",'Cream']
-            ,["1656277517404.png",'Latte']
-            ,["1656277609357.png",'Pillow']
-            ,["1656277907046.png",'Candy Saw']    
-        ,["1655844625187.png",'Suger Cube']            
-            ,["1655860567350.png",'Toffe Jam']      
-            ,["1656860612793.png",'Ring']      
-            ,["1655947616537.png",'Stew']      
-            ,["1656860737440.png",'Focaccia']      
-            ,["1655947493149.png",'Toy']      
-            ,["1655843769524.png",'Axe']      
-            ,["1655860711815.png",'Candy Wool']
-            ,["1656276970547.png",'Hearty Rye']];
-#ci=cookieItems[2]
-def cookie_wook():
-
-    cookie_item("1655860761062.png",'Milk:');            
-    cookie_item("1655862866954.png",'Basket:');    
-    cookie_item("1655871263617.png",'Flower:');    
-    for ci in cookieItems:
-         cookie_item (ci[0],ci[1]);
-    cookie_item("1655860632123.png",'Jelly Jam:');
-    try:
-        loc=find("1655844115185.png");    
-        print 'JellyBean:',loc;#M[1369,267 250x158]@
-        if loc.getScore()>0.85:
-            loc1=Location(loc.x+loc.w*0.9,loc.y+loc.h*0.75)
-            rg=Region(loc1.x-80,loc1.y-50,80*2,50*2)
-            try:
-                loc2=rg.find("1655843239458.png")
-                print loc2 
-                if loc2.getScore()<0.85:
-                    raise Exception('bad score'); 
-            except:        
-                click(loc1);
-                sleep(1);
-    except:
-        pass;
-    try:
-        loc=find("1655843068695.png");    
-        print 'flour:',loc;#M[1369,267 250x158]@        
-        loc1=Location(loc.x+loc.w*0.95,loc.y+loc.h*0.75)
-        rg=Region(loc1.x-80,loc1.y-50,80*2,50*2)
-        try:
-            rg.find("1655843239458.png")
-        except:        
-            click(loc1);
-            sleep(1);
-    except:
-        pass;
-    click(Location(1012, 529)); #right       
-    sleep(1);
-#    click(Location(451, 530));#left
-#    sleep(1);
-def findOR(rgs,pics):
-    for rg in rgs:
-        for pic in pics:
-            try:
-                loc=rg.find(pic);
-                return loc;
-            except:
-                pass;
-
-loc=findOR([Screen()],["1655859264104.png","1656038737775.png"])
-print loc
-if bool(loc):
-    click(loc)
-    sleep(3)
-    click(loc)
-    sleep(5)
-
-    cookieItemFulls={};
-
-    for j in range(2624):
-        for i in range(31):
-            cookie_wook();
-            mouseMove(Location(0,0))
-            sleep(0.5)         
-            locMouse=Mouse.at();
-            if not (locMouse.x<10 and locMouse.y<10):
-                break;
-        if i<31-1:
-            break;
-        sleep(13)         
-#Shards: -20/29/6 -19/25?/5 -21/?/8  -17/18/4
-if False:
-    #without mouse
-    for j in range(222):
-        for i in range(31):
-            cookie_wook();
-        print datetime.datetime.now();
-        sleep(113)        
-            
-def scale(rg,sc0):
-   sc=Screen();#R[0,0 1920x1080]@S(0)
-   return Region(rg.x*sc.w/sc0.w,rg.y*sc.h/sc0.h,rg.w*sc.w/sc0.w,rg.h*sc.h/sc0.h)
-#print scale(Region(0,0,560,406),Region(0,0,1920,1080))
-#print scale(Region(993,494,373,270),Region(0,0,1280,768))
-#R[993,494 373x270]@S(0) for 1280x768
-
-ds=[findOR([scale(Region(0,0,560,406),Region(0,0,1280,768))],["1652230690072.png","1652324847237.png"]).getTarget()
-        ,
-findOR([scale(Region(993,494,373,270),Region(0,0,1280,768))],["1652229805622.png","1652323453233.png"]).getTarget()
-                ,
-findOR([scale(Region(766,0,494,360),Region(0,0,1280,768))],["1652229378603.png","1652322720132.png"]).getTarget()
-        ]
-    
-
-
-cs=[
-        [Location(43,151),Location(1149,683),Location(982,132),Region(0,100,1184,624)],
-        [Location(49,79),Location(1324,677),Location(1140,58),Region(0,24,1366,705)],
-        [Location(68,102),Location(1289,663),Location(1118,81),Region(21,50,1311,661)]
-];
-#print cs
-#from scipy import linalg
-#import numpy as np
-#np.array
-a=([[cs[0][1].x-cs[0][0].x,cs[0][1].y-cs[0][0].y,1],
-    [cs[1][1].x-cs[1][0].x,cs[1][1].y-cs[1][0].y,1],
-    [cs[2][1].x-cs[2][0].x,cs[2][1].y-cs[2][0].y,1]])
-bx=([cs[0][3].x-cs[0][0].x,cs[1][3].x-cs[1][0].x,cs[2][3].x-cs[2][0].x])
-by=([cs[0][3].y-cs[0][0].y,cs[1][3].y-cs[1][0].y,cs[2][3].y-cs[2][0].y])
-bw=([cs[0][3].w,cs[1][3].w,cs[2][3].w])
-print a
-print bw
-px=[-0.0334696913350688,  -0.005206396429899591,  -3.2127184827073263];
-py=[ 0.01859427296392711,  -0.10821866865005578,  -13.992934176273709];
-pw=[  1.154332465600595,  -0.198214949795463,  12.758646336928226];
-ph=[  0.034585347712904425,  1.1387132763108962,  -20.046857567869097];
-ac=a[1];
-pd=ph;
-#print ac[0]*pd[0]+ac[1]*pd[1]+pd[2];#+cs[1][0].y;
-#x=linalg.solve(a,b) #https://www.99cankao.com/algebra/unknwn3.php
-#print(x)
-#ds=[Location(53,91),Location(1293,652),Location(1122,70)];
-ac=[ds[1].x-ds[0].x,ds[1].y-ds[0].y]
-pd=ph
-h=ac[0]*pd[0]+ac[1]*pd[1]+pd[2];
-pd=pw
-w=ac[0]*pd[0]+ac[1]*pd[1]+pd[2];
-pd=px
-x=ac[0]*pd[0]+ac[1]*pd[1]+pd[2]+ds[0].x;
-pd=py
-y=ac[0]*pd[0]+ac[1]*pd[1]+pd[2]+ds[0].y;
-cr=Region(int(x),int(y),int(w),int(h))
-print cr
-
-scenario=gtx1060;
-
-try:
-    ds1=[Region(0,0,313,318).find("1652230690072.png").getTarget(),
-    Region(993,494,373,270).find("1652229805622.png").getTarget(),
-    Region(766,0,494,360).find("1652229378603.png").getTarget()
-           ]
-        
-
-
-except:
-    pass;
-
-
-scenario=gtx1060;
+scenario=inossem;
 ClientRegions={
         gtx1060:Region(161,40,1598,998),
         inossem:Region(1,100,1200,625)
@@ -359,7 +163,6 @@ def updateClientRegion():
     return ClientRegion;
 updateClientRegion();
 print ClientRegion;
-
 
 global zoo,landmarks,Orig_Xs,Orig_Ys;
 global lastLoc;
@@ -1242,7 +1045,6 @@ lastVisit={Main:t0,Fir:now,Terrarium:now,Kujali:now};
 firstVisit={Main:t0,Fir:t0,Terrarium:t0,Kujali:t0};
 Blocked={Main:False,Fir:False,Terrarium:False,Kujali:False};
 lastCheck={Main:t0,Fir:now,Terrarium:now,Kujali:now};
-enteringTime={};#Main:t0,Fir:now,Terrarium:now,Kujali:now};
 oldzoo1="unknown";
 OldestZoo="Main";
 def UpdateOldestZoo():    
@@ -1359,7 +1161,6 @@ landmarkss={
             Fir:["1641135019722.png","1641135048732.png","1641135072434.png","1640640250064.png"]
             ,
             Terrarium:["1641135019722.png","1641135048732.png","1641135072434.png","1640640250064.png"]
-            ,Kujali:["1641135019722.png","1641135048732.png","1641135072434.png","1640640250064.png"]
         },
         inossem:{
             Main:["1640721586941.png","1640719028561.png","1640720333764.png","1644708172971.png","1645764608542.png"
@@ -1703,7 +1504,7 @@ def my_many_trash():
             Hypnagogia(0.2);
         return 0;
     return 999;
-#my_many_trash();
+my_many_trash();
 
 def my_coin():   
     global lastLoc;
@@ -1773,22 +1574,18 @@ def my_feed1(feedLoc):
             inossem:Location(964, 374)
             }[scenario];
     try:
-        loc1=ClientRegion.find(managed("1653360099807.png","my_feed1"));
-        loc=loc1.getTarget();
+        loc=ClientRegion.find(managed("1653360099807.png","my_feed1"));
     except:
         pass;
     mouseMove(loc);
     mouseDown(Button.LEFT);
     Hypnagogia(0.4);#hold and relase and hold >=0.34, depend on loading
     #may enter state hard to recover
-#    mouseUp(Button.LEFT);
-#    Hypnagogia(0.1);#hold and relase and hold >=0.34, depend on loading/zoo?
-#    mouseDown(Button.LEFT);
-#    Hypnagogia(0.1);#hold and relase and hold >=0.34, depend on loading
-    drag(loc)
-    if scenario==gtx1060:
-        Hypnagogia(0.1);#for gtx1060？
-        click(loc);drag(loc);
+    mouseUp(Button.LEFT);
+    Hypnagogia(0.1);#hold and relase and hold >=0.34, depend on loading/zoo?
+    mouseDown(Button.LEFT);
+    Hypnagogia(0.1);#hold and relase and hold >=0.34, depend on loading
+    drag(loc);
     lastLoc=feedLoc;
     if(zoo=="Terrarium"):
         drag(Location(lastLoc.x,lastLoc.y/2)); #do no devide itself, it actually LocCenter by object reference
@@ -1800,7 +1597,7 @@ def my_feed1(feedLoc):
     #inossem the close button 
     return 0;
 #print my_feed1(???)   
-#print my_feed() 
+
 def my_water():
     global lastLoc;
     try:    
@@ -2042,55 +1839,19 @@ def merge_regions(regions):
             max(map(lambda x:x.y+x.h,regions))-y
             );
 #print merge_regions([Region(1501,39,163,253),Region(1640,42,112,124)]);
-
-class MakeSense:
-    me={};
-    OnChange={};
-    def __getattr__(self,attr):
-        return self.me[attr];
-    def __setattr__(self,attr,value):
-        if  bool(my.me.get(attr)) :
-            if self.me[attr]==value:
-                return;
-        print "change ",attr;
-        self.me[attr]=value;
-        self.OnChange[attr]();
-
-global my;
-my=MakeSense();        
-
-def OnChangeQuitGame():
-    if my.QuitGame:
-        SteamMode=True;
-my.OnChange['QuitGame']=OnChangeQuitGame;
-print my.me;
-
-
 def my_close_gtx1060():        
     global lastLoc;
-    try:
-        loc=ClientRegion.find(managed("1654141832902.png","quitgame"))
-        type(Key.ESC);
-        my.QuitGame=True;
-        return 0;
-    except:
-        pass;
-    if not(my.QuitGame):
-        type(Key.ESC);             
-    elif random.random()<0.05:
-        type(Key.ESC);      
+    type(Key.ESC);             
     while 1==1:
         try:   
            loc= Region(1286,276,220,174).find("1641265807541.png");
            Log('Close 1');
            break;
         except:
-           pass;    
-        rg=ClientRegion;
+           pass;        
         try:   
-           rg= Region(1501,39,163,253);           
-           loc=rg.find("1640403388181.png");
-           Log('Close Alternative Bonus');
+           loc= Region(1501,39,163,253).find("1640403388181.png");
+           Log('Close 2');
            break;
         except:
            pass;        
@@ -2132,17 +1893,15 @@ def my_close_gtx1060():
            pass;        
         return 999;
     
-#    mouseMove(loc);
-#    mouseDown(Button.LEFT);
-#    Hypnagogia(0.3);
-#    mouseUp(Button.LEFT);
-    click(loc); 
+    mouseMove(loc);
+    mouseDown(Button.LEFT);
+    Hypnagogia(0.3);
+    mouseUp(Button.LEFT);
     Hypnagogia(1);        
     lastLoc=loc.getTarget();    
     return 0;
-#my_close_gtx1060();
 
-SteamMode=(scenario=='gtx1060');
+SteamMode=False;
 #if zoo is not found
 def my_focus_inossem():#also other recovers        
     global SteamMode;
@@ -2177,25 +1936,7 @@ def my_focus_inossem():#also other recovers
     except:
        pass;        
 #my_focus_inossem();
-def my_focus_gtx1060():    
-    global SteamMode;
-    if my.QuitGame:
-        SteamMode=True;
-    if SteamMode:
-        print("don't know how to get focus?");
-        return;
-    try:
-       for i in Range(24):
-           loc= auto(Region(398,376,445,313),inossem).find(managed("1652488232002.png","reload"));
-           Log('Reloading');
-           sleep(3*60);
-       click(loc);
-       Log('Reload');
-       sleep(20);
-    except:
-       pass;        
 
-my_focus={inossem:my_focus_inossem,gtx1060:my_focus_gtx1060}[scenario];
 def my_close_feed():
     try:
         loc=ClientRegion.find(managed("1653359955691.png","my_close_feed"));
@@ -2216,19 +1957,19 @@ def update_button_close_friend():
         print "Failed: update_button_close_friend";
 #update_button_close_friend()
 
-#print bool(my.me.get('QuitGame'));
-
-my.QuitGame=False;
+global QuitGame;
+QuitGame=False;
 def my_close_inossem():        
     global lastLoc;
+    global QuitGame;
     try:
         loc=ClientRegion.find("1653352410294.png")
         type(Key.ESC);
-        my.QuitGame=True;
+        QuitGame=True;
         return 0;
     except:
         pass;
-    if not(my.QuitGame):
+    if not(QuitGame):
         type(Key.ESC);             
     elif random.random()<0.05:
         type(Key.ESC);             
@@ -2443,7 +2184,6 @@ while 1==1 :
                         os.system('start steam://rungameid/1352330');
                         Hypnagogia(150);                        
                         my_click("1640459738300.png"); 
-                        click(LocCenter)
                         #to be my_splash
                    # if(scenario=='inossem'):
                 else :
@@ -2468,14 +2208,11 @@ while 1==1 :
         now = datetime.datetime.now();
         oldz=zoo;
         zoo=which_zoo();
-
         print(zoo); 
         if zoo=="unknown" :
             zoo=oldz;
             if zoo=="unknown" :
                 zoo=Main;
-        landmarkss[Kujali]=landmarkss[Main]; #something wrong
-        Orig[Kujali]=Orig[Main];
         landmarks=landmarkss[zoo];
         Orig_Xs=Orig[zoo]['x'];
         Orig_Ys=Orig[zoo]['y'];
@@ -2527,17 +2264,17 @@ while 1==1 :
         mine=[my_animal_level,my_close,my_star,my_GrownUp,my_many_cash,my_many_trash,my_coin,
                 my_cash,my_born,my_cash_bronze,my_many_water,my_ball,my_water,my_direct_water
                 ,my_direct_ramp,my_feed,my_direct_ramp_right,my_direct_ramp_left
-                ,my_focus,my_zoo];
+                ,my_focus_inossem,my_zoo];
         did=False;
-        for mi in mine:
-            if mi==lastRun:
+        for my in mine:
+            if my==lastRun:
                 #do not repeat? helping out corner stuck
                 continue;
-            print mi;
-            if(mi()==0):
+            print my;
+            if(my()==0):
                 did=True;
-                lastRun=mi;
-                lastStatus="{F}".format(F=mi)
+                lastRun=my;
+                lastStatus="{F}".format(F=my)
                 break;
         if did:
             continue;
@@ -2591,39 +2328,7 @@ while 1==1 :
                 continue;
 
 #set destination
-
-
-        if ispoppydays(now) and lastPoppyVisit+datetime.timedelta(minutes=31)<now and firstVisit[zoo]+datetime.timedelta(minutes=24)<now:
-                if zoo!='Main':
-                    if my_goto(Main)==0:
-                        SetRampDest(-100,20); 
-                        #Dest subsbribe zoo, to be poppy
-                        continue;
-                    Log("failed my_goto(Main) ?");
-        if  zoo==oldzoo:
-            lastVisit[zoo]=now;
-            for key in lastVisit:
-                if(lastVisit[key]<lastVisit[oldzoo]):
-                    oldzoo=key;
-        else:
-            firstVisit[zoo]=now; 
-        min=now;
-        for j in lastVisit.keys():
-            if lastVisit[j]<min:
-                min=lastVisit[j];
-                wishzoo=j;
-        if(lastVisit[wishzoo]+ datetime.timedelta(minutes=33)<now):
-            print zoo,"->",wishzoo;
-            if(my_goto(wishzoo)==0):            
-                    lastVisit[wishzoo]=now;
-#                    zoo=wishzoo;                #wait for detect
-#                    landmarks=landmarkss[zoo];
-#                    Orig_Xs=Orig[zoo]["x"];
-#                    Orig_Ys=Orig[zoo]["y"];
-                    continue;
-#        if(enabledonzoo): 
-
-
+##        if(enabledonzoo): 
         my_ramp();
         ROI=[];
     if(i<NLOOP) :
@@ -2701,9 +2406,4 @@ def poppymenu():
 poppymenu();
 
 
-research20220602gxt1060=["1654216372174.png","1654216443750.png","1654216482447.png","1654216528869.png","1654216900072.png","1654216955197.png","1654216981472.png","1654217008071.png",
-        "1654217043760.png""1654217080165.png""1654217110710.png""1654217142276.png""1654217174634.png""1654217210442.png""1654217230861.png""1654217254557.png""1654217287737.png""1654217309163.png""1654217333725.png""1654217351165.png""1654217382882.png"
-"1654217427420.png","1654217579782.png","1654217594047.png"       
-        ];#jhohose done
-research20220602mom=["1654218920852.png""1654219492449.png""1654219625302.png""1654219716427.png""1654219769328.png"];
-research20220602trump=["1654220755557.png""1654220987936.png"];
+research20220603mom=["1654253115297.png""1654253130553.png""1654253218427.png"];
