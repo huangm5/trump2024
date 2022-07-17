@@ -1283,6 +1283,8 @@ def which_zoo():
 zoo=which_zoo(); #4/2
 print(zoo);
 
+my.LocDropDown=Location(1176, 128); #menu drop down button
+my.LocGotoMap=Location(1712,871)#gtx1060
 def my_goto(zoo):
     if(Blocked[zoo]):
         if lastCheck[zoo]+ datetime.timedelta(minutes=720)>now:
@@ -2049,15 +2051,16 @@ class MakeSense:
     def __getattr__(self,attr):
         return self.me[attr];
     def __setattr__(self,attr,value):
-        if  bool(my.me.get(attr)) :
+        if  bool(self.me.get(attr)) :
             if self.me[attr]==value:
                 return;
         print "change ",attr;
         self.me[attr]=value;
-        self.OnChange[attr]();
+        if bool(self.OnChange.get(attr)):
+            self.OnChange[attr]();
 
-global my;
 my=MakeSense();        
+global my;
 
 def OnChangeQuitGame():
     if my.QuitGame:
