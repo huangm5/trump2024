@@ -1,4 +1,10 @@
-#20220823
+#becaure for push, it deletes new change
+#20220823 --merging from x
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 1048576 bytes for G1 virtual space
+# An error report file with more information is saved as:
+# C:\Users\Public\Documents\hs_err_pid6388.log
+#where is this file? its right there ? hidden?
 #20220609
 #trump2024.py:2351 sleep 37281.17s
 #rename working folder to start
@@ -13,6 +19,265 @@ gtx1060="gtx1060";
 inossem="inossem";
 
 scenario=inossem;
+class MakeSense:
+    me={};
+    OnChange={};
+    def __getattr__(self,attr):
+        return self.me[attr];
+    def __setattr__(self,attr,value):
+        if  bool(self.me.get(attr)) :
+            if self.me[attr]==value:
+                return;
+        print "change ",attr;
+        self.me[attr]=value;
+        if  bool(self.OnChange.get(attr)) :
+            self.OnChange[attr]();
+
+global my;
+
+try:
+    my
+    print("sure, it was defined.")
+except NameError:
+    print("well, it WASN'T defined after all!")
+    my=MakeSense();        
+
+def my_friend():
+   if (my.lastStatus=='friend dialog' and random.random()>0.1):
+       pass;
+   else: 
+       try:
+            loc=my.ClientRegion.find(managed("1652298276529.png","my_friend"))
+            print loc
+            lastLoc=loc.getTarget(); 
+            #was.png for inossem
+            if my_friend_help()==0:
+                sleep(20);
+            return 0;
+       except:
+           pass;
+   if (my.lastStatus=='friend home' and random.random()>0.1):
+       pass;
+   else: 
+       print my_friend1()
+   return 999;
+
+import socket
+print(socket.gethostname())
+
+if socket.gethostname()=='Inossem':
+    my.scenario=inossem;
+else:
+    my.scenario=gtx1060;
+
+def my_blue_feeder():
+    loc=find("1659095267480.png");
+    if loc.getScore()>0.95:                                    
+        type(Key.F5);
+        sleep(3*60);
+        my.need_splash=True;
+                
+def skipAds():
+    click("1659010237092.png")
+    click(Location(2684, 360));
+    click(Location(2455, 286));
+
+def buysellpoppy100():
+  for i in range(6):
+    loc=find("1658314287861.png")
+    print loc #593 293
+    click(Location(590, 289));sleep(3);
+    click(Location(590, 338));sleep(1);
+    click(Location(645, 475));sleep(1);
+    click(Location(488, 516));sleep(1);
+    loc=find("1658314178135.png");
+    click(Location(739, 678));sleep(1);
+    
+    click(Location(1142, 269));sleep(1);
+    click(Location(1038, 625));sleep(1);
+    click(Location(936, 616));sleep(1);
+    drag(Location(1035, 375));
+    dropAt(Location(450, 438)); sleep(1)
+    click(Location(514, 681));sleep(4);
+    
+    
+cookieItemFulls={};
+
+def my_connectionError():
+    try:   
+        loc=find(managed("1661290954532.png",'reconnect'))
+        print loc,loc.getTarget().x,loc.y+loc.h*92/100
+        sleep(10);
+        loc=Location(loc.getTarget().x,loc.y+loc.h*92/100)
+        print loc
+        click(loc)
+        sleep(1)
+        click("1652488232002.png");
+        sleep(1)
+        #sleep(3*60);#splash
+        return 0;
+    except:
+        return 999;
+#my_connectionError();   
+
+def sell_buy_poppy():
+  for i in range(12):    
+    poppy=Location(555,324)
+    try:
+        poppy=find("1658057886220.png").getTarget();
+        print poppy# 555,324
+        click(poppy);sleep(2)#Location(555, 326)
+    except:
+        pass;
+    click(poppy.offset(0, 94));sleep(2)
+    click(poppy.offset(600-542, 517-324));sleep(1)
+    RemoveObject=find("1658057148093.png")
+    #print RemoveObject,
+    click(Location(494, 514))#,click stoned?
+    mouseDown(Button.LEFT);sleep(0.2);mouseUp(Button.LEFT);sleep(1)
+    Sell=find("1658057450850.png")
+    click(Location(744, 676));sleep(1)
+    click(Location(509, 476));sleep(1)
+    click(Location(519, 573));sleep(1)
+    Yes=find("1658057621555.png")
+    click(Location(509, 684));sleep(4)
+
+def cookie_item(item,title):
+    if bool(cookieItemFulls.get(title)):
+        return;
+    try:
+        loc=find(item);    
+        print title,loc;#M[1369,267 250x158]@
+        if loc.getScore()>0.85:
+            loc1=Location(loc.x+loc.w*0.9,loc.y+loc.h*0.75)
+            rg=Region(loc1.x-80,loc1.y-50,80*2,50*2)
+            try:
+                loc2=rg.find("1655843239458.png")
+                print 'x0:',loc2 
+                if loc2.getScore()<0.93:
+                    raise Exception('bad score'); 
+            except:        
+                click(loc1);
+                sleep(1);
+                try:
+                    loc2=find("1656888495630.png");
+                    click(loc2.getTopRight());
+                    cookieItemFulls[title]=True;
+                except:
+                    pass;
+    except:
+        pass;
+
+import datetime;
+cookieItems=[["1656276637754.png",'Jellybean Jam']
+#            ,["1656996995975.png",'Butter']
+            ,["1656997272926.png",'Wood']
+            ,["1657059240407.png",'Shovel']
+            ,["1656277184823.png",'Planter']
+            ,["1656277384825.png",'Cream']
+            ,["1656277517404.png",'Latte']
+            ,["1656277609357.png",'Pillow']
+            ,["1656277907046.png",'Candy Saw']    
+        ,["1655844625187.png",'Suger Cube']            
+            ,["1655860567350.png",'Toffe Jam']      
+            ,["1656860612793.png",'Ring']      
+            ,["1655947616537.png",'Stew']      
+            ,["1656860737440.png",'Focaccia']      
+            ,["1655947493149.png",'Toy']      
+            ,["1655843769524.png",'Axe']      
+            ,["1655860711815.png",'Candy Wool']
+            ,["1656276970547.png",'Hearty Rye']];
+#ci=cookieItems[2]
+def cookie_wook():
+
+    cookie_item("1655860761062.png",'Milk:');            
+    cookie_item("1655862866954.png",'Basket:');    
+    cookie_item("1655871263617.png",'Flower:');    
+    for ci in cookieItems:
+         cookie_item (ci[0],ci[1]);
+    cookie_item("1655860632123.png",'Jelly Jam:');
+    try:
+        loc=find("1655844115185.png");    
+        print 'JellyBean:',loc;#M[1369,267 250x158]@
+        if loc.getScore()>0.85:
+            loc1=Location(loc.x+loc.w*0.9,loc.y+loc.h*0.75)
+            rg=Region(loc1.x-80,loc1.y-50,80*2,50*2)
+            try:
+                loc2=rg.find("1655843239458.png")
+                print loc2 
+                if loc2.getScore()<0.85:
+                    raise Exception('bad score'); 
+            except:        
+                click(loc1);
+                sleep(1);
+    except:
+        pass;
+    try:
+        loc=find("1655843068695.png");    
+        print 'flour:',loc;#M[1369,267 250x158]@        
+        loc1=Location(loc.x+loc.w*0.95,loc.y+loc.h*0.75)
+        rg=Region(loc1.x-80,loc1.y-50,80*2,50*2)
+        try:
+            rg.find("1655843239458.png")
+        except:        
+            click(loc1);
+            sleep(1);
+    except:
+        pass;
+    click(Location(1012, 529)); #right       
+    sleep(1);
+#    click(Location(451, 530));#left
+#    sleep(1);
+
+def findOR(rgs,pics):
+    for rg in rgs:
+        for pic in pics:
+            try:
+                loc=rg.find(pic);
+                return loc;
+            except:
+                pass;
+def cookie_works():
+    loc=findOR([Screen()],["1655859264104.png","1656038737775.png"])
+    print loc
+    if bool(loc):
+        click(loc)
+        sleep(3)
+        click(loc)
+        sleep(5)
+    
+        cookieItemFulls={};
+    
+        for j in range(2624):
+            for i in range(31):
+                cookie_wook();
+                mouseMove(Location(0,0))
+                sleep(0.5)         
+                locMouse=Mouse.at();
+                if not (locMouse.x<10 and locMouse.y<10):
+                    break;
+            if i<31-1:
+                break;
+            sleep(13)         
+    #Shards: -20/29/6 -19/25?/5 -21/?/8  -17/18/4
+    if False:
+        #without mouse
+        for j in range(222):
+            for i in range(31):
+                cookie_wook();
+            print datetime.datetime.now();
+            sleep(113)        
+#print cookie_works();
+
+def scale(rg,sc0):
+   sc=Screen();#R[0,0 1920x1080]@S(0)
+   return Region(rg.x*sc.w/sc0.w,rg.y*sc.h/sc0.h,rg.w*sc.w/sc0.w,rg.h*sc.h/sc0.h)
+#print scale(Region(0,0,560,406),Region(0,0,1920,1080))
+#print scale(Region(993,494,373,270),Region(0,0,1280,768))
+#R[993,494 373x270]@S(0) for 1280x768
+
+
+
 ClientRegions={
         gtx1060:Region(161,40,1598,998),
         inossem:Region(1,100,1200,625)
@@ -2390,3 +2655,80 @@ poppymenu();
 
 
 research20220603mom=["1654253115297.png""1654253130553.png""1654253218427.png"];
+research20220602gxt1060=["1654216372174.png","1654216443750.png","1654216482447.png","1654216528869.png","1654216900072.png","1654216955197.png","1654216981472.png","1654217008071.png",
+        "1654217043760.png""1654217080165.png""1654217110710.png""1654217142276.png""1654217174634.png""1654217210442.png""1654217230861.png""1654217254557.png""1654217287737.png""1654217309163.png""1654217333725.png""1654217351165.png""1654217382882.png"
+"1654217427420.png","1654217579782.png","1654217594047.png"       
+        ];#jhohose done
+research20220602mom=["1654218920852.png""1654219492449.png""1654219625302.png""1654219716427.png""1654219769328.png"];
+research20220602trump=["1654220755557.png""1654220987936.png"];
+
+import gc
+gc.collect()    
+
+
+def dump_garbage():
+    # force collection
+    print "\nGARBAGE:"
+    gc.collect()
+
+    print "\nGARBAGE OBJECTS:"
+    for x in gc.garbage:
+        s = str(x)
+        if len(s) > 80: s = s[:80]
+        print type(x),"\n  ", s
+
+    if __name__=="__main__":
+        import gc
+        gc.enable()
+        gc.set_debug(gc.DEBUG_LEAK)
+    
+        # make a leak
+        l = []
+        l.append(l)
+        del l
+    
+        # show the dirt ;-)
+        dump_garbage()
+
+
+print my_friend()
+print my_friend1()
+print my_friend_in()
+print my_friend_menu()
+print my_friend_active()
+
+my.lastRun="";
+mine.append(my_friend)
+mine_unknown=[my_friend,my_friend1,my_friend_in,my_friend_menu,my_animal_level,my_close,my_star,my_GrownUp,my_many_cash,my_many_trash,my_coin,
+        my_cash,my_born,my_cash_bronze,my_many_water,my_ball,my_water,my_direct_water
+        ,my_direct_ramp,my_feed,my_direct_ramp_right,my_direct_ramp_left
+        ,my_focus,my_zoo,my_friend_active,my_check,my_breed,my_great];
+
+def my_run(mine):
+    running=True;
+    while running :
+        did=False;
+        t0=datetime.datetime.now();
+        for mi in mine:
+            if mi==my.lastRun:
+                #do not repeat? helping out corner stuck
+                continue;
+            if(mi()==0):                            
+                print mi;
+                did=True;
+                my.lastRun=mi;
+                my.lastStatus="{F}".format(F=mi)
+                break;
+        if did:
+            continue;
+        print datetime.datetime.now()-t0;
+        my.lastRun="otherdeeds";
+    #        if need_my_focus_inossem: 
+    #           need_my_focus_inossem=False;
+    #           my_focus_inossem();
+        break;
+        my_ramp();
+        ROI=[];
+        
+print my_run(mine_unknown)
+print mine_unknown
