@@ -22,14 +22,14 @@ execfile(getBundlePath()+'/trumpy.py')
 update_scenario();
 my.scenario=scenario;
 my.esc_close=False
-    my.in_cookie=False
+my.in_cookie=False
 my.in_zoo=False
 my.last_arena=datetime.datetime.now()- datetime.timedelta(minutes=21)
 
     
 
 
-    now=datetime.datetime.now()
+now=datetime.datetime.now()
                 
 my.GapProduct=44#22
 my.wheel_count=4;
@@ -81,54 +81,7 @@ def sell_buy_poppy():
     click(Location(509, 684));sleep(4)
 
 
-def cookie_item(item,title):
-    print title
-    global cookieItemFulls
-    if bool(cookieItemFulls.get(title)):
-        return 777;
-    try:
-        loc=find(item);    
-        print title,loc;#M[1369,267 250x158]@
-        if loc.getScore()>0.85:
-            loc1=Location(loc.x+loc.w*0.9,loc.y+loc.h*0.75)
-            rg=Region(loc1.x-80,loc1.y-50,80*2,50*2)
-            try:
-                loc2=rg.find("1655843239458.png")
-                print 'x0:',loc2 
-                if loc2.getScore()<0.93:
-                    raise Exception('bad score'); 
-                return 888;
-            except:        
-                click(loc1);
-                sleep(1);
-                try:
-                    loc2=find("1656888495630.png");
-                    click(loc2.getTopRight());
-                    cookieItemFulls[title]=True;
-                except:                    
-                    pass;
-            return 0;
-    except:
-        pass;
-    return 999;
 
-
-cookieItems=[["1666321644716.png",'Wood'],["1658935253872.png",'Suger Cube'],["1655843068695.png",'Flour']#,["1658807426137.png",'Axe']
-        ,["1661972624350.png",'Pickaxe']        ,["1663385220033.png",'Donut'],["1655947493149.png",'Birdy Toy']      
-            ,["1656277907046.png",'Candy Saw'],["1666320976107.png",'Shovel'],["1655860761062.png",'Milk'],["1655862866954.png",'Basket'],["1655871263617.png",'Flower']
-            #,["1656276637754.png",'Jellybean Jam']
-        ,["1663160713757.png",'Jellybean Jam x5'],["1661972784003.png",'Sweet Jelly Jam'],["1666321102692.png",'Toffe Jam']#,["1656996995975.png",'Butter']
-            ,["1656997272926.png",'Wood'],["1656277184823.png",'Biscuit Planter'],["1663781654636.png",'Shiny Glass'],["1657145423461.png",'Happy Planter']
-            ,["1656277384825.png",'Cream'],["1656277517404.png",'Latte'],["1661973370377.png",'Bubbly Boba'],["1656277609357.png",'Pillow'],["1661973487175.png",'Bear Jelly Toy']
-            ,["1656860612793.png",'Ring'],["1655947616537.png",'Jelly Stew'],["1661973027719.png",'Jelly Burger'],["1661973122900.png",'Candy Pasta']      
-            ,["1656276970547.png",'Hearty Rye'],["1663160270499.png",'Tart Jampie'],["1656860737440.png",'Focaccia'],["1655844115185.png",'JellyBean']      
-            ,["1655860711815.png",'Candy Wool'],["1663159291817.png",'Bubbly Boba'],["1663160194097.png",'Lamp']
-            ,["1661973592922.png",'Root Beer'],["1661973635640.png",'Spooky Muffin'],["1661973691323.png",'Radiant Shards']              
-        ];
-#print cookie_wook(cookieItems);
-#cookie_produce()
-#ci=cookieItems[2]
-#cookieiHistory=[];
 import os
 def Log(str):
     print str
@@ -160,29 +113,6 @@ def findOR(rgs,pics):
             except:
                 pass;
 
-def to_produce():
-  for i in range(2):
-    try:
-        loc=findAny("1655859264104.png","1656038737775.png")
-        print loc
-        if len(loc)>0:
-            click(loc[0])
-            sleep(3)
-            try:
-                click("1664565175064.png")
-                sleep(1)
-            except:
-                pass;
-            click(loc[0])
-            sleep(5)          
-            find("1664565368984.png")
-            return 0;    
-        break;
-    except:
-        if i>0:
-            return 888;
-  return 999;    
-#print to_produce()
 
 cookieItemPrior={};
 cookieItemHistory=[];
@@ -638,9 +568,8 @@ def which_zoo1():
         pass;
     try:
         zoc3=AdvisorRegion.findAny(Pattern("1648929649914.png").similar(0.74),"1682703766413.png","1648929649914.png")[0];
-            zoo="Kujali";
-            return zoo;
-        zoc=zoc3;
+        zoo="Kujali";
+        return zoo;
     except:
         pass;
     try:
@@ -2682,7 +2611,8 @@ def my_many_cash():   #cash is full
     locs=list(rg.findAll(my.my_cash_pic));
     if len(locs)==0:
         pics=["cash_over.png",
-				Pattern("cash.png").similar(0.50),Pattern("1715214659740.png").similar(0.69),
+				Pattern("cash.png").similar(0.50)
+               ,#Pattern("1715214659740.png").similar(0.69),
 				"1645890337103.png", "1674530367809.png"]
         ll=rg.findAny(pics)
         if len(ll)>0:
@@ -2707,9 +2637,9 @@ def my_many_cash():   #cash is full
             return 0;
         print getLogin()
         my_cash=my_casher(getLogin(),zoo);    
-            if my.cntzoo!=zoo:
-                my.cntzoo=zoo;
-                my.cnt0=my_cash.me;
+        if my.cntzoo!=zoo:
+            my.cntzoo=zoo;
+            my.cnt0=my_cash.me;
             #print zoo,'as of',my.cnt0
             for loc in locs:
                 lastLoc=loc.getTarget();
@@ -2717,7 +2647,7 @@ def my_many_cash():   #cash is full
                 cnt=my_cash.count()
                 if cnt>my.cnt0+2:
                     nextTime[zoo]=nextTime[zoo]*5/6;
-                print zoo,'faster',cnt,nextTime[zoo]
+                    print zoo,'faster',cnt,nextTime[zoo]
                     my.cnt0=cnt*6;
                 sleep(0.2);
         else:
@@ -4083,15 +4013,18 @@ def my_breed_from_center():
         return 999;
 #print my_breed_from_center()
 
-breed_animals=[Pattern("breed_mouse.png").similar(0.46),"breed_panther.png",
-        "breed_badger.png","breed_dikdik.png","breed_lybx.png"
-        ,"breed_mara.png","breed_pheasant.png"];
+breed_animals=[["mouse",Pattern("breed_mouse.png").similar(0.46)]
+        ,["panther","breed_panther.png"]
+        ,["dikdik","breed_dikdik.png"]
+        ,["lynx","breed_lynx.png"]
+        ,['mara',"breed_mara.png"]
+        ,['pheasant',"breed_pheasant.png"]];
 
 def my_breeds():
   for ispg in range(4):
     try:
      click(findAny("my_breed_add.png","1682809597946.png")[0]);sleep(2)
-     break;
+     select_animal();
     except:
         try:
             click("1704873420009.png");sleep(1) 
@@ -4099,22 +4032,66 @@ def my_breeds():
             return 999;
         if ispg>2:
             return 888;
-  return select_animal();
 #my_breeds();
 
 def select_animal():
-    cel=Region(451,344,202,203);
-    gpx=cel.w    
+    for r in breed_animals:
+        locs=findAny(r[1:])
+        if len(locs)>0:
+            locs.next().click();
+            return; # did the prior one?
+    cel=Region(451,344,202,203);#gtx1060
+    cel=Region(285,310,124,123);
+    donttry=[];
+    my.EnclosureType=find("1734549824231.png");
+    my.NextPage=find("1734549888176.png");
+    gpx=cel.w;  
     gpy=cel.h;    
-    for ix in range(1):
-        for iy in range(1):            
-            Location(cel.x+cel.w*ix+cel.w/2, cel.y+cel.h*iy+cel.h/2).click();sleep(2);
-            print choose_two_animals();
-            esc_breed()
-            
-#select_animal();
+    for it in range(15):
+        gpx=(my.NextPage.x-my.EnclosureType.x)*124/678;
+        gpy=(my.NextPage.y+my.NextPage.h/2-my.EnclosureType.y-my.EnclosureType.h)*124/182;
+        celx=my.NextPage.x-5*gpx+9;
+        cely=my.EnclosureType.y+my.EnclosureType.h-9;
+        #print cel,celx,cely,gpx,gpy
+        itr=-1;
+        for itr in range(10):
+            ix=random.randint(0,4);
+            iy=random.randint(0,2);
+            #ix=0;iy=0;
+            rg=Region(celx+gpx*ix,cely+gpy*iy,gpx,gpy)
+            locs=rg.offset(rg.w/2,rg.h/2).findAny(Pattern("1734556807959.png").similar(0.85),Pattern("1734556853964.png").similar(0.74),Pattern("1734561723325.png").similar(0.97),Pattern("1734556878528.png").similar(0.95),Pattern("1734557070065.png").similar(0.78))
+            if locs.isEmpty():
+                if len(donttry)>0:
+                    if rg.findAny(donttry).isEmpty():
+                        break;
+                else:
+                    break;
+            print 'xxx',ix,iy
+        if itr>=9:
+            return 555;
+        sf='animal{}{}.png'.format(ix,iy)        
+        rg=rg.grow(-15);    
+        img=Screen().capture(rg);        
+        img.save(getBundlePath(),sf);
+        #breed_animals.append([sf,sf]);
+        sl="breed_animals.append(['{}','{}']);\n".format(sf[:-4],sf)
+        with open(getBundlePath()+"\\autoconfig.py", "a+") as file:
+            file.write(sl)    
+        rg.click();sleep(2);
+        ct=choose_two_animals(sf);        
+        print ct
+        if ct>0: 
+            donttry.append(sf);
+            break;#something broke return ct
+    #    esc_breed()
+#print donttry 
+#print select_animal();
+
 def esc_breed():
-       Region(1468,108,223,180).find("1734380685277.png").click();sleep(1)
+       rg=Region(my.NextPage.x+21,my.EnclosureType.y-(my.NextPage.y+my.NextPage.h/2-my.EnclosureType.y)*74/250
+               ,my.NextPage.w*5*77/88/4
+               ,(my.NextPage.y+my.NextPage.h/2-my.EnclosureType.y)*74/250)
+       rg.findAny("1734551728180.png","1734380685277.png")[0].click();sleep(1)
 
 def oldmy_breeds():
     for ipg in range(4):
@@ -4149,7 +4126,7 @@ def oldmy_breeds():
         ssl=sum(sl); 
         gpy+=int(len(sl)/ssl);
     try:
-    zpy=zp[0][1]+coks[0].h/2;
+        zpy=zp[0][1]+coks[0].h/2;
     except: 
         #index out of range: 0
         err='zpy=zp[0][1]+coks[0].h/2;'
@@ -4185,7 +4162,7 @@ def oldmy_breeds():
 #select_animal();
 
 def isdoublebread(animal):
-    return True;
+    return False;
 
 def choose_two_animals(animal):
     cr=my.ClientRegion;
@@ -4202,27 +4179,30 @@ def choose_two_animals(animal):
     print m, '+',f
     #to choose the change color priority?
     try:
-        loc=findAny(Pattern("Chance.png").similar(0.56).targetOffset(47,-1),Pattern("1734382289779.png").similar(0.62))[0];    
+        loc=findAny(Pattern("Chance.png").similar(0.56).targetOffset(47,-1)
+                #,Pattern("1734382289779.png).similar(0.62)
+                )[0];    
     except:
         esc_breed()
         return 999;
     if not(isdoublebread(animal)):
-    try:
-            rg=loc.grow(loc.h*2)
-            rg.findAny(Pattern("1734382544576.png").similar(0.86),Pattern("1682632846440.png").similar(0.82),"20p.png")[0];        #chance more than 30, or =3% 2%? 
+        try:
+            rg=loc.grow(loc.h*3)
+            rg.findAny(#Pattern("1734382544576.png").similar(0.86),
+                Pattern("1682632846440.png").similar(0.82),Pattern("20p.png").similar(0.79),Pattern("1734554932313.png").similar(0.90))[0];        #chance more than 30, or =3% 2%?  "1734555752559.png"
             esc_breed()
             return 333;
-    except:
-        pass;
+        except:
+            pass;
         try:
-            m2=rg.findAny(Pattern("1682632846440.png").similar(0.89));        #chance more than 20
+            rg.findAny(Pattern("1682632846440.png").similar(0.89))[0];        #chance more than 20
             esc_breed()
             return 222;
         except:
             pass;
     if my.StartNow:
         click(findAny(Pattern("StartNow.png").similar(0.63),"1734382393426.png")[0]);sleep(2)
-    typemaybe_Key_ESC();
+    #esc_breed();
     return 0;
 
 #choose_two_animals("1734383062565.png");
@@ -4267,12 +4247,12 @@ def my_breed():
     now=datetime.datetime.now()
     t=my.last.get('waste_time_my_breed');
     if(t):
-    if (    #math.sqrt((CenterX-my.my_breed_location.x)**2
+        if (    #math.sqrt((CenterX-my.my_breed_location.x)**2
             #+(CenterY-my.my_breed_location.y)**2)<200 and  
             t+datetime.timedelta(minutes=70)>now and                          
             t+datetime.timedelta(minutes=1)<now):
 #        print now,' skip my_breed saving ',my.waste_time_my_breed
-        return 999;
+            return 999;
     try:    
         click(my.ClientRegion.findAny("1677559485225.png","1727127743964.png")[0]);sleep(1)
         my_close();
@@ -4397,20 +4377,25 @@ def feed_cancel():
     click(Location(loc.x+loc.w*0.8,loc.y+loc.h*0.8))
 #feed_cancel()
 
-breed_numbers=[["1684187930409.png",20],["1684187950865.png",19],["1677522257885.png",18],["1677522244418.png",17],["1677522276331.png",16],["1677522123881.png",14]
-        ,["1677522105039.png",13],["1662341220893.png",12],[Pattern("1734383153765.png").similar(0.69),12],["1677518282861.png",11],["1734384803402.png",11],["1662341241034.png",10],["1734384832309.png",10],["1704871692613.png",9],["1684187259039.png",9]
+breed_numbers=[["1684187930409.png",20]
+        ,[Pattern("1684187950865.png").similar(0.88),19],[Pattern("1734552757409.png").similar(0.79),19]
+        ,["1677522257885.png",18],["1677522244418.png",17],["1677522276331.png",16],["1677522123881.png",14]
+        ,["1677522105039.png",13],["1662341220893.png",12],[Pattern("1734383153765.png").similar(0.69),12],["1677518282861.png",11],["1734384803402.png",11],["1662341241034.png",10],["1734384832309.png",10]
         ,["1662341241034.png",10]
-        ,[Pattern("1704871692613.png").similar(0.91),9,Pattern("3.png").similar(0.83)]#mees 3
-        ,["1684187259039.png",9]
+        ,[Pattern("1704871692613.png").similar(0.94),9]#mess 6
+        ,[Pattern("1684187259039.png").similar(0.78),9]
+        ,[Pattern("1704871692613.png").similar(0.92),9]#mess 6
+        ,[Pattern("1684187259039.png").similar(0.76),9]#mess 8,3
         ,[Pattern("1677518318148.png").similar(0.89),8] #mess with 6
         ,["1677522158716.png",7]
         ,[Pattern("1677522342750.png").similar(0.81),6,Pattern("1662340932641.png").similar(0.86)]#mess 5 to exclud
-        ,["5.png",5]
-        ,["1662340932641.png",5],["1734383585597.png",5],["1662340896315.png",4],["1662341143419.png",3],["1662341191084.png",2],["1662341115047.png",1]];
+        ,[Pattern("5.png").similar(0.88),5]
+        ,[Pattern("1662340932641.png").similar(0.88),5],["1734383585597.png",5]
+        ,["1662340896315.png",4],["1662341143419.png",3],["1662341191084.png",2],["1662341115047.png",1]
         ,["1662340896315.png",4]
         ,[Pattern("1662341143419.png").similar(0.85),3]
         ,["1662341191084.png",2],["1662341115047.png",1]];
-choose_two_animals();
+#choose_two_animals("");
 
 def bot71(lf):
     for nm in breed_numbers:
@@ -5220,25 +5205,30 @@ print my_clear_feed()
 #894 init
 if False: #buy easter egg
   for i in range(70):
-    click(findAny("1711253199163.png","1719108402847.png","1726084177266.png","1730237918061.png","1734387245291.png","1719355134173.png","1726085425097.png","1730238568696.png")[0]);    sleep(1)
+    click(findAny("1711253199163.png","1719108402847.png","1726084177266.png","1730237918061.png"
+                ,"1734511798765.png","1734387245291.png","1719355134173.png","1726085425097.png","1730238568696.png")[0]);    sleep(1)
     click(findAny(Pattern("1670669685882.png").similar(0.47),"1719108468733.png")[0]);    sleep(2)#to shop
 #    click(findAny("1670669771737.png","1719108506525.png")[0]);    sleep(1)#arrow down
     
-    loc=findAny(Pattern("1707839356315.png",).targetOffset(75,-9)
-            ,Pattern("1726084514688.png").similar(0.60).targetOffset(-185,-49),Pattern("1730237999723.png").similar(0.69).targetOffset(89,-77),Pattern("1734387299906.png").similar(0.66).targetOffset(-171,207)
-            ,"1711253241702.png"
+    loc=findAny(Pattern("1726084514688.png").similar(0.60).targetOffset(-185,-49)
+                ,Pattern("1730237999723.png").similar(0.69).targetOffset(89,-77)
+                ,Pattern("1734387299906.png").similar(0.66).targetOffset(-171,207)
+            ,Pattern("1734511937235.png").similar(0.61).targetOffset(-60,-5)
             ,Pattern("1719355216503.png").similar(0.42).targetOffset(93,30)
             ,Pattern("1719606372507.png").similar(0.51).targetOffset(75,37)
             ,Pattern("1726085568390.png").similar(0.63).targetOffset(-9,-29),Pattern("1726346535166.png").similar(0.63).targetOffset(57,-110),Pattern("1727258356362.png").similar(0.67)
             ,Pattern("1730238634348.png").similar(0.68).targetOffset(61,87))[0];
-    drag(findAny("1711253259826.png","1719108566225.png","1726084270086.png","1730237979236.png",Pattern("1734387352138.png").targetOffset(0,-77)
-    ,findAny("1719355240773.png","1726085644677.png","1730238682162.png")[0]);    sleep(2)    
+    drag(findAny("1711253259826.png","1719108566225.png","1726084270086.png","1730237979236.png"
+              ,Pattern("1734512000308.png").targetOffset(-2,-41)      ,Pattern("1734387352138.png").targetOffset(0,-77)
+        ,"1719355240773.png","1726085644677.png","1730238682162.png")[0]);    sleep(2)    
     dropAt(loc);sleep(2)
     
     click(findAny("1670669969525.png","1719108961803.png")[0]);    sleep(7) #check yes
-    click(findAny("1711253305562.png","1719108625026.png","1726084364607.png","1730238078340.png","1734387433423.png")[0]);    sleep(2)    #poppy - snowflake    
-    click(findAny(Pattern("1719108646459.png").similar(0.61),Pattern("1726084385926.png").similar(0.54),Pattern("1730238101525.png").similar(0.66).targetOffset(16,-12),Pattern("1734387486665.png").similar(0.64))[0]);    sleep(2) #object in field
-    click(findAny("1670670246915.png",Pattern("1719108676400.png").similar(0.55))[0]);    sleep(1)    #hand out
+    click(findAny("1711253305562.png","1719108625026.png","1726084364607.png","1730238078340.png"
+                ,"1734513401365.png","1734387433423.png")[0]);    sleep(3)    #poppy - snowflake    
+    click(findAny("1670670246915.png",Pattern("1719108676400.png").similar(0.55)
+                ,Pattern("1734513461272.png").similar(0.62))[0]);    sleep(1)    #hand out
+    click("1670670246915.png");    sleep(1)    #hand out
     click(findAny("1670670333091.png","1702826720460.png","1719108707927.png")[0]);    sleep(2);#Yes
     click(findAny(Pattern("1670670387139.png").similar(0.67),"1719108739794.png")[0]);    sleep(6); #sell
 #fail from numpy import random    
