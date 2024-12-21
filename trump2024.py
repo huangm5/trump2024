@@ -4091,7 +4091,7 @@ def oldmy_breeds():
 #select_animal();
 
 def isdoublebread(animal):
-    return True;
+    return False;
 
 def choose_two_animals(animal):
     cr=my.ClientRegion;
@@ -4115,13 +4115,13 @@ def choose_two_animals(animal):
     if not(isdoublebread(animal)):
         try:
             rg=loc.grow(loc.h*2)
-            rg.findAny(Pattern("1734382544576.png").similar(0.86))[0];        #chance more than 30, or =3% 2%? 
+            rg.findAny(Pattern("1734382544576.png").similar(0.89))[0];        #chance more than 30, or =3% 2%? 8%?
             esc_breed()
             return 333;
         except:
             pass;
         try:
-            m2=rg.findAny(Pattern("1682632846440.png").similar(0.89));        #chance more than 20
+            m2=rg.findAny(Pattern("1682632846440.png").similar(0.89),Pattern("1734488253750.png").similar(0.86))[0];        #chance more than 20
             esc_breed()
             return 222;
         except:
@@ -4131,7 +4131,7 @@ def choose_two_animals(animal):
     typemaybe_Key_ESC();
     return 0;
 
-#choose_two_animals("1734383062565.png");
+choose_two_animals("1734383062565.png");
 #my_breeds()
 my.StartNow=True;
 
@@ -4139,11 +4139,11 @@ my.StartNow=True;
 
 
 #my.my_breed_location=Location(0,0)
+my.waste_time_my_breed=999
 def my_breed():
     now=datetime.datetime.now()
-    t=my.last.get('waste_time_my_breed');
-    if(t):
-        if (    #math.sqrt((CenterX-my.my_breed_location.x)**2
+    t=my.last['waste_time_my_breed'];
+    if (    #math.sqrt((CenterX-my.my_breed_location.x)**2
                 #+(CenterY-my.my_breed_location.y)**2)<200 and  
                 t+datetime.timedelta(minutes=70)>now and                          
                 t+datetime.timedelta(minutes=1)<now):
@@ -4273,12 +4273,17 @@ def feed_cancel():
     click(Location(loc.x+loc.w*0.8,loc.y+loc.h*0.8))
 #feed_cancel()
 
-breed_numbers=[["1684187930409.png",20],["1684187950865.png",19],["1677522257885.png",18],["1677522244418.png",17],["1677522276331.png",16],["1677522123881.png",14]
-        ,["1677522105039.png",13],["1662341220893.png",12],[Pattern("1734383153765.png").similar(0.69),12],["1677518282861.png",11],["1734384803402.png",11],["1662341241034.png",10],["1734384832309.png",10],["1704871692613.png",9],["1684187259039.png",9]
-        ,[Pattern("1677518318148.png").similar(0.89),8] #mess with 6
+breed_numbers=[["1684187930409.png",20]
+        ,["1684187950865.png",19]#mess 13
+        ,["1677522257885.png",18],["1677522244418.png",17],["1677522276331.png",16]
+        ,["1677522123881.png",14]
+        ,["1677522105039.png",13],["1662341220893.png",12],[Pattern("1734383153765.png").similar(0.69),12],["1677518282861.png",11],[Pattern("1734384803402.png").similar(0.86),11]#mess 6
+        ,["1662341241034.png",10],["1734384832309.png",10],["1704871692613.png",9],[Pattern("1684187259039.png").similar(0.88),9]#mess 8
+        ,[Pattern("1677518318148.png").similar(0.89),8],[Pattern("1734488409836.png").similar(0.95),8] #mess with 6
         ,["1677522158716.png",7]
         ,[Pattern("1677522342750.png").similar(0.86),6]#mess 5
-        ,["1662340932641.png",5],["1734383585597.png",5],["1662340896315.png",4],["1662341143419.png",3],["1662341191084.png",2],["1662341115047.png",1]];
+        ,["1662340932641.png",5],[Pattern("1734383585597.png").similar(0.96),5]#mess 3
+        ,["1662340896315.png",4],["1662341143419.png",3],["1662341191084.png",2],["1662341115047.png",1]];
 #choose_two_animals('');
 
 def bot71(lf):
@@ -5147,7 +5152,6 @@ print dir(my_GrownUp.func_code.co_varnames.count)
 print (my_poo_find_gtx1060.func_name)
 print (my_poo_find_gtx1060.func_dict)
 
-#1190 "1729697470577.png" full harv
 
 #  File "C:\Users\Public\Documents\trump2024.charlotte.sikuli\trump2024.py", line 3995, in select_animal
 #    zpx=zp[0][1]+coks[0].w/2;
