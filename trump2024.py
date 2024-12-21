@@ -1,3 +1,4 @@
+﻿#[error] ImagePath: find: not there: inossem/water.png
 import math;
 
 gtx1060="gtx1060";
@@ -7,7 +8,7 @@ global cookieItemFulls
 cookieItemFulls={};
 
 
-scenario=gtx1060;
+scenario=inossem;
 
 import datetime;
 
@@ -21,18 +22,18 @@ execfile(getBundlePath()+'/trumpy.py')
 update_scenario();
 my.scenario=scenario;
 my.esc_close=False
-my.in_cookie=False
+    my.in_cookie=False
 my.in_zoo=False
 my.last_arena=datetime.datetime.now()- datetime.timedelta(minutes=21)
 
+    
 
 
-
-now=datetime.datetime.now()
-      
+    now=datetime.datetime.now()
+                
 my.GapProduct=44#22
 my.wheel_count=4;
-
+            
 cookieItemFulls={};
 my.darkLoopMaybe=0;
 def my_connectionError():
@@ -408,7 +409,7 @@ def my_direct_ramp():
             ];
     for i in range(len(wilds)):
         try:
-            my.ClientRegion.find(managed(wilds[i],"wildtohome"));
+            lc=my.ClientRegion.findAny(wilds[i])[0];
             Log("wildtohome #{I}".format(I=i));
             drag(autoscale(Location(222, 574),inossem));
             dropAt(autoscale(Location(986, 275),inossem));
@@ -549,7 +550,6 @@ def update_ClientRegion():
     return None;
 update_ClientRegion();
 print my.ClientRegion;
-#my.ClientRegion.click()
 
 
 global zoo,landmarks,Orig_Xs,Orig_Ys;
@@ -583,14 +583,12 @@ def auto_must(rg,origin): #ClientRegions not my.ClientRegion
 #print auto(ClientRegions[gtx1060],gtx1060);
 #print auto(ClientRegions[inossem],inossem);
 ROI=[];        
-        
-def which_zoo1():
+def xwhich_zoo_gtx1060():
     zoo='unknown';
-    zoc=None;
-    AdvisorRegion=Region(my.ClientRegion.x,my.ClientRegion.y,306,300);
+    AdvisorRegion=Region(0,0,481,440);
     try:
-        zoc=AdvisorRegion.findAny(Pattern("1733027481661.png").similar(0.61))[0];
-        zoo="Polar";
+        zoc=AdvisorRegion.findAny(Pattern("1648929649914.png").similar(0.74),"1682703766413.png")[0];
+        zoo="Kujali";
         return zoo;
     except:
         pass;
@@ -605,6 +603,31 @@ def which_zoo1():
         zoo="Aquarium";
         return zoo;
     except:
+        pass;
+    try:
+        zoc=AdvisorRegion.find(Pattern("1646455590532.png").similar(0.54));
+        zoo="Terrarium";
+        return zoo;
+    except:
+        pass;   
+    return zoo;
+#print which_zoo_gtx1060();
+        
+def which_zoo1():
+    zoo='unknown';
+    zoc=None;
+    AdvisorRegion=Region(0,0,306,300);
+    try:
+        zoc=AdvisorRegion.find(Pattern("1646769583487.png").similar(0.76));
+        zoo="Main";
+        return zoo;
+    except:
+        pass;
+    try:
+        zoc=AdvisorRegion.find(Pattern("Aquarium.png").similar(0.56));
+        zoo="Aquarium";
+        return zoo;
+    except:
         pass;   
     try:
         zoc=AdvisorRegion.findAny(Pattern("1652374285038.png").similar(0.79),"fir.png")[0];
@@ -615,7 +638,9 @@ def which_zoo1():
         pass;
     try:
         zoc3=AdvisorRegion.findAny(Pattern("1648929649914.png").similar(0.74),"1682703766413.png","1648929649914.png")[0];
-        zoo="Kujali";
+            zoo="Kujali";
+            return zoo;
+        zoc=zoc3;
     except:
         pass;
     try:
@@ -736,7 +761,7 @@ def my_redeem_prize():
            return 0;
    except:
        pass;
-   cards=list(findAll("card_question.png"));
+   cards=list(my.ClientRegion.findAll("card_question.png"));
    for card in cards:
       click(card);sleep(2);
       click(card.offset(-5,0));sleep(2);
@@ -1405,12 +1430,8 @@ def my_friend_menu_drop():
    if not my.friend_active:
         return 999;
    try:
-        lastLoc=menudrop.find(managed("1652299608937.png","my_friend_menu_drop")); 
-        #green triangle point down
-#        lastLoc= Region(1159,120,29,31).find("1649554885808.png");        
-        lastLoc=lastLoc.getTarget(); 
-        click(lastLoc); 
-        sleep(1.25);
+        lastLoc=menudrop.findAny("1652299608937.png","my_friend_menu_drop.png")[0]; 
+        click(lastLoc); sleep(1.25);
         return 0;
    except:
        pass;
@@ -1509,9 +1530,10 @@ my.friend_tbd1=False;
 
 
 
-
+my.tamp_friend_menu=4
 def my_friend_menu():
     if not my.friend_active:
+        my.tamp_friend_menu=0;
         t=my.last.get('friend_active')            
         now=datetime.datetime.now();
         if now.hour-t.hour<0 or now.hour-t.hour>2:           
@@ -1520,6 +1542,10 @@ def my_friend_menu():
             my.friend_active=True;
         else:            
             return 999;
+    my.tamp_friend_menu=my.tamp_friend_menu+1
+    h=(4+datetime.datetime.now().hour)%24; #how about daylight saving?
+    if random.random()>h*h/24.01/my.tamp_friend_menu:
+       return 888; #next chance
     my_friend_menu_drop(); #cannot use safely
     try:
         lastLoc=find(managed("1652299824877.png","my_friend_menu")); 
@@ -1557,11 +1583,12 @@ def findAnyAll(a):
     return loc_tbd
 
 def my_friend_helpy():
-#    isgtx1060=(gtx1060==my.scenario)
+    #"1717544695161.png"
+    isgtx1060=(gtx1060==my.scenario)
     loc_help=False;
     for k in range(2):
         try:
-            loc_help=my.ClientRegion.findAny(Pattern("1664845762765.png").similar(0.92),Pattern("1716411693136.png").similar(0.90))[0];#help
+            loc_help=my.ClientRegion.findAny(Pattern("1664845762765.png").similar(0.92),"help2.png")[0];#help
             isHelp=True;
             if loc_help.getScore()<0.93: #gray for 0.85
                 try:
@@ -1580,8 +1607,8 @@ def my_friend_helpy():
         for ii in range(2):            
            sleep(1);
            try:
-               loc_tbd=findAnyAll([Pattern("1681157936645.png").similar(0.66),Pattern("1682484909768.png").similar(0.74),Pattern("1702436558463.png").similar(0.96),Pattern("1704695474006.png").similar(0.75),Pattern("1705519957121.png").similar(0.94),Pattern("1716412104606.png").similar(0.97)])
-#               print loc_tbd
+               loc_tbd=findAnyAll([Pattern("1681157936645.png").similar(0.66),Pattern("1682484909768.png").similar(0.74),Pattern("1702436558463.png").similar(0.96),Pattern("1704695474006.png").similar(0.94),Pattern("1705519957121.png").similar(0.94)])
+               print loc_tbd
  
 #               loc_tbd=list(findAll([Pattern("1681157936645.png").similar(0.84),Pattern("1682484909768.png").similar(0.93),Pattern("1702436558463.png").similar(0.97)]))
                AnyWork=False;
@@ -1592,7 +1619,7 @@ def my_friend_helpy():
                        exs=list(rg.findAny(Pattern("1681154621992.png").similar(0.89),Pattern("1681239571826.png").similar(0.90),Pattern("1682485274966.png").similar(0.95),Pattern("1682485321162.png").similar(0.96),Pattern("1705572783200.png").similar(0.95)))
                        if len(exs)>0:
 #                           s1=list(rg.findAny([[Pattern("1681239434782.png").similar(0.89),Pattern("1681239482463.png").similar(0.90)],[Pattern("1682485529411.png").similar(0.92),Pattern("1682485490712.png").similar(0.97)]][isgtx1060]))[0].getScore()
-                           sl1=list(rg.findAny(Pattern("1681239434782.png").similar(0.95),Pattern("1681239482463.png").similar(0.95),Pattern("1716411862873.png").similar(0.95)));
+                           sl1=list(rg.findAny(Pattern("1681239434782.png").similar(0.95),Pattern("1681239482463.png").similar(0.95)));
                            if len(sl1)==0:
                                continue;
                            sl=sl1[0].getScore()
@@ -1830,6 +1857,8 @@ def my_grandpa():
         click(findAny(Pattern("ramp_helper_head.png").similar(0.53),"1704605432837.png")[0]);sleep(3) #my.TimeLoadZoo/77=1
         click("ramp_helper_news.png");sleep(3);
         if my_breed_from_dialog()==0:
+            return 0;
+        if my_chest_from_dialog()==0:
             return 0;
         if my_littlehelp_from_dialog()==0:
             return 0;
@@ -2589,6 +2618,15 @@ my.my_cash_pic={gtx1060:"1640407206306.png",
                 inossem:"1645890337103.png"
                 }[scenario];
 
+emptys={"Kujali":{},"Terrarium":{},"Main":{},"Fir":{},"Aquarium":{},"Oceanside":{}};
+#from copy import deepcopy
+#print emptys.copy(),deepcopy(emptys)
+
+my_cashes={"Trump2024":emptys.copy(),
+        "Mom":emptys.copy(),
+        "Charlotte":emptys.copy(),
+        "unknown":emptys.copy()
+        }
 class Counter:
     me=0; 
     nextTime=1111;
@@ -2669,19 +2707,24 @@ def my_many_cash():   #cash is full
             return 0;
         print getLogin()
         my_cash=my_casher(getLogin(),zoo);    
-        if my.cntzoo!=zoo:
-            my.cntzoo=zoo;
-            my.cnt0=my_cash.me;
+            if my.cntzoo!=zoo:
+                my.cntzoo=zoo;
+                my.cnt0=my_cash.me;
             #print zoo,'as of',my.cnt0
-        for loc in locs:
-            lastLoc=loc.getTarget();
-            click(lastLoc);
-            cnt=my_cash.count()
-            if cnt>my.cnt0+2:
-                nextTime[zoo]=nextTime[zoo]*5/6;
+            for loc in locs:
+                lastLoc=loc.getTarget();
+                click(lastLoc);
+                cnt=my_cash.count()
+                if cnt>my.cnt0+2:
+                    nextTime[zoo]=nextTime[zoo]*5/6;
                 print zoo,'faster',cnt,nextTime[zoo]
-                my.cnt0=cnt*6;
-            sleep(0.2);
+                    my.cnt0=cnt*6;
+                sleep(0.2);
+        else:
+            for loc in locs:
+                lastLoc=loc.getTarget();
+                click(lastLoc);
+                sleep(0.2);
         return 0;
     return 999;
 #print my_many_cash(),my.cnt0,my.cntzoo
@@ -2788,7 +2831,8 @@ def isIntersect(r1,excludes):
             if rec.height>0:    
                 return True;
     return False;
-
+            
+my.work_count=0
 def my_many_work(work):    
     locs=([])
     for w in work:
@@ -2807,6 +2851,12 @@ def my_many_work(work):
    #print locs
     if len(locs)==0:
         return 999;
+    #anti repeat
+    if len(locs)==my.work_count:
+        print inspect.stack()[1][3], ' repeated';              
+        return 666;
+    my.work_count=len(locs)
+    my.work0=locs[0]
     if len(locs)==1:
         click(locs[0]);
         return 0;
@@ -2846,7 +2896,7 @@ def my_many_work(work):
 
 
 
-#import argparse
+#import argparse        
 
 
         
@@ -2960,7 +3010,7 @@ def my_clear_feed():
     dropAt(loc2.offset(0,-loc2.h));sleep(3)
     return 0;
 #print my_clear_feed()
-
+    
 def OnChange_zoo():
     my.locend=my.ClientRegion.getCenter().offset(my.ClientRegion.w/40,
         [0,-my.ClientRegion.h/10][{Terrarium:1,Aquarium:1,Oceanside:1,Main:0,Fir:0,Kujali:0}
@@ -2986,7 +3036,8 @@ def my_feed():
     try:
         rg=Region(my.ClientRegion.x+my.ClientRegion.w/2,my.ClientRegion.y+my.ClientRegion.h/4,
                 my.ClientRegion.w/2,my.ClientRegion.h/2);
-        loc1=rg.findAny(my.bucket3x)[0]
+        bucket3x=[Pattern("1704975055999.png").similar(0.77).targetOffset(-47,4)];
+        loc1=rg.findAny(bucket3x)[0]
         loc=loc1.getTarget();
     except:    
             return 888;
@@ -2998,7 +3049,11 @@ def my_feed():
     #lastLoc=feedLoc;
     lastLoc= my.ClientRegion.getCenter().offset(0,my.ClientRegion.h/8)
     drag(lastLoc.offset(0,my.ClientRegion.h/5));sleep(1)
-    drag(my.locend);sleep(1)
+#    my.zoo=which_zoo()
+#    print my.zoo
+#    print [0,my.ClientRegion.h/5][{Terrarium:1,Main:0,Fir:0,Kujali:0}[my.zoo]] 
+    locend=my.ClientRegion.getCenter().offset(0,[0,-my.ClientRegion.h/20][{Terrarium:1,Aquarium:1,Oceanside:1,Main:0,Fir:0,Kujali:0}[my.zoo]])
+    drag(locend);sleep(1)
     try:
         bucket=my.locend.grow(locend.w+locend.h).findAny(bucket)[0]    
     except:
@@ -3280,7 +3335,7 @@ def my_focus_inossem():#also other recovers
        need_my_focus_inossem=False;
     try:
        for i in range(24):
-           loc= auto(Region(398,376,445,313),inossem).find(managed("1652488232002.png","reload"));
+           loc= auto(Region(398,376,445,313),inossem).findAny("1652488232002.png","reload.png")[0];
            Log('Reloading');
            Do.popAsk('{}'.format(24-i),'Reloading',3*60);
        click(loc);sleep(1)
@@ -3288,34 +3343,39 @@ def my_focus_inossem():#also other recovers
        Do.popAsk('Reload','',20);
     except:
        pass;
-    try:   
-       loc= Region(14,0,1005,35).findAny(Pattern("pandaicon.png").similar(0.64))[0];
-       if which_zoo_inossem()=="unknown":
-#            mouseMove(loc);
-#            mouseDown(Button.LEFT);
-#            sleep(0.2);
-#            mouseUp(Button.LEFT);                    
-            click(loc);sleep(1)
-            type_Key_ESC();sleep(0.2);
-            Log('Recover tab');
-            my_redeem_prize();
-            my_great()
-            if which_zoo_inossem()!="unknown":
-                return 0;
-            Do.popAsk('90 may','Reload except splashing',90);
-            for i in range(2):
-                if findAny("Splashing.png").isEmpty():
-                    return 0;
-                    #exit;
-                    #break;
-                Do.popAsk('Splashing?',i,30);
-            LogScreen();            
-            #type(Key.F5); #F5 may be blocked?
-            Do.popAsk('Reload F5','',38)
-            return 0;
+    try: 
+       rg=Region(my.ClientRegion.getScreen())
+       rg.h=my.ClientRegion.h/10;
+       loc=rg.findAny(Pattern("pandaicon.png").similar(0.64))[0];
     except:
-       pass;        
-    return 999;
+        return 999;
+    click(loc);sleep(1)
+    for i in range(4):
+        type_Key_ESC();sleep(1);
+        if my_redeem_prize()==0 or my_great()==0:
+            if which_zoo()!="unknown":
+                return 0;
+        try:
+            click(Pattern("1716241840720.png").targetOffset(38,0));sleep(1)        
+            try:
+                click(Pattern("1716241923686.png").targetOffset(4,8));sleep(1)    
+                return 0;
+            except:             
+                type(Key.F5);
+        except:
+             pass; 
+    LogScreen();            
+    Do.popAsk('90 may','Reload except splashing',90);
+    for i in range(2):
+        if findAny("Splashing.png").isEmpty():
+            return 0;
+            #exit;
+            #break;
+        Do.popAsk('Splashing?',i,30);
+    #LogScreen();            
+    #type(Key.F5); #F5 may be blocked?
+    Do.popAsk('Reload F5','',38)
+    return 0;
 
 #print my_focus_inossem();
 
@@ -3772,17 +3832,21 @@ def my_reset4():
 #            need_my_splash=False;
 import inspect
 print inspect.stack()[0][3]
-def my_splash():
-    for i in range(100):
-        if(my_click(managed("1652449514171.png","Splash"))==0):
+def my_splash():            
+    rg=Region(my.ClientRegion.x+my.ClientRegion.w*3/7,my.ClientRegion.y+my.ClientRegion.h*4/10,my.ClientRegion.w/7,my.ClientRegion.h*3/10)
+#    rg.highlight()
+    for i in range(50):
+        try: 
+            click(rg.findAny(Pattern("1652449514171.png").similar(0.56),"Splash.png")[0]  );sleep(2) ;#fail sleep 1
             my.lastStatus='Splash';                
             return 0;
-        Do.popAsk(inspect.stack()[0][3],'',10)
+        except:        
+            if Do.popAsk(inspect.stack()[0][3],'Yes to stop',10):
+                return 777;
     return 999;
+#my_splash()
+
 my.lastStatus=''
-#my_reset4();
-
-
 
 def my_reset5():   
     os.system('taskkill /IM zoo2.exe');
@@ -3962,7 +4026,37 @@ def escape_breed():
         if my_close()!=0:
            if my_born()!=0:
                break;
-    
+
+def my_chest_from_dialog():
+    try:
+        click(findAny(Pattern("1716289173673.png").targetOffset(36,42))[0]);sleep(1)#exclude 
+        click(findAny("1716289235583.png")[0]);sleep(1)#exclude         
+    except:
+        pass
+    return open_cards();
+#    return 999;
+def my_open_cards():
+    rg=Region(my.ClientRegion.x+my.ClientRegion.w/4,my.ClientRegion.y+my.ClientRegion.h/4,
+            my.ClientRegion.w/2,my.ClientRegion.h/2)
+    try:
+        rg.findAny(Pattern("1716583253250.png").similar(0.58),Pattern("1716583343799.png").similar(0.64))[0]
+    except:
+        return 999;
+    open_cards();
+#print my_open_cards();
+
+def open_cards():
+    click(my.ClientRegion);sleep(3)
+    try:
+        for i in range(4):
+            click(findAny("1716289358771.png")[0]);sleep(1)#exclude         
+        click(findAny("1716289428397.png")[0]);sleep(1)
+        return 0;
+    except:
+        pass
+    return 999;
+#print my_chest_from_dialog();
+
 def my_breed_from_dialog():
     try:
         click(findAny(Pattern("1661736237298.png").similar(0.62),Pattern("1704605890057.png").similar(0.94))[0]);sleep(1)
@@ -4055,7 +4149,7 @@ def oldmy_breeds():
         ssl=sum(sl); 
         gpy+=int(len(sl)/ssl);
     try:
-        zpy=zp[0][1]+coks[0].h/2;
+    zpy=zp[0][1]+coks[0].h/2;
     except: 
         #index out of range: 0
         err='zpy=zp[0][1]+coks[0].h/2;'
@@ -4113,13 +4207,13 @@ def choose_two_animals(animal):
         esc_breed()
         return 999;
     if not(isdoublebread(animal)):
-        try:
+    try:
             rg=loc.grow(loc.h*2)
-            rg.findAny(Pattern("1734382544576.png").similar(0.89))[0];        #chance more than 30, or =3% 2%? 8%?
+            rg.findAny(Pattern("1734382544576.png").similar(0.89),Pattern("1682632846440.png").similar(0.82),"20p.png")[0];        #chance more than 30, or =3% 2%? 8%?
             esc_breed()
             return 333;
-        except:
-            pass;
+    except:
+        pass;
         try:
             m2=rg.findAny(Pattern("1682632846440.png").similar(0.89),Pattern("1734488253750.png").similar(0.86))[0];        #chance more than 20
             esc_breed()
@@ -4135,8 +4229,38 @@ choose_two_animals("1734383062565.png");
 #my_breeds()
 my.StartNow=True;
 
-#5 + 5 mess with 5 + 3
+def observe_info():
+    click("1730805358956.png");sleep(1)
+    bf=find("1730805414795.png");click(bf);sleep(1)
+    lf=Region(bf.x+bf.w*2,bf.y-bf.h*4/3,bf.w*8,bf.h*5);
+    lf.highlight();sleep(0.3)
+    #onreturn=
+    lf.highlightOff()
+    for nm in breed_numbers:
+        try:
+            te=lf.find(nm[0])
+            if te.getScore()>0.83:#0.93 miss
+                rg=te.grow(te.w/4)
+                try:
+                    rg.find(nm[2]) #exclude
+                    continue;
+                except:
+                    pass;
 
+                maxLevel=nm[1];
+#                print maxLevel
+                rg=Region(te.x-bf.w*2+te.w,te.y,bf.w*2,bf.h*2);
+                img=te.getScreen().capture(rg);
+                name='tbdan.png'
+                img.save(getBundlePath(),name);    
+                return nm[1];
+        except:
+            pass;
+            
+#print observe_info();
+
+
+#5 + 5 mess with 5 + 3
 
 #my.my_breed_location=Location(0,0)
 my.waste_time_my_breed=999
@@ -4165,7 +4289,7 @@ def my_breed():
     type(Key.ESC);sleep(1)    
     return 0;
 #now=datetime.datetime.now();print my_breed(),datetime.datetime.now()-now,my.waste_time_my_breed #11.7 / 3
-#my.waste_time_my_breed=999
+my.waste_time_my_breed=999;
 
 #my_breed();
 
@@ -4279,18 +4403,36 @@ breed_numbers=[["1684187930409.png",20]
         ,["1677522123881.png",14]
         ,["1677522105039.png",13],["1662341220893.png",12],[Pattern("1734383153765.png").similar(0.69),12],["1677518282861.png",11],[Pattern("1734384803402.png").similar(0.86),11]#mess 6
         ,["1662341241034.png",10],["1734384832309.png",10],["1704871692613.png",9],[Pattern("1684187259039.png").similar(0.88),9]#mess 8
+        ,["1662341241034.png",10]
+        ,[Pattern("1704871692613.png").similar(0.91),9,Pattern("3.png").similar(0.83)]#mees 3
+        ,["1684187259039.png",9]
         ,[Pattern("1677518318148.png").similar(0.89),8],[Pattern("1734488409836.png").similar(0.95),8] #mess with 6
         ,["1677522158716.png",7]
-        ,[Pattern("1677522342750.png").similar(0.86),6]#mess 5
-        ,["1662340932641.png",5],[Pattern("1734383585597.png").similar(0.96),5]#mess 3
-        ,["1662340896315.png",4],["1662341143419.png",3],["1662341191084.png",2],["1662341115047.png",1]];
-#choose_two_animals('');
+        ,[Pattern("1677522342750.png").similar(0.81),6,Pattern("1662340932641.png").similar(0.86)]#mess 5 to exclud
+        ,["5.png",5]
+        ,["1662340932641.png",5],["1734383585597.png",5],["1662340896315.png",4],["1662341143419.png",3],["1662341191084.png",2],["1662341115047.png",1]];
+        ,["1662340896315.png",4]
+        ,[Pattern("1662341143419.png").similar(0.85),3]
+        ,["1662341191084.png",2],["1662341115047.png",1]];
+choose_two_animals();
 
 def bot71(lf):
     for nm in breed_numbers:
         try:
             te=lf.find(nm[0])
             if te.getScore()>0.83:#0.93 miss
+                rg=Region(te.x-lf.w/3,te.y+te.h/2,lf.w/3+te.w,te.h*3)
+                try:
+                    rg.findAny("1730803569350.png","1730803584181.png")[0];
+                    continue;
+                except:
+                    pass;
+                rg=te.grow(te.w/4)
+                try:
+                    rg.find(nm[2]) #exclude
+                    continue;
+                except:
+                    pass;
                 click(te)
                 return nm[1];
         except:
@@ -4459,13 +4601,12 @@ def bbs():
             s=int(s.split("s")[0]);
         print h,m,s;
         mouseMove(bs)
-
-my.login='Charlotte'
-
-def getLogin():
+my.login='Charlotte';   
+def getLogin():        
+    type('0',Key.CTRL);sleep(0.5)
     rg=Region(1074,2,292,295)
     try:
-        rg.find("1671719739025.png")
+        rg.find(Pattern("1671719739025.png").similar(0.73))
         my.login='Trump2024';
     except:
         try:
@@ -4667,7 +4808,7 @@ def mine_unknown():
     ,my_many_star
     ,my_clear_feed
     ,my_ramp
-    ,my_friend_wander
+    ,my_friend_wander,my_open_cards
     ,my_focus,my_zoo,
     #my.friend_active,
     my_breed_from_dialog,
@@ -4925,7 +5066,39 @@ if False:
         type(Key.ESC);sleep(1)
 
 
+if False: #buy christmas snow flakes
+  for i in range(50):
+    click(Pattern("1702826796966.png").similar(0.43));    sleep(1)
+    click(Pattern("1670669685882.png").similar(0.47));    sleep(2)#to shop
+    click("1670669771737.png");    sleep(1)#arrow down
+    
+    loc=findAny(Pattern("1702826868319.png").targetOffset(65,-19),"1702852465710.png",Pattern("1703040702871.png").similar(0.58).targetOffset(96,6))[0];
+    drag(find(Pattern("1702826890919.png").similar(0.58)));    sleep(2)    
+    dropAt(loc);sleep(2)
+    
+    click("1670669969525.png");    sleep(12) #check yes
+    click(Pattern("1702826948882.png").similar(0.45));    sleep(2)    #poppy - snowflake    
+    click(Pattern("1702826663006.png").similar(0.45));    sleep(1) #object in field
+    click("1670670246915.png");    sleep(1)    #hand out
+    click(findAny("1670670333091.png","1702826720460.png")[0]);    sleep(2);#Yes
+    click(Pattern("1670670387139.png").similar(0.67));    sleep(8); #sell
 
+if False: #buy valentine
+  for i in range(70):
+    click("1707523554389.png");    sleep(1)
+    click(Pattern("1670669685882.png").similar(0.47));    sleep(2)#to shop
+#    click("1670669771737.png");    sleep(1)#arrow down
+    
+    loc=findAny(Pattern("1707531926828.png").targetOffset(35,-22),Pattern("1707839258443.png").targetOffset(-25,-25),Pattern("1707839356315.png").targetOffset(75,-9))[0];
+    drag(find("1707523613793.png"));    sleep(2)    
+    dropAt(loc);sleep(2)
+    
+    click("1670669969525.png");    sleep(7) #check yes
+    click("1707523719629.png");    sleep(2)    #poppy - snowflake    
+    click(findAny(Pattern("1707523758791.png").similar(0.55),Pattern("1707532099305.png").similar(0.61))[0]);    sleep(1) #object in field
+    click("1670670246915.png");    sleep(1)    #hand out
+    click(findAny("1670670333091.png","1702826720460.png")[0]);    sleep(2);#Yes
+    click(Pattern("1670670387139.png").similar(0.67));    sleep(8); #sell
 
 def my_spin():
     Region(424,281,454,351).find("1704460952190.png").click();sleep(20)
@@ -5051,12 +5224,19 @@ print my_clear_feed()
 #894 init
 if False: #buy easter egg
   for i in range(70):
-    click(findAny("1711253199163.png","1719108402847.png","1726084177266.png","1730237918061.png","1734387245291.png")[0]);    sleep(1)
+    click(findAny("1711253199163.png","1719108402847.png","1726084177266.png","1730237918061.png","1734387245291.png","1719355134173.png","1726085425097.png","1730238568696.png")[0]);    sleep(1)
     click(findAny(Pattern("1670669685882.png").similar(0.47),"1719108468733.png")[0]);    sleep(2)#to shop
 #    click(findAny("1670669771737.png","1719108506525.png")[0]);    sleep(1)#arrow down
     
-    loc=findAny(Pattern("1726084514688.png").similar(0.60).targetOffset(-185,-49),Pattern("1730237999723.png").similar(0.69).targetOffset(89,-77),Pattern("1734387299906.png").similar(0.66).targetOffset(-171,207))[0];
-    drag(findAny("1711253259826.png","1719108566225.png","1726084270086.png","1730237979236.png",Pattern("1734387352138.png").targetOffset(0,-77))[0]);    sleep(2)    
+    loc=findAny(Pattern("1707839356315.png",).targetOffset(75,-9)
+            ,Pattern("1726084514688.png").similar(0.60).targetOffset(-185,-49),Pattern("1730237999723.png").similar(0.69).targetOffset(89,-77),Pattern("1734387299906.png").similar(0.66).targetOffset(-171,207)
+            ,"1711253241702.png"
+            ,Pattern("1719355216503.png").similar(0.42).targetOffset(93,30)
+            ,Pattern("1719606372507.png").similar(0.51).targetOffset(75,37)
+            ,Pattern("1726085568390.png").similar(0.63).targetOffset(-9,-29),Pattern("1726346535166.png").similar(0.63).targetOffset(57,-110),Pattern("1727258356362.png").similar(0.67)
+            ,Pattern("1730238634348.png").similar(0.68).targetOffset(61,87))[0];
+    drag(findAny("1711253259826.png","1719108566225.png","1726084270086.png","1730237979236.png",Pattern("1734387352138.png").targetOffset(0,-77)
+    ,findAny("1719355240773.png","1726085644677.png","1730238682162.png")[0]);    sleep(2)    
     dropAt(loc);sleep(2)
     
     click(findAny("1670669969525.png","1719108961803.png")[0]);    sleep(7) #check yes
@@ -5156,3 +5336,13 @@ print (my_poo_find_gtx1060.func_dict)
 #  File "C:\Users\Public\Documents\trump2024.charlotte.sikuli\trump2024.py", line 3995, in select_animal
 #    zpx=zp[0][1]+coks[0].w/2;
 
+#polar bear 18% "1711754523344.png"
+
+#"1715035567925.png" what is crypto...?
+#protect diamond , was 172 on 7/14, now 72 7/16 for trump2024
+#white zwbra "1726377776556.png"
+breedorder=["1727753999631.png"#level 5,requires 1, 
+        ]
+#tbd "1730632316575.png"
+def observ():
+    pass;

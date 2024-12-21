@@ -1,1 +1,4 @@
 tmp*.png
+*.wsuo
+*.sqlite
+/.vs
