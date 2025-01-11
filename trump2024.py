@@ -668,16 +668,6 @@ def my_friend_1010():
 def my_friend_openbox():       
     try:
        click(findAny(Pattern("treasure_box_float.png").similar(0.69),Pattern("1682486456102.png").similar(0.66))[0]);sleep(5);   
-       isgtx1060=(gtx1060==my.scenario)
-       cards=findAll(["card_question.png","1682486571820.png"][isgtx1060]);
-       i=0;
-       for card in cards:
-           click(card);sleep(2);
-           i+=1;
-           if (i>=4):
-               break;
-           click(card.offset(-5,0));sleep(2);
-#       click(findAny("RedeemPrize.png","1682486713626.png")[0]);sleep(1);
 	   my_redeem_prize();
        return 0;
     except:
@@ -690,20 +680,27 @@ def my_redeem_prize():
            return 0;
    except:
        pass;
-   cards=list(my.ClientRegion.findAll("card_question.png"));
-   for card in cards:
-      click(card);sleep(2);
-      click(card.offset(-5,0));sleep(2);
-      try:
-           click("RedeemPrize.png");sleep(1);
-           return 0;
-      except:
+   i=0;
+   for k in range(4):
+       cards=list(my.ClientRegion.findAny("card_question.png"));
+       #print cards
+       for card in cards:
+          click(card);sleep(0.5);
+          mouseMove(my.ClientRegion.getTopLeft());
+          sleep(2);
           try:
-              find("1681860792319.png");return 0;
+               click("RedeemPrize.png");sleep(1);
+               return 0;
           except:
-           pass;#becare full may click too many cost key?
+              try:
+                  find("1681860792319.png");return 0;
+              except:
+               pass;#becare full may click too many cost key?
+          i=i+1
+          if i>=4 :
+              return 444;
    return 999;
-print my_redeem_prize()
+#print my_redeem_prize()
 
 def my_friend_gonext():
     sleep(2);
@@ -1012,6 +1009,11 @@ def entering_Terrarium_Mom():
            break;
 
 def entering(zoo):
+    my_breed_from_dialog();
+    my_born()
+    my_born_success()                    
+    type(Key.ESC);
+    type(Key.ESC);
     try:
         f=globals()['entering_'+zoo+'_'+getLogin()]
         print f
@@ -1027,6 +1029,7 @@ def entering(zoo):
     elif zoo==Main:
         drag(autoscale(Location(703, 651),inossem));
         dropAt(autoscale(Location(650, 136),inossem));
+#entering('Aquarium');
     
 def my_friend_exit():    #exit to tbd
     try:
@@ -4052,14 +4055,15 @@ def select_animal():
         gpy=(my.NextPage.y+my.NextPage.h/2-my.EnclosureType.y-my.EnclosureType.h)*124/182;
         celx=my.NextPage.x-5*gpx+9;
         cely=my.EnclosureType.y+my.EnclosureType.h-9;
-        #print cel,celx,cely,gpx,gpy
+        print cel,celx,cely,gpx,gpy
         itr=-1;
         for itr in range(10):
             ix=random.randint(0,4);
             iy=random.randint(0,2);
             #ix=0;iy=0;
+            print 'ytyt',ix,iy
             rg=Region(celx+gpx*ix,cely+gpy*iy,gpx,gpy)
-            locs=rg.offset(rg.w/2,rg.h/2).findAny(Pattern("1734556807959.png").similar(0.85),Pattern("1734556853964.png").similar(0.74),Pattern("1734561723325.png").similar(0.97),Pattern("1734556878528.png").similar(0.95),Pattern("1734557070065.png").similar(0.78))
+            locs=rg.offset(rg.w/2,rg.h/2).findAny(Pattern("1734556807959.png").similar(0.87),Pattern("1734556853964.png").similar(0.74),Pattern("1734561723325.png").similar(0.97),Pattern("1734556878528.png").similar(0.95),Pattern("1734557070065.png").similar(0.78))
             if locs.isEmpty():
                 if len(donttry)>0:
                     if rg.findAny(donttry).isEmpty():
@@ -4245,6 +4249,7 @@ def observe_info():
 #my.my_breed_location=Location(0,0)
 def my_breed():
     now=datetime.datetime.now()
+    
     t=my.last.get('waste_time_my_breed');
     if(t):
         if (    #math.sqrt((CenterX-my.my_breed_location.x)**2
@@ -4271,7 +4276,7 @@ def my_breed():
 #now=datetime.datetime.now();print my_breed(),datetime.datetime.now()-now,my.waste_time_my_breed #11.7 / 3
 my.waste_time_my_breed=999;
 
-#my_breed();
+##my_breed();
 
 my.friend_active=False;
 my.friend_menu_lastVisit=t0;
@@ -5193,8 +5198,6 @@ my.Blocked={Main:False,Fir:False,Terrarium:False,Oceanside:False,Aquarium:False,
 print stayTime
 stayTime[Main]=22
 stayTime[Oceanside]=1
-my.friend_active =True;print my_friends()
-print my_run(mine_unknown,datetime.timedelta(hours=49),55555)
 #print my.friend_active #7730->
 print my.ClientRegion
 #MISSING "1710628275582.png"
@@ -5333,3 +5336,9 @@ breedorder=["1727753999631.png"#level 5,requires 1,
 #tbd "1730632316575.png"
 def observ():
     pass;
+
+my.friend_active =True;print my_friends()
+print my_run(mine_unknown,datetime.timedelta(hours=49),55555)
+my.waste_time_my_breed=999;
+my_breed();
+#tbd "1719357599064"
