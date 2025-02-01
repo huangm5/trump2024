@@ -667,11 +667,12 @@ def my_friend_1010():
    
 def my_friend_openbox():       
     try:
-       click(findAny(Pattern("treasure_box_float.png").similar(0.69),Pattern("1682486456102.png").similar(0.66))[0]);sleep(5);   
-	   my_redeem_prize();
+       click(findAny(                   Pattern("treasure_box_float.png").similar(0.69),Pattern("1682486456102.png").similar(0.66))[0]);
+       sleep(5);
+       my_redeem_prize();
        return 0;
     except:
-        return 999;
+       return 999;
 #print my_friend_1010();
 #print my_friend_openbox();
 def my_redeem_prize():
@@ -2616,7 +2617,7 @@ def my_many_cash():   #cash is full
         pics=["cash_over.png",
 				Pattern("cash.png").similar(0.50)
                ,#Pattern("1715214659740.png").similar(0.69),
-				"1645890337103.png", "1674530367809.png"]
+				"1645890337103.png", "1674530367809.png","1737787153211.png"]
         ll=rg.findAny(pics)
         if len(ll)>0:
             c=0;
